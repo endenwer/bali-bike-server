@@ -1,0 +1,13 @@
+type Query {
+  bikes: [Bike!]!
+  bike(bikeId: ID!): Bike
+}
+
+type Bike {
+  id: ID!
+  modelId: Int!
+  price: Int!
+  photos: [String!]
+  rating: Float
+  reviewsCount: Int
+}

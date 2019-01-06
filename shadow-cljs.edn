@@ -1,0 +1,6 @@
+{:source-paths ["src" "generated"]
+ :builds {:app
+          {:id        :app
+           :target    :node-script
+           :main      bali-bike-server.core/main
+           :output-to "index.js"}}}

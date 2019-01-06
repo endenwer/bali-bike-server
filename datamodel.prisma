@@ -1,0 +1,8 @@
+type Bike {
+  id: ID! @unique
+  modelId: Int!
+  price: Int!
+  photos: [String!]
+  rating: Float
+  reviewsCount: Int
+}
