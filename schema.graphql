@@ -1,6 +1,8 @@
 type Query {
   bikes: [Bike!]!
-  bike(bikeId: ID!): Bike
+  bike(id: ID!): Bike
+  bookings: [Booking!]!
+  booking(id: ID!): Booking
 }
 
 type Bike {
@@ -10,4 +12,24 @@ type Bike {
   photos: [String!]
   rating: Float
   reviewsCount: Int
+  manufactureYear: Int
+  mileage: Int
+  reviews: [Review!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  comment: String
+}
+
+type Booking {
+  id: ID!
+  startDate: String!
+  endDate: String!
+  deliveryTime: String!
+  deliveryLocationLongitude: String!
+  deliveryLocationLatitude: String!
+  deliveryLocationComment: String
+  bike: Bike!
 }

@@ -3,6 +3,31 @@ type Bike {
   modelId: Int!
   price: Int!
   photos: [String!]
-  rating: Float
-  reviewsCount: Int
+  rating: Float @default(value: 0)
+  reviewsCount: Int @default(value: 0)
+  manufactureYear: Int
+  mileage: Int @default(value: 0)
+  reviews: [Review!]!
+  bookings: [Booking!]!
+}
+
+type Review {
+  id: ID! @unique
+  rating: Int!
+  comment: String
+  createdAt: DateTime!
+  userUid: String!
+  bike: Bike!
+}
+
+type Booking {
+  id: ID! @unique
+  userUid: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  deliveryTime: DateTime
+  deliveryLocationLongitude: String!
+  deliveryLocationLatitude: String!
+  deliveryLocationComment: String
+  bike: Bike!
 }
