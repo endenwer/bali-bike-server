@@ -1,4 +1,8 @@
 {:source-paths ["src" "generated"]
+
+ :dependencies [[funcool/promesa "2.0.0-SNAPSHOT"]
+                [binaryage/oops "0.6.4"]]
+
  :builds {:app
           {:id        :app
            :target    :node-script

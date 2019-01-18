@@ -1,6 +1,11 @@
 (ns bali-bike-server.core
+  (:require-macros [promesa.core :refer [alet]])
   (:require ["graphql-yoga" :refer [GraphQLServer] :rename {GraphQLServer graphql-server}]
-            ["/prisma-client" :default prisma-client]))
+            ["graphql-shield" :refer [rule shield]]
+            ["/prisma-client" :default prisma-client]
+            [bali-bike-server.auth :as auth]
+            [oops.core :refer [oset!]]
+            [promesa.core :as p]))
 
 (def resolvers
   {:Query {:bikes (fn [_ args context] (.prisma.bikes context))
@@ -12,11 +17,32 @@
    :Booking {:bike (fn [parent args context]
                      (.bike (.prisma.booking context (clj->js {:id (.-id parent)}))))}})
 
+(def is-authenticated
+  ((rule) (fn [parent args context info] (.-user context))))
+
+(def permissions
+  (shield (clj->js
+          {:Query {:bookings is-authenticated
+                   :booking is-authenticated}})))
+
+(defn inject-user
+  [resolve root args context info]
+  (if-let [token (.-request.headers.authorization context)]
+    (alet [user (p/await (auth/get-user token))
+           new-context (oset! context "!user" user)]
+          (resolve root args new-context info))
+    (resolve root args context info)))
+
 (def server
   (graphql-server. (clj->js {:typeDefs "./schema.graphql"
                              :resolvers (clj->js resolvers)
-                             :context {:prisma (.-prisma prisma-client)}})))
+                             :middlewares [inject-user permissions]
+                             :context (fn [req]
+                                        (clj->js
+                                         {:prisma (.-prisma prisma-client)
+                                          :request (.-request req)}))})))
 
 (defn main []
+  (auth/init)
   (.start server (fn [] (.log js/console "Started"))))
 
