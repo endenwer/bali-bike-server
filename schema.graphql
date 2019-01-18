@@ -5,6 +5,17 @@ type Query {
   booking(id: ID!): Booking
 }
 
+type Mutation {
+  createBooking(
+    bikeId: ID!,
+    startDate: String!,
+    endDate: String!,
+    deliveryLocationLongitude: String!,
+    deliveryLocationLatitude: String!,
+    deliveryLocationComment: String,
+    deliveryTime: String): Booking
+}
+
 type Bike {
   id: ID!
   modelId: Int!

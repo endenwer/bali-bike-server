@@ -12,18 +12,30 @@
            :bike (fn [_ args context] (.prisma.bike context (clj->js {:id (.-id args)})))
            :bookings (fn [_ args context] (.prisma.bookings context))
            :booking (fn [_ args context] (.prisma.booking context (clj->js {:id (.-id args)})))}
+   :Mutation {:createBooking (fn [_ args context]
+                               (.prisma.createBooking
+                                context
+                                (clj->js {:startDate (.-startDate args)
+                                          :endDate (.-endDate args)
+                                          :deliveryLocationLongitude (.-deliveryLocationLongitude args)
+                                          :deliveryLocationLatitude (.-deliveryLocationLatitude args)
+                                          :deliveryLocationComment (.-deliveryLocationComment args)
+                                          :deliveryTime (.-deliveryTime args)
+                                          :userUid (.-user.uid context)
+                                          :bike {:connect {:id (.-bikeId args)}}})))}
    :Bike {:reviews (fn [parent args context]
                      (.reviews (.prisma.bike context (clj->js {:id (.-id parent)}))))}
    :Booking {:bike (fn [parent args context]
                      (.bike (.prisma.booking context (clj->js {:id (.-id parent)}))))}})
 
 (def is-authenticated
-  ((rule) (fn [parent args context info] (.-user context))))
+  ((rule) (fn [parent args context info] (js/Boolean (.-user context)))))
 
 (def permissions
   (shield (clj->js
           {:Query {:bookings is-authenticated
-                   :booking is-authenticated}})))
+                   :booking is-authenticated}
+           :Mutation {:createBooking is-authenticated}})))
 
 (defn inject-user
   [resolve root args context info]
