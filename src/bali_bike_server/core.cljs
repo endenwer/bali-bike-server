@@ -31,10 +31,17 @@
 (def is-authenticated
   ((rule) (fn [parent args context info] (js/Boolean (.-user context)))))
 
+(def is-booking-owner
+  ((rule) (fn [parrent args context info]
+            (if-let [user (.-user context)]
+              (->
+               (p/promise (.prisma.booking context (clj->js {:id (.-id args)})))
+               (p/then (fn [booking] (= (.-userUid booking) (.-uid user)))))))))
+
 (def permissions
   (shield (clj->js
           {:Query {:bookings is-authenticated
-                   :booking is-authenticated}
+                   :booking is-booking-owner}
            :Mutation {:createBooking is-authenticated}})))
 
 (defn inject-user
