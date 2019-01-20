@@ -20,6 +20,12 @@ type Review {
   bike: Bike!
 }
 
+enum BookingStatus {
+  WAITING_CONFIRMATION
+  CONFIRMED
+  CANCELED
+}
+
 type Booking {
   id: ID! @unique
   userUid: String!
@@ -29,5 +35,6 @@ type Booking {
   deliveryLocationLongitude: String!
   deliveryLocationLatitude: String!
   deliveryLocationComment: String
+  status: BookingStatus! @default(value: "WAITING_CONFIRMATION")
   bike: Bike!
 }

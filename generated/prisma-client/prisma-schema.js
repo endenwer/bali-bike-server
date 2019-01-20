@@ -296,6 +296,7 @@ type Booking {
   deliveryLocationLongitude: String!
   deliveryLocationLatitude: String!
   deliveryLocationComment: String
+  status: BookingStatus!
   bike: Bike!
 }
 
@@ -313,6 +314,7 @@ input BookingCreateInput {
   deliveryLocationLongitude: String!
   deliveryLocationLatitude: String!
   deliveryLocationComment: String
+  status: BookingStatus
   bike: BikeCreateOneWithoutBookingsInput!
 }
 
@@ -329,6 +331,7 @@ input BookingCreateWithoutBikeInput {
   deliveryLocationLongitude: String!
   deliveryLocationLatitude: String!
   deliveryLocationComment: String
+  status: BookingStatus
 }
 
 type BookingEdge {
@@ -353,6 +356,8 @@ enum BookingOrderByInput {
   deliveryLocationLatitude_DESC
   deliveryLocationComment_ASC
   deliveryLocationComment_DESC
+  status_ASC
+  status_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -368,6 +373,7 @@ type BookingPreviousValues {
   deliveryLocationLongitude: String!
   deliveryLocationLatitude: String!
   deliveryLocationComment: String
+  status: BookingStatus!
 }
 
 input BookingScalarWhereInput {
@@ -465,9 +471,19 @@ input BookingScalarWhereInput {
   deliveryLocationComment_not_starts_with: String
   deliveryLocationComment_ends_with: String
   deliveryLocationComment_not_ends_with: String
+  status: BookingStatus
+  status_not: BookingStatus
+  status_in: [BookingStatus!]
+  status_not_in: [BookingStatus!]
   AND: [BookingScalarWhereInput!]
   OR: [BookingScalarWhereInput!]
   NOT: [BookingScalarWhereInput!]
+}
+
+enum BookingStatus {
+  WAITING_CONFIRMATION
+  CONFIRMED
+  CANCELED
 }
 
 type BookingSubscriptionPayload {
@@ -496,6 +512,7 @@ input BookingUpdateInput {
   deliveryLocationLongitude: String
   deliveryLocationLatitude: String
   deliveryLocationComment: String
+  status: BookingStatus
   bike: BikeUpdateOneRequiredWithoutBookingsInput
 }
 
@@ -507,6 +524,7 @@ input BookingUpdateManyDataInput {
   deliveryLocationLongitude: String
   deliveryLocationLatitude: String
   deliveryLocationComment: String
+  status: BookingStatus
 }
 
 input BookingUpdateManyMutationInput {
@@ -517,6 +535,7 @@ input BookingUpdateManyMutationInput {
   deliveryLocationLongitude: String
   deliveryLocationLatitude: String
   deliveryLocationComment: String
+  status: BookingStatus
 }
 
 input BookingUpdateManyWithoutBikeInput {
@@ -543,6 +562,7 @@ input BookingUpdateWithoutBikeDataInput {
   deliveryLocationLongitude: String
   deliveryLocationLatitude: String
   deliveryLocationComment: String
+  status: BookingStatus
 }
 
 input BookingUpdateWithWhereUniqueWithoutBikeInput {
@@ -651,6 +671,10 @@ input BookingWhereInput {
   deliveryLocationComment_not_starts_with: String
   deliveryLocationComment_ends_with: String
   deliveryLocationComment_not_ends_with: String
+  status: BookingStatus
+  status_not: BookingStatus
+  status_in: [BookingStatus!]
+  status_not_in: [BookingStatus!]
   bike: BikeWhereInput
   AND: [BookingWhereInput!]
   OR: [BookingWhereInput!]

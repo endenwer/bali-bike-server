@@ -34,6 +34,12 @@ type Review {
   comment: String
 }
 
+enum BookingStatus {
+  WAITING_CONFIRMATION
+  CONFIRMED
+  CANCELED
+}
+
 type Booking {
   id: ID!
   startDate: String!
@@ -42,5 +48,6 @@ type Booking {
   deliveryLocationLongitude: String!
   deliveryLocationLatitude: String!
   deliveryLocationComment: String
+  status: BookingStatus
   bike: Bike!
 }
