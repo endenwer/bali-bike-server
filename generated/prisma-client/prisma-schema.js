@@ -292,9 +292,11 @@ type Booking {
   userUid: String!
   startDate: DateTime!
   endDate: DateTime!
-  deliveryTime: DateTime
   deliveryLocationLongitude: String!
+  deliveryLocationLongitudeDelta: String!
   deliveryLocationLatitude: String!
+  deliveryLocationLatitudeDelta: String!
+  deliveryLocationAddress: String!
   deliveryLocationComment: String
   status: BookingStatus!
   bike: Bike!
@@ -310,9 +312,11 @@ input BookingCreateInput {
   userUid: String!
   startDate: DateTime!
   endDate: DateTime!
-  deliveryTime: DateTime
   deliveryLocationLongitude: String!
+  deliveryLocationLongitudeDelta: String!
   deliveryLocationLatitude: String!
+  deliveryLocationLatitudeDelta: String!
+  deliveryLocationAddress: String!
   deliveryLocationComment: String
   status: BookingStatus
   bike: BikeCreateOneWithoutBookingsInput!
@@ -327,9 +331,11 @@ input BookingCreateWithoutBikeInput {
   userUid: String!
   startDate: DateTime!
   endDate: DateTime!
-  deliveryTime: DateTime
   deliveryLocationLongitude: String!
+  deliveryLocationLongitudeDelta: String!
   deliveryLocationLatitude: String!
+  deliveryLocationLatitudeDelta: String!
+  deliveryLocationAddress: String!
   deliveryLocationComment: String
   status: BookingStatus
 }
@@ -348,12 +354,16 @@ enum BookingOrderByInput {
   startDate_DESC
   endDate_ASC
   endDate_DESC
-  deliveryTime_ASC
-  deliveryTime_DESC
   deliveryLocationLongitude_ASC
   deliveryLocationLongitude_DESC
+  deliveryLocationLongitudeDelta_ASC
+  deliveryLocationLongitudeDelta_DESC
   deliveryLocationLatitude_ASC
   deliveryLocationLatitude_DESC
+  deliveryLocationLatitudeDelta_ASC
+  deliveryLocationLatitudeDelta_DESC
+  deliveryLocationAddress_ASC
+  deliveryLocationAddress_DESC
   deliveryLocationComment_ASC
   deliveryLocationComment_DESC
   status_ASC
@@ -369,9 +379,11 @@ type BookingPreviousValues {
   userUid: String!
   startDate: DateTime!
   endDate: DateTime!
-  deliveryTime: DateTime
   deliveryLocationLongitude: String!
+  deliveryLocationLongitudeDelta: String!
   deliveryLocationLatitude: String!
+  deliveryLocationLatitudeDelta: String!
+  deliveryLocationAddress: String!
   deliveryLocationComment: String
   status: BookingStatus!
 }
@@ -421,14 +433,6 @@ input BookingScalarWhereInput {
   endDate_lte: DateTime
   endDate_gt: DateTime
   endDate_gte: DateTime
-  deliveryTime: DateTime
-  deliveryTime_not: DateTime
-  deliveryTime_in: [DateTime!]
-  deliveryTime_not_in: [DateTime!]
-  deliveryTime_lt: DateTime
-  deliveryTime_lte: DateTime
-  deliveryTime_gt: DateTime
-  deliveryTime_gte: DateTime
   deliveryLocationLongitude: String
   deliveryLocationLongitude_not: String
   deliveryLocationLongitude_in: [String!]
@@ -443,6 +447,20 @@ input BookingScalarWhereInput {
   deliveryLocationLongitude_not_starts_with: String
   deliveryLocationLongitude_ends_with: String
   deliveryLocationLongitude_not_ends_with: String
+  deliveryLocationLongitudeDelta: String
+  deliveryLocationLongitudeDelta_not: String
+  deliveryLocationLongitudeDelta_in: [String!]
+  deliveryLocationLongitudeDelta_not_in: [String!]
+  deliveryLocationLongitudeDelta_lt: String
+  deliveryLocationLongitudeDelta_lte: String
+  deliveryLocationLongitudeDelta_gt: String
+  deliveryLocationLongitudeDelta_gte: String
+  deliveryLocationLongitudeDelta_contains: String
+  deliveryLocationLongitudeDelta_not_contains: String
+  deliveryLocationLongitudeDelta_starts_with: String
+  deliveryLocationLongitudeDelta_not_starts_with: String
+  deliveryLocationLongitudeDelta_ends_with: String
+  deliveryLocationLongitudeDelta_not_ends_with: String
   deliveryLocationLatitude: String
   deliveryLocationLatitude_not: String
   deliveryLocationLatitude_in: [String!]
@@ -457,6 +475,34 @@ input BookingScalarWhereInput {
   deliveryLocationLatitude_not_starts_with: String
   deliveryLocationLatitude_ends_with: String
   deliveryLocationLatitude_not_ends_with: String
+  deliveryLocationLatitudeDelta: String
+  deliveryLocationLatitudeDelta_not: String
+  deliveryLocationLatitudeDelta_in: [String!]
+  deliveryLocationLatitudeDelta_not_in: [String!]
+  deliveryLocationLatitudeDelta_lt: String
+  deliveryLocationLatitudeDelta_lte: String
+  deliveryLocationLatitudeDelta_gt: String
+  deliveryLocationLatitudeDelta_gte: String
+  deliveryLocationLatitudeDelta_contains: String
+  deliveryLocationLatitudeDelta_not_contains: String
+  deliveryLocationLatitudeDelta_starts_with: String
+  deliveryLocationLatitudeDelta_not_starts_with: String
+  deliveryLocationLatitudeDelta_ends_with: String
+  deliveryLocationLatitudeDelta_not_ends_with: String
+  deliveryLocationAddress: String
+  deliveryLocationAddress_not: String
+  deliveryLocationAddress_in: [String!]
+  deliveryLocationAddress_not_in: [String!]
+  deliveryLocationAddress_lt: String
+  deliveryLocationAddress_lte: String
+  deliveryLocationAddress_gt: String
+  deliveryLocationAddress_gte: String
+  deliveryLocationAddress_contains: String
+  deliveryLocationAddress_not_contains: String
+  deliveryLocationAddress_starts_with: String
+  deliveryLocationAddress_not_starts_with: String
+  deliveryLocationAddress_ends_with: String
+  deliveryLocationAddress_not_ends_with: String
   deliveryLocationComment: String
   deliveryLocationComment_not: String
   deliveryLocationComment_in: [String!]
@@ -508,9 +554,11 @@ input BookingUpdateInput {
   userUid: String
   startDate: DateTime
   endDate: DateTime
-  deliveryTime: DateTime
   deliveryLocationLongitude: String
+  deliveryLocationLongitudeDelta: String
   deliveryLocationLatitude: String
+  deliveryLocationLatitudeDelta: String
+  deliveryLocationAddress: String
   deliveryLocationComment: String
   status: BookingStatus
   bike: BikeUpdateOneRequiredWithoutBookingsInput
@@ -520,9 +568,11 @@ input BookingUpdateManyDataInput {
   userUid: String
   startDate: DateTime
   endDate: DateTime
-  deliveryTime: DateTime
   deliveryLocationLongitude: String
+  deliveryLocationLongitudeDelta: String
   deliveryLocationLatitude: String
+  deliveryLocationLatitudeDelta: String
+  deliveryLocationAddress: String
   deliveryLocationComment: String
   status: BookingStatus
 }
@@ -531,9 +581,11 @@ input BookingUpdateManyMutationInput {
   userUid: String
   startDate: DateTime
   endDate: DateTime
-  deliveryTime: DateTime
   deliveryLocationLongitude: String
+  deliveryLocationLongitudeDelta: String
   deliveryLocationLatitude: String
+  deliveryLocationLatitudeDelta: String
+  deliveryLocationAddress: String
   deliveryLocationComment: String
   status: BookingStatus
 }
@@ -558,9 +610,11 @@ input BookingUpdateWithoutBikeDataInput {
   userUid: String
   startDate: DateTime
   endDate: DateTime
-  deliveryTime: DateTime
   deliveryLocationLongitude: String
+  deliveryLocationLongitudeDelta: String
   deliveryLocationLatitude: String
+  deliveryLocationLatitudeDelta: String
+  deliveryLocationAddress: String
   deliveryLocationComment: String
   status: BookingStatus
 }
@@ -621,14 +675,6 @@ input BookingWhereInput {
   endDate_lte: DateTime
   endDate_gt: DateTime
   endDate_gte: DateTime
-  deliveryTime: DateTime
-  deliveryTime_not: DateTime
-  deliveryTime_in: [DateTime!]
-  deliveryTime_not_in: [DateTime!]
-  deliveryTime_lt: DateTime
-  deliveryTime_lte: DateTime
-  deliveryTime_gt: DateTime
-  deliveryTime_gte: DateTime
   deliveryLocationLongitude: String
   deliveryLocationLongitude_not: String
   deliveryLocationLongitude_in: [String!]
@@ -643,6 +689,20 @@ input BookingWhereInput {
   deliveryLocationLongitude_not_starts_with: String
   deliveryLocationLongitude_ends_with: String
   deliveryLocationLongitude_not_ends_with: String
+  deliveryLocationLongitudeDelta: String
+  deliveryLocationLongitudeDelta_not: String
+  deliveryLocationLongitudeDelta_in: [String!]
+  deliveryLocationLongitudeDelta_not_in: [String!]
+  deliveryLocationLongitudeDelta_lt: String
+  deliveryLocationLongitudeDelta_lte: String
+  deliveryLocationLongitudeDelta_gt: String
+  deliveryLocationLongitudeDelta_gte: String
+  deliveryLocationLongitudeDelta_contains: String
+  deliveryLocationLongitudeDelta_not_contains: String
+  deliveryLocationLongitudeDelta_starts_with: String
+  deliveryLocationLongitudeDelta_not_starts_with: String
+  deliveryLocationLongitudeDelta_ends_with: String
+  deliveryLocationLongitudeDelta_not_ends_with: String
   deliveryLocationLatitude: String
   deliveryLocationLatitude_not: String
   deliveryLocationLatitude_in: [String!]
@@ -657,6 +717,34 @@ input BookingWhereInput {
   deliveryLocationLatitude_not_starts_with: String
   deliveryLocationLatitude_ends_with: String
   deliveryLocationLatitude_not_ends_with: String
+  deliveryLocationLatitudeDelta: String
+  deliveryLocationLatitudeDelta_not: String
+  deliveryLocationLatitudeDelta_in: [String!]
+  deliveryLocationLatitudeDelta_not_in: [String!]
+  deliveryLocationLatitudeDelta_lt: String
+  deliveryLocationLatitudeDelta_lte: String
+  deliveryLocationLatitudeDelta_gt: String
+  deliveryLocationLatitudeDelta_gte: String
+  deliveryLocationLatitudeDelta_contains: String
+  deliveryLocationLatitudeDelta_not_contains: String
+  deliveryLocationLatitudeDelta_starts_with: String
+  deliveryLocationLatitudeDelta_not_starts_with: String
+  deliveryLocationLatitudeDelta_ends_with: String
+  deliveryLocationLatitudeDelta_not_ends_with: String
+  deliveryLocationAddress: String
+  deliveryLocationAddress_not: String
+  deliveryLocationAddress_in: [String!]
+  deliveryLocationAddress_not_in: [String!]
+  deliveryLocationAddress_lt: String
+  deliveryLocationAddress_lte: String
+  deliveryLocationAddress_gt: String
+  deliveryLocationAddress_gte: String
+  deliveryLocationAddress_contains: String
+  deliveryLocationAddress_not_contains: String
+  deliveryLocationAddress_starts_with: String
+  deliveryLocationAddress_not_starts_with: String
+  deliveryLocationAddress_ends_with: String
+  deliveryLocationAddress_not_ends_with: String
   deliveryLocationComment: String
   deliveryLocationComment_not: String
   deliveryLocationComment_in: [String!]

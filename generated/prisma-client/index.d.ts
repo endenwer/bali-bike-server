@@ -214,12 +214,16 @@ export type BookingOrderByInput =
   | "startDate_DESC"
   | "endDate_ASC"
   | "endDate_DESC"
-  | "deliveryTime_ASC"
-  | "deliveryTime_DESC"
   | "deliveryLocationLongitude_ASC"
   | "deliveryLocationLongitude_DESC"
+  | "deliveryLocationLongitudeDelta_ASC"
+  | "deliveryLocationLongitudeDelta_DESC"
   | "deliveryLocationLatitude_ASC"
   | "deliveryLocationLatitude_DESC"
+  | "deliveryLocationLatitudeDelta_ASC"
+  | "deliveryLocationLatitudeDelta_DESC"
+  | "deliveryLocationAddress_ASC"
+  | "deliveryLocationAddress_DESC"
   | "deliveryLocationComment_ASC"
   | "deliveryLocationComment_DESC"
   | "status_ASC"
@@ -269,9 +273,11 @@ export interface BookingCreateInput {
   userUid: String;
   startDate: DateTimeInput;
   endDate: DateTimeInput;
-  deliveryTime?: DateTimeInput;
   deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
   deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   status?: BookingStatus;
   bike: BikeCreateOneWithoutBookingsInput;
@@ -379,9 +385,11 @@ export interface BookingCreateWithoutBikeInput {
   userUid: String;
   startDate: DateTimeInput;
   endDate: DateTimeInput;
-  deliveryTime?: DateTimeInput;
   deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
   deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   status?: BookingStatus;
 }
@@ -561,9 +569,11 @@ export interface BookingUpdateInput {
   userUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
-  deliveryTime?: DateTimeInput;
   deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
   deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
   status?: BookingStatus;
   bike?: BikeUpdateOneRequiredWithoutBookingsInput;
@@ -713,9 +723,11 @@ export interface BookingUpdateWithoutBikeDataInput {
   userUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
-  deliveryTime?: DateTimeInput;
   deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
   deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
   status?: BookingStatus;
 }
@@ -724,9 +736,11 @@ export interface BookingUpdateManyMutationInput {
   userUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
-  deliveryTime?: DateTimeInput;
   deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
   deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
   status?: BookingStatus;
 }
@@ -789,14 +803,6 @@ export interface BookingScalarWhereInput {
   endDate_lte?: DateTimeInput;
   endDate_gt?: DateTimeInput;
   endDate_gte?: DateTimeInput;
-  deliveryTime?: DateTimeInput;
-  deliveryTime_not?: DateTimeInput;
-  deliveryTime_in?: DateTimeInput[] | DateTimeInput;
-  deliveryTime_not_in?: DateTimeInput[] | DateTimeInput;
-  deliveryTime_lt?: DateTimeInput;
-  deliveryTime_lte?: DateTimeInput;
-  deliveryTime_gt?: DateTimeInput;
-  deliveryTime_gte?: DateTimeInput;
   deliveryLocationLongitude?: String;
   deliveryLocationLongitude_not?: String;
   deliveryLocationLongitude_in?: String[] | String;
@@ -811,6 +817,20 @@ export interface BookingScalarWhereInput {
   deliveryLocationLongitude_not_starts_with?: String;
   deliveryLocationLongitude_ends_with?: String;
   deliveryLocationLongitude_not_ends_with?: String;
+  deliveryLocationLongitudeDelta?: String;
+  deliveryLocationLongitudeDelta_not?: String;
+  deliveryLocationLongitudeDelta_in?: String[] | String;
+  deliveryLocationLongitudeDelta_not_in?: String[] | String;
+  deliveryLocationLongitudeDelta_lt?: String;
+  deliveryLocationLongitudeDelta_lte?: String;
+  deliveryLocationLongitudeDelta_gt?: String;
+  deliveryLocationLongitudeDelta_gte?: String;
+  deliveryLocationLongitudeDelta_contains?: String;
+  deliveryLocationLongitudeDelta_not_contains?: String;
+  deliveryLocationLongitudeDelta_starts_with?: String;
+  deliveryLocationLongitudeDelta_not_starts_with?: String;
+  deliveryLocationLongitudeDelta_ends_with?: String;
+  deliveryLocationLongitudeDelta_not_ends_with?: String;
   deliveryLocationLatitude?: String;
   deliveryLocationLatitude_not?: String;
   deliveryLocationLatitude_in?: String[] | String;
@@ -825,6 +845,34 @@ export interface BookingScalarWhereInput {
   deliveryLocationLatitude_not_starts_with?: String;
   deliveryLocationLatitude_ends_with?: String;
   deliveryLocationLatitude_not_ends_with?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationLatitudeDelta_not?: String;
+  deliveryLocationLatitudeDelta_in?: String[] | String;
+  deliveryLocationLatitudeDelta_not_in?: String[] | String;
+  deliveryLocationLatitudeDelta_lt?: String;
+  deliveryLocationLatitudeDelta_lte?: String;
+  deliveryLocationLatitudeDelta_gt?: String;
+  deliveryLocationLatitudeDelta_gte?: String;
+  deliveryLocationLatitudeDelta_contains?: String;
+  deliveryLocationLatitudeDelta_not_contains?: String;
+  deliveryLocationLatitudeDelta_starts_with?: String;
+  deliveryLocationLatitudeDelta_not_starts_with?: String;
+  deliveryLocationLatitudeDelta_ends_with?: String;
+  deliveryLocationLatitudeDelta_not_ends_with?: String;
+  deliveryLocationAddress?: String;
+  deliveryLocationAddress_not?: String;
+  deliveryLocationAddress_in?: String[] | String;
+  deliveryLocationAddress_not_in?: String[] | String;
+  deliveryLocationAddress_lt?: String;
+  deliveryLocationAddress_lte?: String;
+  deliveryLocationAddress_gt?: String;
+  deliveryLocationAddress_gte?: String;
+  deliveryLocationAddress_contains?: String;
+  deliveryLocationAddress_not_contains?: String;
+  deliveryLocationAddress_starts_with?: String;
+  deliveryLocationAddress_not_starts_with?: String;
+  deliveryLocationAddress_ends_with?: String;
+  deliveryLocationAddress_not_ends_with?: String;
   deliveryLocationComment?: String;
   deliveryLocationComment_not?: String;
   deliveryLocationComment_in?: String[] | String;
@@ -893,14 +941,6 @@ export interface BookingWhereInput {
   endDate_lte?: DateTimeInput;
   endDate_gt?: DateTimeInput;
   endDate_gte?: DateTimeInput;
-  deliveryTime?: DateTimeInput;
-  deliveryTime_not?: DateTimeInput;
-  deliveryTime_in?: DateTimeInput[] | DateTimeInput;
-  deliveryTime_not_in?: DateTimeInput[] | DateTimeInput;
-  deliveryTime_lt?: DateTimeInput;
-  deliveryTime_lte?: DateTimeInput;
-  deliveryTime_gt?: DateTimeInput;
-  deliveryTime_gte?: DateTimeInput;
   deliveryLocationLongitude?: String;
   deliveryLocationLongitude_not?: String;
   deliveryLocationLongitude_in?: String[] | String;
@@ -915,6 +955,20 @@ export interface BookingWhereInput {
   deliveryLocationLongitude_not_starts_with?: String;
   deliveryLocationLongitude_ends_with?: String;
   deliveryLocationLongitude_not_ends_with?: String;
+  deliveryLocationLongitudeDelta?: String;
+  deliveryLocationLongitudeDelta_not?: String;
+  deliveryLocationLongitudeDelta_in?: String[] | String;
+  deliveryLocationLongitudeDelta_not_in?: String[] | String;
+  deliveryLocationLongitudeDelta_lt?: String;
+  deliveryLocationLongitudeDelta_lte?: String;
+  deliveryLocationLongitudeDelta_gt?: String;
+  deliveryLocationLongitudeDelta_gte?: String;
+  deliveryLocationLongitudeDelta_contains?: String;
+  deliveryLocationLongitudeDelta_not_contains?: String;
+  deliveryLocationLongitudeDelta_starts_with?: String;
+  deliveryLocationLongitudeDelta_not_starts_with?: String;
+  deliveryLocationLongitudeDelta_ends_with?: String;
+  deliveryLocationLongitudeDelta_not_ends_with?: String;
   deliveryLocationLatitude?: String;
   deliveryLocationLatitude_not?: String;
   deliveryLocationLatitude_in?: String[] | String;
@@ -929,6 +983,34 @@ export interface BookingWhereInput {
   deliveryLocationLatitude_not_starts_with?: String;
   deliveryLocationLatitude_ends_with?: String;
   deliveryLocationLatitude_not_ends_with?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationLatitudeDelta_not?: String;
+  deliveryLocationLatitudeDelta_in?: String[] | String;
+  deliveryLocationLatitudeDelta_not_in?: String[] | String;
+  deliveryLocationLatitudeDelta_lt?: String;
+  deliveryLocationLatitudeDelta_lte?: String;
+  deliveryLocationLatitudeDelta_gt?: String;
+  deliveryLocationLatitudeDelta_gte?: String;
+  deliveryLocationLatitudeDelta_contains?: String;
+  deliveryLocationLatitudeDelta_not_contains?: String;
+  deliveryLocationLatitudeDelta_starts_with?: String;
+  deliveryLocationLatitudeDelta_not_starts_with?: String;
+  deliveryLocationLatitudeDelta_ends_with?: String;
+  deliveryLocationLatitudeDelta_not_ends_with?: String;
+  deliveryLocationAddress?: String;
+  deliveryLocationAddress_not?: String;
+  deliveryLocationAddress_in?: String[] | String;
+  deliveryLocationAddress_not_in?: String[] | String;
+  deliveryLocationAddress_lt?: String;
+  deliveryLocationAddress_lte?: String;
+  deliveryLocationAddress_gt?: String;
+  deliveryLocationAddress_gte?: String;
+  deliveryLocationAddress_contains?: String;
+  deliveryLocationAddress_not_contains?: String;
+  deliveryLocationAddress_starts_with?: String;
+  deliveryLocationAddress_not_starts_with?: String;
+  deliveryLocationAddress_ends_with?: String;
+  deliveryLocationAddress_not_ends_with?: String;
   deliveryLocationComment?: String;
   deliveryLocationComment_not?: String;
   deliveryLocationComment_in?: String[] | String;
@@ -979,9 +1061,11 @@ export interface BookingUpdateManyDataInput {
   userUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
-  deliveryTime?: DateTimeInput;
   deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
   deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
   status?: BookingStatus;
 }
@@ -1101,9 +1185,11 @@ export interface BookingPreviousValues {
   userUid: String;
   startDate: DateTimeOutput;
   endDate: DateTimeOutput;
-  deliveryTime?: DateTimeOutput;
   deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
   deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   status: BookingStatus;
 }
@@ -1115,9 +1201,11 @@ export interface BookingPreviousValuesPromise
   userUid: () => Promise<String>;
   startDate: () => Promise<DateTimeOutput>;
   endDate: () => Promise<DateTimeOutput>;
-  deliveryTime: () => Promise<DateTimeOutput>;
   deliveryLocationLongitude: () => Promise<String>;
+  deliveryLocationLongitudeDelta: () => Promise<String>;
   deliveryLocationLatitude: () => Promise<String>;
+  deliveryLocationLatitudeDelta: () => Promise<String>;
+  deliveryLocationAddress: () => Promise<String>;
   deliveryLocationComment: () => Promise<String>;
   status: () => Promise<BookingStatus>;
 }
@@ -1129,9 +1217,11 @@ export interface BookingPreviousValuesSubscription
   userUid: () => Promise<AsyncIterator<String>>;
   startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  deliveryTime: () => Promise<AsyncIterator<DateTimeOutput>>;
   deliveryLocationLongitude: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLongitudeDelta: () => Promise<AsyncIterator<String>>;
   deliveryLocationLatitude: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
+  deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
 }
@@ -1428,9 +1518,11 @@ export interface Booking {
   userUid: String;
   startDate: DateTimeOutput;
   endDate: DateTimeOutput;
-  deliveryTime?: DateTimeOutput;
   deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
   deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   status: BookingStatus;
 }
@@ -1440,9 +1532,11 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   userUid: () => Promise<String>;
   startDate: () => Promise<DateTimeOutput>;
   endDate: () => Promise<DateTimeOutput>;
-  deliveryTime: () => Promise<DateTimeOutput>;
   deliveryLocationLongitude: () => Promise<String>;
+  deliveryLocationLongitudeDelta: () => Promise<String>;
   deliveryLocationLatitude: () => Promise<String>;
+  deliveryLocationLatitudeDelta: () => Promise<String>;
+  deliveryLocationAddress: () => Promise<String>;
   deliveryLocationComment: () => Promise<String>;
   status: () => Promise<BookingStatus>;
   bike: <T = BikePromise>() => T;
@@ -1455,9 +1549,11 @@ export interface BookingSubscription
   userUid: () => Promise<AsyncIterator<String>>;
   startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  deliveryTime: () => Promise<AsyncIterator<DateTimeOutput>>;
   deliveryLocationLongitude: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLongitudeDelta: () => Promise<AsyncIterator<String>>;
   deliveryLocationLatitude: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
+  deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
   bike: <T = BikeSubscription>() => T;

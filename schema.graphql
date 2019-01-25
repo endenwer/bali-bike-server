@@ -7,13 +7,15 @@ type Query {
 
 type Mutation {
   createBooking(
-    bikeId: ID!,
-    startDate: String!,
-    endDate: String!,
-    deliveryLocationLongitude: String!,
-    deliveryLocationLatitude: String!,
-    deliveryLocationComment: String,
-    deliveryTime: String): Booking
+    startDate: String!
+    endDate: String!
+    deliveryLocationLongitude: String!
+    deliveryLocationLongitudeDelta: String!
+    deliveryLocationLatitude: String!
+    deliveryLocationLatitudeDelta: String!
+    deliveryLocationAddress: String!
+    deliveryLocationComment: String
+    bikeId: ID!): Booking
 }
 
 type Bike {
@@ -42,12 +44,15 @@ enum BookingStatus {
 
 type Booking {
   id: ID!
+  userUid: String!
   startDate: String!
   endDate: String!
-  deliveryTime: String!
   deliveryLocationLongitude: String!
+  deliveryLocationLongitudeDelta: String!
   deliveryLocationLatitude: String!
+  deliveryLocationLatitudeDelta: String!
+  deliveryLocationAddress: String!
   deliveryLocationComment: String
-  status: BookingStatus
+  status: BookingStatus!
   bike: Bike!
 }

@@ -31,9 +31,11 @@ type Booking {
   userUid: String!
   startDate: DateTime!
   endDate: DateTime!
-  deliveryTime: DateTime
   deliveryLocationLongitude: String!
+  deliveryLocationLongitudeDelta: String!
   deliveryLocationLatitude: String!
+  deliveryLocationLatitudeDelta: String!
+  deliveryLocationAddress: String!
   deliveryLocationComment: String
   status: BookingStatus! @default(value: "WAITING_CONFIRMATION")
   bike: Bike!
