@@ -1,11 +1,14 @@
 type Query {
   bikes: [Bike!]!
+  savedBikes: [Bike!]
   bike(id: ID!): Bike
   bookings: [Booking!]!
   booking(id: ID!): Booking
 }
 
 type Mutation {
+  addBikeToSaved(bikeId: String!): SavedBikesList
+  removeBikeFromSaved(bikeId: String!): SavedBikesList
   createBooking(
     startDate: String!
     endDate: String!
@@ -34,6 +37,11 @@ type Review {
   id: ID!
   rating: Int!
   comment: String
+}
+
+type SavedBikesList {
+  userUid: String!
+  bikes: [String!]
 }
 
 enum BookingStatus {

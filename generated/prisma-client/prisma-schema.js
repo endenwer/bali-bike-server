@@ -11,6 +11,10 @@ type AggregateReview {
   count: Int!
 }
 
+type AggregateSavedBikesList {
+  count: Int!
+}
+
 type BatchPayload {
   count: Long!
 }
@@ -44,6 +48,11 @@ input BikeCreateInput {
   mileage: Int
   reviews: ReviewCreateManyWithoutBikeInput
   bookings: BookingCreateManyWithoutBikeInput
+}
+
+input BikeCreateManyInput {
+  create: [BikeCreateInput!]
+  connect: [BikeWhereUniqueInput!]
 }
 
 input BikeCreateOneWithoutBookingsInput {
@@ -119,6 +128,74 @@ type BikePreviousValues {
   mileage: Int
 }
 
+input BikeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  modelId: Int
+  modelId_not: Int
+  modelId_in: [Int!]
+  modelId_not_in: [Int!]
+  modelId_lt: Int
+  modelId_lte: Int
+  modelId_gt: Int
+  modelId_gte: Int
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  rating: Float
+  rating_not: Float
+  rating_in: [Float!]
+  rating_not_in: [Float!]
+  rating_lt: Float
+  rating_lte: Float
+  rating_gt: Float
+  rating_gte: Float
+  reviewsCount: Int
+  reviewsCount_not: Int
+  reviewsCount_in: [Int!]
+  reviewsCount_not_in: [Int!]
+  reviewsCount_lt: Int
+  reviewsCount_lte: Int
+  reviewsCount_gt: Int
+  reviewsCount_gte: Int
+  manufactureYear: Int
+  manufactureYear_not: Int
+  manufactureYear_in: [Int!]
+  manufactureYear_not_in: [Int!]
+  manufactureYear_lt: Int
+  manufactureYear_lte: Int
+  manufactureYear_gt: Int
+  manufactureYear_gte: Int
+  mileage: Int
+  mileage_not: Int
+  mileage_in: [Int!]
+  mileage_not_in: [Int!]
+  mileage_lt: Int
+  mileage_lte: Int
+  mileage_gt: Int
+  mileage_gte: Int
+  AND: [BikeScalarWhereInput!]
+  OR: [BikeScalarWhereInput!]
+  NOT: [BikeScalarWhereInput!]
+}
+
 type BikeSubscriptionPayload {
   mutation: MutationType!
   node: Bike
@@ -137,6 +214,18 @@ input BikeSubscriptionWhereInput {
   NOT: [BikeSubscriptionWhereInput!]
 }
 
+input BikeUpdateDataInput {
+  modelId: Int
+  price: Int
+  photos: BikeUpdatephotosInput
+  rating: Float
+  reviewsCount: Int
+  manufactureYear: Int
+  mileage: Int
+  reviews: ReviewUpdateManyWithoutBikeInput
+  bookings: BookingUpdateManyWithoutBikeInput
+}
+
 input BikeUpdateInput {
   modelId: Int
   price: Int
@@ -149,6 +238,27 @@ input BikeUpdateInput {
   bookings: BookingUpdateManyWithoutBikeInput
 }
 
+input BikeUpdateManyDataInput {
+  modelId: Int
+  price: Int
+  photos: BikeUpdatephotosInput
+  rating: Float
+  reviewsCount: Int
+  manufactureYear: Int
+  mileage: Int
+}
+
+input BikeUpdateManyInput {
+  create: [BikeCreateInput!]
+  update: [BikeUpdateWithWhereUniqueNestedInput!]
+  upsert: [BikeUpsertWithWhereUniqueNestedInput!]
+  delete: [BikeWhereUniqueInput!]
+  connect: [BikeWhereUniqueInput!]
+  disconnect: [BikeWhereUniqueInput!]
+  deleteMany: [BikeScalarWhereInput!]
+  updateMany: [BikeUpdateManyWithWhereNestedInput!]
+}
+
 input BikeUpdateManyMutationInput {
   modelId: Int
   price: Int
@@ -157,6 +267,11 @@ input BikeUpdateManyMutationInput {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+}
+
+input BikeUpdateManyWithWhereNestedInput {
+  where: BikeScalarWhereInput!
+  data: BikeUpdateManyDataInput!
 }
 
 input BikeUpdateOneRequiredWithoutBookingsInput {
@@ -199,6 +314,11 @@ input BikeUpdateWithoutReviewsDataInput {
   bookings: BookingUpdateManyWithoutBikeInput
 }
 
+input BikeUpdateWithWhereUniqueNestedInput {
+  where: BikeWhereUniqueInput!
+  data: BikeUpdateDataInput!
+}
+
 input BikeUpsertWithoutBookingsInput {
   update: BikeUpdateWithoutBookingsDataInput!
   create: BikeCreateWithoutBookingsInput!
@@ -207,6 +327,12 @@ input BikeUpsertWithoutBookingsInput {
 input BikeUpsertWithoutReviewsInput {
   update: BikeUpdateWithoutReviewsDataInput!
   create: BikeCreateWithoutReviewsInput!
+}
+
+input BikeUpsertWithWhereUniqueNestedInput {
+  where: BikeWhereUniqueInput!
+  update: BikeUpdateDataInput!
+  create: BikeCreateInput!
 }
 
 input BikeWhereInput {
@@ -796,6 +922,12 @@ type Mutation {
   upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
   deleteReview(where: ReviewWhereUniqueInput!): Review
   deleteManyReviews(where: ReviewWhereInput): BatchPayload!
+  createSavedBikesList(data: SavedBikesListCreateInput!): SavedBikesList!
+  updateSavedBikesList(data: SavedBikesListUpdateInput!, where: SavedBikesListWhereUniqueInput!): SavedBikesList
+  updateManySavedBikesLists(data: SavedBikesListUpdateManyMutationInput!, where: SavedBikesListWhereInput): BatchPayload!
+  upsertSavedBikesList(where: SavedBikesListWhereUniqueInput!, create: SavedBikesListCreateInput!, update: SavedBikesListUpdateInput!): SavedBikesList!
+  deleteSavedBikesList(where: SavedBikesListWhereUniqueInput!): SavedBikesList
+  deleteManySavedBikesLists(where: SavedBikesListWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -825,6 +957,9 @@ type Query {
   review(where: ReviewWhereUniqueInput!): Review
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
   reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
+  savedBikesList(where: SavedBikesListWhereUniqueInput!): SavedBikesList
+  savedBikesLists(where: SavedBikesListWhereInput, orderBy: SavedBikesListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SavedBikesList]!
+  savedBikesListsConnection(where: SavedBikesListWhereInput, orderBy: SavedBikesListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SavedBikesListConnection!
   node(id: ID!): Node
 }
 
@@ -1092,10 +1227,101 @@ input ReviewWhereUniqueInput {
   id: ID
 }
 
+type SavedBikesList {
+  userUid: String!
+  bikes(where: BikeWhereInput, orderBy: BikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bike!]
+}
+
+type SavedBikesListConnection {
+  pageInfo: PageInfo!
+  edges: [SavedBikesListEdge]!
+  aggregate: AggregateSavedBikesList!
+}
+
+input SavedBikesListCreateInput {
+  userUid: String!
+  bikes: BikeCreateManyInput
+}
+
+type SavedBikesListEdge {
+  node: SavedBikesList!
+  cursor: String!
+}
+
+enum SavedBikesListOrderByInput {
+  userUid_ASC
+  userUid_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type SavedBikesListPreviousValues {
+  userUid: String!
+}
+
+type SavedBikesListSubscriptionPayload {
+  mutation: MutationType!
+  node: SavedBikesList
+  updatedFields: [String!]
+  previousValues: SavedBikesListPreviousValues
+}
+
+input SavedBikesListSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SavedBikesListWhereInput
+  AND: [SavedBikesListSubscriptionWhereInput!]
+  OR: [SavedBikesListSubscriptionWhereInput!]
+  NOT: [SavedBikesListSubscriptionWhereInput!]
+}
+
+input SavedBikesListUpdateInput {
+  userUid: String
+  bikes: BikeUpdateManyInput
+}
+
+input SavedBikesListUpdateManyMutationInput {
+  userUid: String
+}
+
+input SavedBikesListWhereInput {
+  userUid: String
+  userUid_not: String
+  userUid_in: [String!]
+  userUid_not_in: [String!]
+  userUid_lt: String
+  userUid_lte: String
+  userUid_gt: String
+  userUid_gte: String
+  userUid_contains: String
+  userUid_not_contains: String
+  userUid_starts_with: String
+  userUid_not_starts_with: String
+  userUid_ends_with: String
+  userUid_not_ends_with: String
+  bikes_every: BikeWhereInput
+  bikes_some: BikeWhereInput
+  bikes_none: BikeWhereInput
+  AND: [SavedBikesListWhereInput!]
+  OR: [SavedBikesListWhereInput!]
+  NOT: [SavedBikesListWhereInput!]
+}
+
+input SavedBikesListWhereUniqueInput {
+  userUid: String
+}
+
 type Subscription {
   bike(where: BikeSubscriptionWhereInput): BikeSubscriptionPayload
   booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
   review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
+  savedBikesList(where: SavedBikesListSubscriptionWhereInput): SavedBikesListSubscriptionPayload
 }
 `
       }

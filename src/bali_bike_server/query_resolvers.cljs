@@ -4,6 +4,10 @@
   [_ _ {:keys [prisma]}]
   (prisma [:bikes]))
 
+(defn saved-bikes
+  [_ _ {:keys [prisma user]}]
+  (prisma [:savedBikesList {:userUid (:uid user)} [:bikes]]))
+
 (defn bike
   [_ _ {:keys [prisma args]}]
   (prisma [:bike {:id (:id args)}]))

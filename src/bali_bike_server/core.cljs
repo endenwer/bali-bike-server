@@ -11,10 +11,13 @@
 
 (def resolvers
   {:Query {:bikes query-resolvers/bikes
+           :savedBikes query-resolvers/saved-bikes
            :bike query-resolvers/bike
            :bookings query-resolvers/bookings
            :booking query-resolvers/booking}
-   :Mutation {:createBooking mutation-resolvers/create-booking}
+   :Mutation {:createBooking mutation-resolvers/create-booking
+              :addBikeToSaved mutation-resolvers/add-bike-to-saved
+              :removeBikeFromSaved mutation-resolvers/remove-bike-from-saved}
    :Bike {:reviews query-resolvers/bike-reviews}
    :Booking {:bike query-resolvers/booking-bike}})
 
@@ -22,7 +25,9 @@
   (shield (clj->js
           {:Query {:bookings rules/is-authenticated
                    :booking rules/is-booking-owner}
-           :Mutation {:createBooking rules/is-authenticated}})))
+           :Mutation {:createBooking rules/is-authenticated
+                      :addBikeToSaved rules/is-authenticated
+                      :removeBikeFromSaved rules/is-authenticated}})))
 
 (def server
   (graphql-server. (clj->js {:typeDefs "./schema.graphql"

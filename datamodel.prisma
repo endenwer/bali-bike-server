@@ -11,6 +11,12 @@ type Bike {
   bookings: [Booking!]!
 }
 
+type SavedBikesList {
+  id: ID! @unique
+  userUid: String! @unique
+  bikes: [Bike!]!
+}
+
 type Review {
   id: ID! @unique
   rating: Int!
