@@ -1228,6 +1228,7 @@ input ReviewWhereUniqueInput {
 }
 
 type SavedBikesList {
+  id: ID!
   userUid: String!
   bikes(where: BikeWhereInput, orderBy: BikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bike!]
 }
@@ -1249,10 +1250,10 @@ type SavedBikesListEdge {
 }
 
 enum SavedBikesListOrderByInput {
-  userUid_ASC
-  userUid_DESC
   id_ASC
   id_DESC
+  userUid_ASC
+  userUid_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1260,6 +1261,7 @@ enum SavedBikesListOrderByInput {
 }
 
 type SavedBikesListPreviousValues {
+  id: ID!
   userUid: String!
 }
 
@@ -1291,6 +1293,20 @@ input SavedBikesListUpdateManyMutationInput {
 }
 
 input SavedBikesListWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
   userUid: String
   userUid_not: String
   userUid_in: [String!]
@@ -1314,6 +1330,7 @@ input SavedBikesListWhereInput {
 }
 
 input SavedBikesListWhereUniqueInput {
+  id: ID
   userUid: String
 }
 

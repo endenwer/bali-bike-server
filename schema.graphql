@@ -30,6 +30,7 @@ type Bike {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  saved: Boolean
   reviews: [Review!]!
 }
 

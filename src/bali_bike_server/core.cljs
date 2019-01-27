@@ -18,7 +18,8 @@
    :Mutation {:createBooking mutation-resolvers/create-booking
               :addBikeToSaved mutation-resolvers/add-bike-to-saved
               :removeBikeFromSaved mutation-resolvers/remove-bike-from-saved}
-   :Bike {:reviews query-resolvers/bike-reviews}
+   :Bike {:reviews query-resolvers/bike-reviews
+          :saved query-resolvers/bike-saved}
    :Booking {:bike query-resolvers/booking-bike}})
 
 (def permissions

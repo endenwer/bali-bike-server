@@ -1,4 +1,5 @@
-(ns bali-bike-server.query-resolvers)
+(ns bali-bike-server.query-resolvers
+  (:require [promesa.core :as p :refer-macros [alet]]))
 
 (defn bikes
   [_ _ {:keys [prisma]}]
@@ -11,6 +12,13 @@
 (defn bike
   [_ _ {:keys [prisma args]}]
   (prisma [:bike {:id (:id args)}]))
+
+(defn bike-saved
+  [_ _ {:keys [prisma parent user]}]
+  (when user
+    (alet [saved-bikes-query [:savedBikesList {:userUid (:uid user)} [:bikes]]
+           saved-bikes (p/await (p/promise (prisma saved-bikes-query)))]
+          (= (count (filterv #(= (.-id %) (:id parent)) saved-bikes)) 1))))
 
 (defn bike-reviews
   [_ _ {:keys [prisma parent]}]
