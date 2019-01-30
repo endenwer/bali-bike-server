@@ -21,6 +21,7 @@ type BatchPayload {
 
 type Bike {
   id: ID!
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: [String!]!
@@ -39,6 +40,7 @@ type BikeConnection {
 }
 
 input BikeCreateInput {
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: BikeCreatephotosInput
@@ -70,6 +72,7 @@ input BikeCreatephotosInput {
 }
 
 input BikeCreateWithoutBookingsInput {
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: BikeCreatephotosInput
@@ -81,6 +84,7 @@ input BikeCreateWithoutBookingsInput {
 }
 
 input BikeCreateWithoutReviewsInput {
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: BikeCreatephotosInput
@@ -99,6 +103,8 @@ type BikeEdge {
 enum BikeOrderByInput {
   id_ASC
   id_DESC
+  ownerUid_ASC
+  ownerUid_DESC
   modelId_ASC
   modelId_DESC
   price_ASC
@@ -119,6 +125,7 @@ enum BikeOrderByInput {
 
 type BikePreviousValues {
   id: ID!
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: [String!]!
@@ -143,6 +150,20 @@ input BikeScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  ownerUid: String
+  ownerUid_not: String
+  ownerUid_in: [String!]
+  ownerUid_not_in: [String!]
+  ownerUid_lt: String
+  ownerUid_lte: String
+  ownerUid_gt: String
+  ownerUid_gte: String
+  ownerUid_contains: String
+  ownerUid_not_contains: String
+  ownerUid_starts_with: String
+  ownerUid_not_starts_with: String
+  ownerUid_ends_with: String
+  ownerUid_not_ends_with: String
   modelId: Int
   modelId_not: Int
   modelId_in: [Int!]
@@ -215,6 +236,7 @@ input BikeSubscriptionWhereInput {
 }
 
 input BikeUpdateDataInput {
+  ownerUid: String
   modelId: Int
   price: Int
   photos: BikeUpdatephotosInput
@@ -227,6 +249,7 @@ input BikeUpdateDataInput {
 }
 
 input BikeUpdateInput {
+  ownerUid: String
   modelId: Int
   price: Int
   photos: BikeUpdatephotosInput
@@ -239,6 +262,7 @@ input BikeUpdateInput {
 }
 
 input BikeUpdateManyDataInput {
+  ownerUid: String
   modelId: Int
   price: Int
   photos: BikeUpdatephotosInput
@@ -260,6 +284,7 @@ input BikeUpdateManyInput {
 }
 
 input BikeUpdateManyMutationInput {
+  ownerUid: String
   modelId: Int
   price: Int
   photos: BikeUpdatephotosInput
@@ -293,6 +318,7 @@ input BikeUpdatephotosInput {
 }
 
 input BikeUpdateWithoutBookingsDataInput {
+  ownerUid: String
   modelId: Int
   price: Int
   photos: BikeUpdatephotosInput
@@ -304,6 +330,7 @@ input BikeUpdateWithoutBookingsDataInput {
 }
 
 input BikeUpdateWithoutReviewsDataInput {
+  ownerUid: String
   modelId: Int
   price: Int
   photos: BikeUpdatephotosInput
@@ -350,6 +377,20 @@ input BikeWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  ownerUid: String
+  ownerUid_not: String
+  ownerUid_in: [String!]
+  ownerUid_not_in: [String!]
+  ownerUid_lt: String
+  ownerUid_lte: String
+  ownerUid_gt: String
+  ownerUid_gte: String
+  ownerUid_contains: String
+  ownerUid_not_contains: String
+  ownerUid_starts_with: String
+  ownerUid_not_starts_with: String
+  ownerUid_ends_with: String
+  ownerUid_not_ends_with: String
   modelId: Int
   modelId_not: Int
   modelId_in: [Int!]

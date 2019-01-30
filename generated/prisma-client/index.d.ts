@@ -293,6 +293,8 @@ export type BookingOrderByInput =
 export type BikeOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "ownerUid_ASC"
+  | "ownerUid_DESC"
   | "modelId_ASC"
   | "modelId_DESC"
   | "price_ASC"
@@ -353,6 +355,20 @@ export interface BikeWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  ownerUid?: String;
+  ownerUid_not?: String;
+  ownerUid_in?: String[] | String;
+  ownerUid_not_in?: String[] | String;
+  ownerUid_lt?: String;
+  ownerUid_lte?: String;
+  ownerUid_gt?: String;
+  ownerUid_gte?: String;
+  ownerUid_contains?: String;
+  ownerUid_not_contains?: String;
+  ownerUid_starts_with?: String;
+  ownerUid_not_starts_with?: String;
+  ownerUid_ends_with?: String;
+  ownerUid_not_ends_with?: String;
   modelId?: Int;
   modelId_not?: Int;
   modelId_in?: Int[] | Int;
@@ -599,6 +615,7 @@ export interface ReviewSubscriptionWhereInput {
 }
 
 export interface BikeUpdateInput {
+  ownerUid?: String;
   modelId?: Int;
   price?: Int;
   photos?: BikeUpdatephotosInput;
@@ -626,6 +643,7 @@ export interface BikeUpdatephotosInput {
 }
 
 export interface BikeUpdateManyDataInput {
+  ownerUid?: String;
   modelId?: Int;
   price?: Int;
   photos?: BikeUpdatephotosInput;
@@ -667,6 +685,20 @@ export interface BikeScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  ownerUid?: String;
+  ownerUid_not?: String;
+  ownerUid_in?: String[] | String;
+  ownerUid_not_in?: String[] | String;
+  ownerUid_lt?: String;
+  ownerUid_lte?: String;
+  ownerUid_gt?: String;
+  ownerUid_gte?: String;
+  ownerUid_contains?: String;
+  ownerUid_not_contains?: String;
+  ownerUid_starts_with?: String;
+  ownerUid_not_starts_with?: String;
+  ownerUid_ends_with?: String;
+  ownerUid_not_ends_with?: String;
   modelId?: Int;
   modelId_not?: Int;
   modelId_in?: Int[] | Int;
@@ -830,6 +862,7 @@ export type SavedBikesListWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface BikeCreateWithoutReviewsInput {
+  ownerUid: String;
   modelId: Int;
   price: Int;
   photos?: BikeCreatephotosInput;
@@ -895,6 +928,7 @@ export interface BookingUpdateManyWithoutBikeInput {
 }
 
 export interface BikeUpdateWithoutReviewsDataInput {
+  ownerUid?: String;
   modelId?: Int;
   price?: Int;
   photos?: BikeUpdatephotosInput;
@@ -931,6 +965,7 @@ export interface BookingUpdateWithoutBikeDataInput {
 }
 
 export interface BikeCreateInput {
+  ownerUid: String;
   modelId: Int;
   price: Int;
   photos?: BikeCreatephotosInput;
@@ -1186,6 +1221,7 @@ export interface BookingUpdateManyDataInput {
 }
 
 export interface BikeUpdateDataInput {
+  ownerUid?: String;
   modelId?: Int;
   price?: Int;
   photos?: BikeUpdatephotosInput;
@@ -1198,6 +1234,7 @@ export interface BikeUpdateDataInput {
 }
 
 export interface BikeUpdateManyMutationInput {
+  ownerUid?: String;
   modelId?: Int;
   price?: Int;
   photos?: BikeUpdatephotosInput;
@@ -1265,6 +1302,7 @@ export interface SavedBikesListUpdateManyMutationInput {
 }
 
 export interface BikeCreateWithoutBookingsInput {
+  ownerUid: String;
   modelId: Int;
   price: Int;
   photos?: BikeCreatephotosInput;
@@ -1303,6 +1341,7 @@ export interface BikeUpsertWithoutBookingsInput {
 }
 
 export interface BikeUpdateWithoutBookingsDataInput {
+  ownerUid?: String;
   modelId?: Int;
   price?: Int;
   photos?: BikeUpdatephotosInput;
@@ -1644,6 +1683,7 @@ export interface AggregateBookingSubscription
 
 export interface Bike {
   id: ID_Output;
+  ownerUid: String;
   modelId: Int;
   price: Int;
   photos: String[];
@@ -1655,6 +1695,7 @@ export interface Bike {
 
 export interface BikePromise extends Promise<Bike>, Fragmentable {
   id: () => Promise<ID_Output>;
+  ownerUid: () => Promise<String>;
   modelId: () => Promise<Int>;
   price: () => Promise<Int>;
   photos: () => Promise<String[]>;
@@ -1690,6 +1731,7 @@ export interface BikeSubscription
   extends Promise<AsyncIterator<Bike>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  ownerUid: () => Promise<AsyncIterator<String>>;
   modelId: () => Promise<AsyncIterator<Int>>;
   price: () => Promise<AsyncIterator<Int>>;
   photos: () => Promise<AsyncIterator<String[]>>;
@@ -1905,6 +1947,7 @@ export interface BookingSubscription
 
 export interface BikePreviousValues {
   id: ID_Output;
+  ownerUid: String;
   modelId: Int;
   price: Int;
   photos: String[];
@@ -1918,6 +1961,7 @@ export interface BikePreviousValuesPromise
   extends Promise<BikePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  ownerUid: () => Promise<String>;
   modelId: () => Promise<Int>;
   price: () => Promise<Int>;
   photos: () => Promise<String[]>;
@@ -1931,6 +1975,7 @@ export interface BikePreviousValuesSubscription
   extends Promise<AsyncIterator<BikePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  ownerUid: () => Promise<AsyncIterator<String>>;
   modelId: () => Promise<AsyncIterator<Int>>;
   price: () => Promise<AsyncIterator<Int>>;
   photos: () => Promise<AsyncIterator<String[]>>;
@@ -2071,14 +2116,14 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 

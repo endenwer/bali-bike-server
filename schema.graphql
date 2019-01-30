@@ -21,8 +21,15 @@ type Mutation {
     bikeId: ID!): Booking
 }
 
+type User {
+  uid: String!
+  name: String!
+  photoURL: String
+}
+
 type Bike {
   id: ID!
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: [String!]
@@ -32,6 +39,7 @@ type Bike {
   mileage: Int
   saved: Boolean
   reviews: [Review!]!
+  owner: User!
 }
 
 type Review {
@@ -64,4 +72,5 @@ type Booking {
   deliveryLocationComment: String
   status: BookingStatus!
   bike: Bike!
+  user: User!
 }

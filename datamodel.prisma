@@ -1,5 +1,6 @@
 type Bike {
   id: ID! @unique
+  ownerUid: String!
   modelId: Int!
   price: Int!
   photos: [String!]

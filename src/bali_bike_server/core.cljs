@@ -19,8 +19,10 @@
               :addBikeToSaved mutation-resolvers/add-bike-to-saved
               :removeBikeFromSaved mutation-resolvers/remove-bike-from-saved}
    :Bike {:reviews query-resolvers/bike-reviews
-          :saved query-resolvers/bike-saved}
-   :Booking {:bike query-resolvers/booking-bike}})
+          :saved query-resolvers/bike-saved
+          :owner query-resolvers/bike-owner}
+   :Booking {:bike query-resolvers/booking-bike
+             :user query-resolvers/booking-user}})
 
 (def permissions
   (shield (clj->js
