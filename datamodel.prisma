@@ -2,12 +2,13 @@ type Bike {
   id: ID! @unique
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: [String!]
   rating: Float @default(value: 0)
   reviewsCount: Int @default(value: 0)
   manufactureYear: Int
   mileage: Int @default(value: 0)
+  dailyPrice: Int!
+  monthlyPrice: Int!
   reviews: [Review!]!
   bookings: [Booking!]!
 }
@@ -44,6 +45,7 @@ type Booking {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  totalPrice: Int!
   status: BookingStatus! @default(value: "WAITING_CONFIRMATION")
   bike: Bike!
 }

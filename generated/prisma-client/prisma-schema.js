@@ -23,12 +23,13 @@ type Bike {
   id: ID!
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: [String!]!
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int!
+  monthlyPrice: Int!
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
 }
@@ -42,12 +43,13 @@ type BikeConnection {
 input BikeCreateInput {
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: BikeCreatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int!
+  monthlyPrice: Int!
   reviews: ReviewCreateManyWithoutBikeInput
   bookings: BookingCreateManyWithoutBikeInput
 }
@@ -74,24 +76,26 @@ input BikeCreatephotosInput {
 input BikeCreateWithoutBookingsInput {
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: BikeCreatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int!
+  monthlyPrice: Int!
   reviews: ReviewCreateManyWithoutBikeInput
 }
 
 input BikeCreateWithoutReviewsInput {
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: BikeCreatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int!
+  monthlyPrice: Int!
   bookings: BookingCreateManyWithoutBikeInput
 }
 
@@ -107,8 +111,6 @@ enum BikeOrderByInput {
   ownerUid_DESC
   modelId_ASC
   modelId_DESC
-  price_ASC
-  price_DESC
   rating_ASC
   rating_DESC
   reviewsCount_ASC
@@ -117,6 +119,10 @@ enum BikeOrderByInput {
   manufactureYear_DESC
   mileage_ASC
   mileage_DESC
+  dailyPrice_ASC
+  dailyPrice_DESC
+  monthlyPrice_ASC
+  monthlyPrice_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -127,12 +133,13 @@ type BikePreviousValues {
   id: ID!
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: [String!]!
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int!
+  monthlyPrice: Int!
 }
 
 input BikeScalarWhereInput {
@@ -172,14 +179,6 @@ input BikeScalarWhereInput {
   modelId_lte: Int
   modelId_gt: Int
   modelId_gte: Int
-  price: Int
-  price_not: Int
-  price_in: [Int!]
-  price_not_in: [Int!]
-  price_lt: Int
-  price_lte: Int
-  price_gt: Int
-  price_gte: Int
   rating: Float
   rating_not: Float
   rating_in: [Float!]
@@ -212,6 +211,22 @@ input BikeScalarWhereInput {
   mileage_lte: Int
   mileage_gt: Int
   mileage_gte: Int
+  dailyPrice: Int
+  dailyPrice_not: Int
+  dailyPrice_in: [Int!]
+  dailyPrice_not_in: [Int!]
+  dailyPrice_lt: Int
+  dailyPrice_lte: Int
+  dailyPrice_gt: Int
+  dailyPrice_gte: Int
+  monthlyPrice: Int
+  monthlyPrice_not: Int
+  monthlyPrice_in: [Int!]
+  monthlyPrice_not_in: [Int!]
+  monthlyPrice_lt: Int
+  monthlyPrice_lte: Int
+  monthlyPrice_gt: Int
+  monthlyPrice_gte: Int
   AND: [BikeScalarWhereInput!]
   OR: [BikeScalarWhereInput!]
   NOT: [BikeScalarWhereInput!]
@@ -238,12 +253,13 @@ input BikeSubscriptionWhereInput {
 input BikeUpdateDataInput {
   ownerUid: String
   modelId: Int
-  price: Int
   photos: BikeUpdatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int
+  monthlyPrice: Int
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -251,12 +267,13 @@ input BikeUpdateDataInput {
 input BikeUpdateInput {
   ownerUid: String
   modelId: Int
-  price: Int
   photos: BikeUpdatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int
+  monthlyPrice: Int
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -264,12 +281,13 @@ input BikeUpdateInput {
 input BikeUpdateManyDataInput {
   ownerUid: String
   modelId: Int
-  price: Int
   photos: BikeUpdatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int
+  monthlyPrice: Int
 }
 
 input BikeUpdateManyInput {
@@ -286,12 +304,13 @@ input BikeUpdateManyInput {
 input BikeUpdateManyMutationInput {
   ownerUid: String
   modelId: Int
-  price: Int
   photos: BikeUpdatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int
+  monthlyPrice: Int
 }
 
 input BikeUpdateManyWithWhereNestedInput {
@@ -320,24 +339,26 @@ input BikeUpdatephotosInput {
 input BikeUpdateWithoutBookingsDataInput {
   ownerUid: String
   modelId: Int
-  price: Int
   photos: BikeUpdatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int
+  monthlyPrice: Int
   reviews: ReviewUpdateManyWithoutBikeInput
 }
 
 input BikeUpdateWithoutReviewsDataInput {
   ownerUid: String
   modelId: Int
-  price: Int
   photos: BikeUpdatephotosInput
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int
+  monthlyPrice: Int
   bookings: BookingUpdateManyWithoutBikeInput
 }
 
@@ -399,14 +420,6 @@ input BikeWhereInput {
   modelId_lte: Int
   modelId_gt: Int
   modelId_gte: Int
-  price: Int
-  price_not: Int
-  price_in: [Int!]
-  price_not_in: [Int!]
-  price_lt: Int
-  price_lte: Int
-  price_gt: Int
-  price_gte: Int
   rating: Float
   rating_not: Float
   rating_in: [Float!]
@@ -439,6 +452,22 @@ input BikeWhereInput {
   mileage_lte: Int
   mileage_gt: Int
   mileage_gte: Int
+  dailyPrice: Int
+  dailyPrice_not: Int
+  dailyPrice_in: [Int!]
+  dailyPrice_not_in: [Int!]
+  dailyPrice_lt: Int
+  dailyPrice_lte: Int
+  dailyPrice_gt: Int
+  dailyPrice_gte: Int
+  monthlyPrice: Int
+  monthlyPrice_not: Int
+  monthlyPrice_in: [Int!]
+  monthlyPrice_not_in: [Int!]
+  monthlyPrice_lt: Int
+  monthlyPrice_lte: Int
+  monthlyPrice_gt: Int
+  monthlyPrice_gte: Int
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
@@ -465,6 +494,7 @@ type Booking {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  totalPrice: Int!
   status: BookingStatus!
   bike: Bike!
 }
@@ -485,6 +515,7 @@ input BookingCreateInput {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  totalPrice: Int!
   status: BookingStatus
   bike: BikeCreateOneWithoutBookingsInput!
 }
@@ -504,6 +535,7 @@ input BookingCreateWithoutBikeInput {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  totalPrice: Int!
   status: BookingStatus
 }
 
@@ -533,6 +565,8 @@ enum BookingOrderByInput {
   deliveryLocationAddress_DESC
   deliveryLocationComment_ASC
   deliveryLocationComment_DESC
+  totalPrice_ASC
+  totalPrice_DESC
   status_ASC
   status_DESC
   createdAt_ASC
@@ -552,6 +586,7 @@ type BookingPreviousValues {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  totalPrice: Int!
   status: BookingStatus!
 }
 
@@ -684,6 +719,14 @@ input BookingScalarWhereInput {
   deliveryLocationComment_not_starts_with: String
   deliveryLocationComment_ends_with: String
   deliveryLocationComment_not_ends_with: String
+  totalPrice: Int
+  totalPrice_not: Int
+  totalPrice_in: [Int!]
+  totalPrice_not_in: [Int!]
+  totalPrice_lt: Int
+  totalPrice_lte: Int
+  totalPrice_gt: Int
+  totalPrice_gte: Int
   status: BookingStatus
   status_not: BookingStatus
   status_in: [BookingStatus!]
@@ -727,6 +770,7 @@ input BookingUpdateInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  totalPrice: Int
   status: BookingStatus
   bike: BikeUpdateOneRequiredWithoutBookingsInput
 }
@@ -741,6 +785,7 @@ input BookingUpdateManyDataInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  totalPrice: Int
   status: BookingStatus
 }
 
@@ -754,6 +799,7 @@ input BookingUpdateManyMutationInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  totalPrice: Int
   status: BookingStatus
 }
 
@@ -783,6 +829,7 @@ input BookingUpdateWithoutBikeDataInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  totalPrice: Int
   status: BookingStatus
 }
 
@@ -926,6 +973,14 @@ input BookingWhereInput {
   deliveryLocationComment_not_starts_with: String
   deliveryLocationComment_ends_with: String
   deliveryLocationComment_not_ends_with: String
+  totalPrice: Int
+  totalPrice_not: Int
+  totalPrice_in: [Int!]
+  totalPrice_not_in: [Int!]
+  totalPrice_lt: Int
+  totalPrice_lte: Int
+  totalPrice_gt: Int
+  totalPrice_gte: Int
   status: BookingStatus
   status_not: BookingStatus
   status_in: [BookingStatus!]

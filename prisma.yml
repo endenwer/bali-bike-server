@@ -1,4 +1,4 @@
-endpoint: https://eu1.prisma.sh/stepan-lusnikov-71befd/bali-bike/dev
+endpoint: http://104.248.152.233
 datamodel: datamodel.prisma
 generate:
   - generator: javascript-client

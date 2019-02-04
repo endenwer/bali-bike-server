@@ -283,6 +283,8 @@ export type BookingOrderByInput =
   | "deliveryLocationAddress_DESC"
   | "deliveryLocationComment_ASC"
   | "deliveryLocationComment_DESC"
+  | "totalPrice_ASC"
+  | "totalPrice_DESC"
   | "status_ASC"
   | "status_DESC"
   | "createdAt_ASC"
@@ -297,8 +299,6 @@ export type BikeOrderByInput =
   | "ownerUid_DESC"
   | "modelId_ASC"
   | "modelId_DESC"
-  | "price_ASC"
-  | "price_DESC"
   | "rating_ASC"
   | "rating_DESC"
   | "reviewsCount_ASC"
@@ -307,6 +307,10 @@ export type BikeOrderByInput =
   | "manufactureYear_DESC"
   | "mileage_ASC"
   | "mileage_DESC"
+  | "dailyPrice_ASC"
+  | "dailyPrice_DESC"
+  | "monthlyPrice_ASC"
+  | "monthlyPrice_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -377,14 +381,6 @@ export interface BikeWhereInput {
   modelId_lte?: Int;
   modelId_gt?: Int;
   modelId_gte?: Int;
-  price?: Int;
-  price_not?: Int;
-  price_in?: Int[] | Int;
-  price_not_in?: Int[] | Int;
-  price_lt?: Int;
-  price_lte?: Int;
-  price_gt?: Int;
-  price_gte?: Int;
   rating?: Float;
   rating_not?: Float;
   rating_in?: Float[] | Float;
@@ -417,6 +413,22 @@ export interface BikeWhereInput {
   mileage_lte?: Int;
   mileage_gt?: Int;
   mileage_gte?: Int;
+  dailyPrice?: Int;
+  dailyPrice_not?: Int;
+  dailyPrice_in?: Int[] | Int;
+  dailyPrice_not_in?: Int[] | Int;
+  dailyPrice_lt?: Int;
+  dailyPrice_lte?: Int;
+  dailyPrice_gt?: Int;
+  dailyPrice_gte?: Int;
+  monthlyPrice?: Int;
+  monthlyPrice_not?: Int;
+  monthlyPrice_in?: Int[] | Int;
+  monthlyPrice_not_in?: Int[] | Int;
+  monthlyPrice_lt?: Int;
+  monthlyPrice_lte?: Int;
+  monthlyPrice_gt?: Int;
+  monthlyPrice_gte?: Int;
   reviews_every?: ReviewWhereInput;
   reviews_some?: ReviewWhereInput;
   reviews_none?: ReviewWhereInput;
@@ -444,6 +456,7 @@ export interface BookingUpdateManyMutationInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  totalPrice?: Int;
   status?: BookingStatus;
 }
 
@@ -581,6 +594,14 @@ export interface BookingScalarWhereInput {
   deliveryLocationComment_not_starts_with?: String;
   deliveryLocationComment_ends_with?: String;
   deliveryLocationComment_not_ends_with?: String;
+  totalPrice?: Int;
+  totalPrice_not?: Int;
+  totalPrice_in?: Int[] | Int;
+  totalPrice_not_in?: Int[] | Int;
+  totalPrice_lt?: Int;
+  totalPrice_lte?: Int;
+  totalPrice_gt?: Int;
+  totalPrice_gte?: Int;
   status?: BookingStatus;
   status_not?: BookingStatus;
   status_in?: BookingStatus[] | BookingStatus;
@@ -600,6 +621,7 @@ export interface BookingCreateWithoutBikeInput {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  totalPrice: Int;
   status?: BookingStatus;
 }
 
@@ -617,12 +639,13 @@ export interface ReviewSubscriptionWhereInput {
 export interface BikeUpdateInput {
   ownerUid?: String;
   modelId?: Int;
-  price?: Int;
   photos?: BikeUpdatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -645,12 +668,13 @@ export interface BikeUpdatephotosInput {
 export interface BikeUpdateManyDataInput {
   ownerUid?: String;
   modelId?: Int;
-  price?: Int;
   photos?: BikeUpdatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
 }
 
 export interface ReviewUpdateManyWithoutBikeInput {
@@ -707,14 +731,6 @@ export interface BikeScalarWhereInput {
   modelId_lte?: Int;
   modelId_gt?: Int;
   modelId_gte?: Int;
-  price?: Int;
-  price_not?: Int;
-  price_in?: Int[] | Int;
-  price_not_in?: Int[] | Int;
-  price_lt?: Int;
-  price_lte?: Int;
-  price_gt?: Int;
-  price_gte?: Int;
   rating?: Float;
   rating_not?: Float;
   rating_in?: Float[] | Float;
@@ -747,6 +763,22 @@ export interface BikeScalarWhereInput {
   mileage_lte?: Int;
   mileage_gt?: Int;
   mileage_gte?: Int;
+  dailyPrice?: Int;
+  dailyPrice_not?: Int;
+  dailyPrice_in?: Int[] | Int;
+  dailyPrice_not_in?: Int[] | Int;
+  dailyPrice_lt?: Int;
+  dailyPrice_lte?: Int;
+  dailyPrice_gt?: Int;
+  dailyPrice_gte?: Int;
+  monthlyPrice?: Int;
+  monthlyPrice_not?: Int;
+  monthlyPrice_in?: Int[] | Int;
+  monthlyPrice_not_in?: Int[] | Int;
+  monthlyPrice_lt?: Int;
+  monthlyPrice_lte?: Int;
+  monthlyPrice_gt?: Int;
+  monthlyPrice_gte?: Int;
   AND?: BikeScalarWhereInput[] | BikeScalarWhereInput;
   OR?: BikeScalarWhereInput[] | BikeScalarWhereInput;
   NOT?: BikeScalarWhereInput[] | BikeScalarWhereInput;
@@ -864,12 +896,13 @@ export type SavedBikesListWhereUniqueInput = AtLeastOne<{
 export interface BikeCreateWithoutReviewsInput {
   ownerUid: String;
   modelId: Int;
-  price: Int;
   photos?: BikeCreatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
 
@@ -930,12 +963,13 @@ export interface BookingUpdateManyWithoutBikeInput {
 export interface BikeUpdateWithoutReviewsDataInput {
   ownerUid?: String;
   modelId?: Int;
-  price?: Int;
   photos?: BikeUpdatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
 
@@ -961,18 +995,20 @@ export interface BookingUpdateWithoutBikeDataInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  totalPrice?: Int;
   status?: BookingStatus;
 }
 
 export interface BikeCreateInput {
   ownerUid: String;
   modelId: Int;
-  price: Int;
   photos?: BikeCreatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   reviews?: ReviewCreateManyWithoutBikeInput;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
@@ -1106,6 +1142,14 @@ export interface BookingWhereInput {
   deliveryLocationComment_not_starts_with?: String;
   deliveryLocationComment_ends_with?: String;
   deliveryLocationComment_not_ends_with?: String;
+  totalPrice?: Int;
+  totalPrice_not?: Int;
+  totalPrice_in?: Int[] | Int;
+  totalPrice_not_in?: Int[] | Int;
+  totalPrice_lt?: Int;
+  totalPrice_lte?: Int;
+  totalPrice_gt?: Int;
+  totalPrice_gte?: Int;
   status?: BookingStatus;
   status_not?: BookingStatus;
   status_in?: BookingStatus[] | BookingStatus;
@@ -1217,18 +1261,20 @@ export interface BookingUpdateManyDataInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  totalPrice?: Int;
   status?: BookingStatus;
 }
 
 export interface BikeUpdateDataInput {
   ownerUid?: String;
   modelId?: Int;
-  price?: Int;
   photos?: BikeUpdatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -1236,12 +1282,13 @@ export interface BikeUpdateDataInput {
 export interface BikeUpdateManyMutationInput {
   ownerUid?: String;
   modelId?: Int;
-  price?: Int;
   photos?: BikeUpdatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
 }
 
 export interface SavedBikesListUpdateInput {
@@ -1284,6 +1331,7 @@ export interface BookingCreateInput {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  totalPrice: Int;
   status?: BookingStatus;
   bike: BikeCreateOneWithoutBookingsInput;
 }
@@ -1304,12 +1352,13 @@ export interface SavedBikesListUpdateManyMutationInput {
 export interface BikeCreateWithoutBookingsInput {
   ownerUid: String;
   modelId: Int;
-  price: Int;
   photos?: BikeCreatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   reviews?: ReviewCreateManyWithoutBikeInput;
 }
 
@@ -1343,12 +1392,13 @@ export interface BikeUpsertWithoutBookingsInput {
 export interface BikeUpdateWithoutBookingsDataInput {
   ownerUid?: String;
   modelId?: Int;
-  price?: Int;
   photos?: BikeUpdatephotosInput;
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   reviews?: ReviewUpdateManyWithoutBikeInput;
 }
 
@@ -1369,6 +1419,7 @@ export interface BookingUpdateInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  totalPrice?: Int;
   status?: BookingStatus;
   bike?: BikeUpdateOneRequiredWithoutBookingsInput;
 }
@@ -1685,24 +1736,26 @@ export interface Bike {
   id: ID_Output;
   ownerUid: String;
   modelId: Int;
-  price: Int;
   photos: String[];
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
 }
 
 export interface BikePromise extends Promise<Bike>, Fragmentable {
   id: () => Promise<ID_Output>;
   ownerUid: () => Promise<String>;
   modelId: () => Promise<Int>;
-  price: () => Promise<Int>;
   photos: () => Promise<String[]>;
   rating: () => Promise<Float>;
   reviewsCount: () => Promise<Int>;
   manufactureYear: () => Promise<Int>;
   mileage: () => Promise<Int>;
+  dailyPrice: () => Promise<Int>;
+  monthlyPrice: () => Promise<Int>;
   reviews: <T = FragmentableArray<Review>>(
     args?: {
       where?: ReviewWhereInput;
@@ -1733,12 +1786,13 @@ export interface BikeSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   ownerUid: () => Promise<AsyncIterator<String>>;
   modelId: () => Promise<AsyncIterator<Int>>;
-  price: () => Promise<AsyncIterator<Int>>;
   photos: () => Promise<AsyncIterator<String[]>>;
   rating: () => Promise<AsyncIterator<Float>>;
   reviewsCount: () => Promise<AsyncIterator<Int>>;
   manufactureYear: () => Promise<AsyncIterator<Int>>;
   mileage: () => Promise<AsyncIterator<Int>>;
+  dailyPrice: () => Promise<AsyncIterator<Int>>;
+  monthlyPrice: () => Promise<AsyncIterator<Int>>;
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(
     args?: {
       where?: ReviewWhereInput;
@@ -1839,6 +1893,7 @@ export interface BookingPreviousValues {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  totalPrice: Int;
   status: BookingStatus;
 }
 
@@ -1855,6 +1910,7 @@ export interface BookingPreviousValuesPromise
   deliveryLocationLatitudeDelta: () => Promise<String>;
   deliveryLocationAddress: () => Promise<String>;
   deliveryLocationComment: () => Promise<String>;
+  totalPrice: () => Promise<Int>;
   status: () => Promise<BookingStatus>;
 }
 
@@ -1871,6 +1927,7 @@ export interface BookingPreviousValuesSubscription
   deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
   deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
+  totalPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
 }
 
@@ -1910,6 +1967,7 @@ export interface Booking {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  totalPrice: Int;
   status: BookingStatus;
 }
 
@@ -1924,6 +1982,7 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   deliveryLocationLatitudeDelta: () => Promise<String>;
   deliveryLocationAddress: () => Promise<String>;
   deliveryLocationComment: () => Promise<String>;
+  totalPrice: () => Promise<Int>;
   status: () => Promise<BookingStatus>;
   bike: <T = BikePromise>() => T;
 }
@@ -1941,6 +2000,7 @@ export interface BookingSubscription
   deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
   deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
+  totalPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
   bike: <T = BikeSubscription>() => T;
 }
@@ -1949,12 +2009,13 @@ export interface BikePreviousValues {
   id: ID_Output;
   ownerUid: String;
   modelId: Int;
-  price: Int;
   photos: String[];
   rating?: Float;
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
 }
 
 export interface BikePreviousValuesPromise
@@ -1963,12 +2024,13 @@ export interface BikePreviousValuesPromise
   id: () => Promise<ID_Output>;
   ownerUid: () => Promise<String>;
   modelId: () => Promise<Int>;
-  price: () => Promise<Int>;
   photos: () => Promise<String[]>;
   rating: () => Promise<Float>;
   reviewsCount: () => Promise<Int>;
   manufactureYear: () => Promise<Int>;
   mileage: () => Promise<Int>;
+  dailyPrice: () => Promise<Int>;
+  monthlyPrice: () => Promise<Int>;
 }
 
 export interface BikePreviousValuesSubscription
@@ -1977,12 +2039,13 @@ export interface BikePreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   ownerUid: () => Promise<AsyncIterator<String>>;
   modelId: () => Promise<AsyncIterator<Int>>;
-  price: () => Promise<AsyncIterator<Int>>;
   photos: () => Promise<AsyncIterator<String[]>>;
   rating: () => Promise<AsyncIterator<Float>>;
   reviewsCount: () => Promise<AsyncIterator<Int>>;
   manufactureYear: () => Promise<AsyncIterator<Int>>;
   mileage: () => Promise<AsyncIterator<Int>>;
+  dailyPrice: () => Promise<AsyncIterator<Int>>;
+  monthlyPrice: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Review {

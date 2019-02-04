@@ -31,12 +31,13 @@ type Bike {
   id: ID!
   ownerUid: String!
   modelId: Int!
-  price: Int!
   photos: [String!]
   rating: Float
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
+  dailyPrice: Int!
+  monthlyPrice: Int!
   saved: Boolean
   reviews: [Review!]!
   owner: User!
@@ -70,6 +71,7 @@ type Booking {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  totalPrice: Int!
   status: BookingStatus!
   bike: Bike!
   user: User!
