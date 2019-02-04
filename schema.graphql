@@ -1,5 +1,7 @@
 type Query {
-  bikes: [Bike!]!
+  bikes(
+    first: Int!
+    skip: Int!): [Bike!]!
   savedBikes: [Bike!]
   bike(id: ID!): Bike
   bookings: [Booking!]!

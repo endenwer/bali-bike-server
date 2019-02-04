@@ -3,8 +3,8 @@
             ["firebase-admin" :default firebase-admin]))
 
 (defn bikes
-  [_ _ {:keys [prisma]}]
-  (prisma [:bikes]))
+  [_ _ {:keys [prisma args]}]
+  (prisma [:bikes {:first (:first args) :skip (:skip args)}]))
 
 (defn saved-bikes
   [_ _ {:keys [prisma user]}]
