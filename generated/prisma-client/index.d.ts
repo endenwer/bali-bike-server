@@ -283,6 +283,10 @@ export type BookingOrderByInput =
   | "deliveryLocationAddress_DESC"
   | "deliveryLocationComment_ASC"
   | "deliveryLocationComment_DESC"
+  | "dailyPrice_ASC"
+  | "dailyPrice_DESC"
+  | "monthlyPrice_ASC"
+  | "monthlyPrice_DESC"
   | "totalPrice_ASC"
   | "totalPrice_DESC"
   | "status_ASC"
@@ -456,6 +460,8 @@ export interface BookingUpdateManyMutationInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
 }
@@ -594,6 +600,22 @@ export interface BookingScalarWhereInput {
   deliveryLocationComment_not_starts_with?: String;
   deliveryLocationComment_ends_with?: String;
   deliveryLocationComment_not_ends_with?: String;
+  dailyPrice?: Int;
+  dailyPrice_not?: Int;
+  dailyPrice_in?: Int[] | Int;
+  dailyPrice_not_in?: Int[] | Int;
+  dailyPrice_lt?: Int;
+  dailyPrice_lte?: Int;
+  dailyPrice_gt?: Int;
+  dailyPrice_gte?: Int;
+  monthlyPrice?: Int;
+  monthlyPrice_not?: Int;
+  monthlyPrice_in?: Int[] | Int;
+  monthlyPrice_not_in?: Int[] | Int;
+  monthlyPrice_lt?: Int;
+  monthlyPrice_lte?: Int;
+  monthlyPrice_gt?: Int;
+  monthlyPrice_gte?: Int;
   totalPrice?: Int;
   totalPrice_not?: Int;
   totalPrice_in?: Int[] | Int;
@@ -621,6 +643,8 @@ export interface BookingCreateWithoutBikeInput {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   totalPrice: Int;
   status?: BookingStatus;
 }
@@ -995,6 +1019,8 @@ export interface BookingUpdateWithoutBikeDataInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
 }
@@ -1142,6 +1168,22 @@ export interface BookingWhereInput {
   deliveryLocationComment_not_starts_with?: String;
   deliveryLocationComment_ends_with?: String;
   deliveryLocationComment_not_ends_with?: String;
+  dailyPrice?: Int;
+  dailyPrice_not?: Int;
+  dailyPrice_in?: Int[] | Int;
+  dailyPrice_not_in?: Int[] | Int;
+  dailyPrice_lt?: Int;
+  dailyPrice_lte?: Int;
+  dailyPrice_gt?: Int;
+  dailyPrice_gte?: Int;
+  monthlyPrice?: Int;
+  monthlyPrice_not?: Int;
+  monthlyPrice_in?: Int[] | Int;
+  monthlyPrice_not_in?: Int[] | Int;
+  monthlyPrice_lt?: Int;
+  monthlyPrice_lte?: Int;
+  monthlyPrice_gt?: Int;
+  monthlyPrice_gte?: Int;
   totalPrice?: Int;
   totalPrice_not?: Int;
   totalPrice_in?: Int[] | Int;
@@ -1261,6 +1303,8 @@ export interface BookingUpdateManyDataInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
 }
@@ -1331,6 +1375,8 @@ export interface BookingCreateInput {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   totalPrice: Int;
   status?: BookingStatus;
   bike: BikeCreateOneWithoutBookingsInput;
@@ -1419,6 +1465,8 @@ export interface BookingUpdateInput {
   deliveryLocationLatitudeDelta?: String;
   deliveryLocationAddress?: String;
   deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
   bike?: BikeUpdateOneRequiredWithoutBookingsInput;
@@ -1893,6 +1941,8 @@ export interface BookingPreviousValues {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   totalPrice: Int;
   status: BookingStatus;
 }
@@ -1910,6 +1960,8 @@ export interface BookingPreviousValuesPromise
   deliveryLocationLatitudeDelta: () => Promise<String>;
   deliveryLocationAddress: () => Promise<String>;
   deliveryLocationComment: () => Promise<String>;
+  dailyPrice: () => Promise<Int>;
+  monthlyPrice: () => Promise<Int>;
   totalPrice: () => Promise<Int>;
   status: () => Promise<BookingStatus>;
 }
@@ -1927,6 +1979,8 @@ export interface BookingPreviousValuesSubscription
   deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
   deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
+  dailyPrice: () => Promise<AsyncIterator<Int>>;
+  monthlyPrice: () => Promise<AsyncIterator<Int>>;
   totalPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
 }
@@ -1967,6 +2021,8 @@ export interface Booking {
   deliveryLocationLatitudeDelta: String;
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
   totalPrice: Int;
   status: BookingStatus;
 }
@@ -1982,6 +2038,8 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   deliveryLocationLatitudeDelta: () => Promise<String>;
   deliveryLocationAddress: () => Promise<String>;
   deliveryLocationComment: () => Promise<String>;
+  dailyPrice: () => Promise<Int>;
+  monthlyPrice: () => Promise<Int>;
   totalPrice: () => Promise<Int>;
   status: () => Promise<BookingStatus>;
   bike: <T = BikePromise>() => T;
@@ -2000,6 +2058,8 @@ export interface BookingSubscription
   deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
   deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
+  dailyPrice: () => Promise<AsyncIterator<Int>>;
+  monthlyPrice: () => Promise<AsyncIterator<Int>>;
   totalPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
   bike: <T = BikeSubscription>() => T;

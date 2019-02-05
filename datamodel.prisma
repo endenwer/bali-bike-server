@@ -45,6 +45,8 @@ type Booking {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  dailyPrice: Int!
+  monthlyPrice: Int!
   totalPrice: Int!
   status: BookingStatus! @default(value: "WAITING_CONFIRMATION")
   bike: Bike!

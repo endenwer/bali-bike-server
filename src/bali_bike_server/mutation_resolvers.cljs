@@ -1,20 +1,49 @@
 (ns bali-bike-server.mutation-resolvers
-  (:require [promesa.core :as p :refer-macros [alet]]))
+  (:require [promesa.core :as p :refer-macros [alet]]
+            ["moment-precise-range-plugin"]
+            ["moment" :as moment]))
+
+(defn get-dates-diff
+  [start-date end-date]
+  (js->clj (.preciseDiff moment (moment start-date) (moment end-date) true) :keywordize-keys true))
+
+(defn round-to-thousands
+  [number]
+  (* (js/Math.round (/ number 1000)) 1000))
+
+(defn- calculate-total-price
+  [{:keys [start-date end-date monthly-price daily-price]}]
+  (let [dates-diff (get-dates-diff start-date end-date)
+        calculated-daily-price (if (> (:months dates-diff) 0)
+                                (round-to-thousands (/ monthly-price 30))
+                                daily-price)]
+    (+ (* monthly-price (:months dates-diff))
+       (* calculated-daily-price (:days dates-diff)))))
 
 (defn create-booking
   [_ _ {:keys [prisma user args]}]
-  (prisma
-   [:createBooking
-    {:startDate (:startDate args)
-     :endDate (:endDate args)
-     :deliveryLocationLongitude (:deliveryLocationLongitude args)
-     :deliveryLocationLongitudeDelta (:deliveryLocationLongitudeDelta args)
-     :deliveryLocationLatitude (:deliveryLocationLatitude args)
-     :deliveryLocationLatitudeDelta (:deliveryLocationLatitudeDelta args)
-     :deliveryLocationAddress (:deliveryLocationAddress args)
-     :deliveryLocationComment (:deliveryLocationComment args)
-     :userUid (:uid user)
-     :bike {:connect {:id (:bikeId args)}}}]))
+  (alet [bike (p/await (p/promise (prisma [:bike {:id (:bikeId args)}])))
+         monthly-price (.-monthlyPrice bike)
+         daily-price (.-dailyPrice bike)
+         total-price (calculate-total-price {:start-date (:startDate args)
+                                             :end-date (:endDate args)
+                                             :monthly-price monthly-price
+                                             :daily-price daily-price})]
+        (prisma
+         [:createBooking
+          {:startDate (:startDate args)
+           :endDate (:endDate args)
+           :deliveryLocationLongitude (:deliveryLocationLongitude args)
+           :deliveryLocationLongitudeDelta (:deliveryLocationLongitudeDelta args)
+           :deliveryLocationLatitude (:deliveryLocationLatitude args)
+           :deliveryLocationLatitudeDelta (:deliveryLocationLatitudeDelta args)
+           :deliveryLocationAddress (:deliveryLocationAddress args)
+           :deliveryLocationComment (:deliveryLocationComment args)
+           :userUid (:uid user)
+           :monthlyPrice monthly-price
+           :dailyPrice daily-price
+           :totalPrice total-price
+           :bike {:connect {:id (:bikeId args)}}}])))
 
 (defn add-bike-to-saved
   [_ _ {:keys [prisma user args]}]

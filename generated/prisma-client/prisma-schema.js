@@ -494,6 +494,8 @@ type Booking {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  dailyPrice: Int!
+  monthlyPrice: Int!
   totalPrice: Int!
   status: BookingStatus!
   bike: Bike!
@@ -515,6 +517,8 @@ input BookingCreateInput {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  dailyPrice: Int!
+  monthlyPrice: Int!
   totalPrice: Int!
   status: BookingStatus
   bike: BikeCreateOneWithoutBookingsInput!
@@ -535,6 +539,8 @@ input BookingCreateWithoutBikeInput {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  dailyPrice: Int!
+  monthlyPrice: Int!
   totalPrice: Int!
   status: BookingStatus
 }
@@ -565,6 +571,10 @@ enum BookingOrderByInput {
   deliveryLocationAddress_DESC
   deliveryLocationComment_ASC
   deliveryLocationComment_DESC
+  dailyPrice_ASC
+  dailyPrice_DESC
+  monthlyPrice_ASC
+  monthlyPrice_DESC
   totalPrice_ASC
   totalPrice_DESC
   status_ASC
@@ -586,6 +596,8 @@ type BookingPreviousValues {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  dailyPrice: Int!
+  monthlyPrice: Int!
   totalPrice: Int!
   status: BookingStatus!
 }
@@ -719,6 +731,22 @@ input BookingScalarWhereInput {
   deliveryLocationComment_not_starts_with: String
   deliveryLocationComment_ends_with: String
   deliveryLocationComment_not_ends_with: String
+  dailyPrice: Int
+  dailyPrice_not: Int
+  dailyPrice_in: [Int!]
+  dailyPrice_not_in: [Int!]
+  dailyPrice_lt: Int
+  dailyPrice_lte: Int
+  dailyPrice_gt: Int
+  dailyPrice_gte: Int
+  monthlyPrice: Int
+  monthlyPrice_not: Int
+  monthlyPrice_in: [Int!]
+  monthlyPrice_not_in: [Int!]
+  monthlyPrice_lt: Int
+  monthlyPrice_lte: Int
+  monthlyPrice_gt: Int
+  monthlyPrice_gte: Int
   totalPrice: Int
   totalPrice_not: Int
   totalPrice_in: [Int!]
@@ -770,6 +798,8 @@ input BookingUpdateInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  dailyPrice: Int
+  monthlyPrice: Int
   totalPrice: Int
   status: BookingStatus
   bike: BikeUpdateOneRequiredWithoutBookingsInput
@@ -785,6 +815,8 @@ input BookingUpdateManyDataInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  dailyPrice: Int
+  monthlyPrice: Int
   totalPrice: Int
   status: BookingStatus
 }
@@ -799,6 +831,8 @@ input BookingUpdateManyMutationInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  dailyPrice: Int
+  monthlyPrice: Int
   totalPrice: Int
   status: BookingStatus
 }
@@ -829,6 +863,8 @@ input BookingUpdateWithoutBikeDataInput {
   deliveryLocationLatitudeDelta: String
   deliveryLocationAddress: String
   deliveryLocationComment: String
+  dailyPrice: Int
+  monthlyPrice: Int
   totalPrice: Int
   status: BookingStatus
 }
@@ -973,6 +1009,22 @@ input BookingWhereInput {
   deliveryLocationComment_not_starts_with: String
   deliveryLocationComment_ends_with: String
   deliveryLocationComment_not_ends_with: String
+  dailyPrice: Int
+  dailyPrice_not: Int
+  dailyPrice_in: [Int!]
+  dailyPrice_not_in: [Int!]
+  dailyPrice_lt: Int
+  dailyPrice_lte: Int
+  dailyPrice_gt: Int
+  dailyPrice_gte: Int
+  monthlyPrice: Int
+  monthlyPrice_not: Int
+  monthlyPrice_in: [Int!]
+  monthlyPrice_not_in: [Int!]
+  monthlyPrice_lt: Int
+  monthlyPrice_lte: Int
+  monthlyPrice_gt: Int
+  monthlyPrice_gte: Int
   totalPrice: Int
   totalPrice_not: Int
   totalPrice_in: [Int!]

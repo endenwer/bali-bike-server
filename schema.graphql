@@ -73,6 +73,8 @@ type Booking {
   deliveryLocationLatitudeDelta: String!
   deliveryLocationAddress: String!
   deliveryLocationComment: String
+  dailyPrice: Int!
+  monthlyPrice: Int!
   totalPrice: Int!
   status: BookingStatus!
   bike: Bike!
