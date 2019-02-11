@@ -2,12 +2,22 @@
   (:require ["graphql-yoga" :refer [GraphQLServer] :rename {GraphQLServer graphql-server}]
             ["graphql-shield" :refer [shield]]
             ["/prisma-client" :default prisma-client]
+            ["pg" :as pg]
+            [promesa.async-cljs :refer-macros [async]]
+            [promesa.core :as p]
             [bali-bike-server.auth :as auth]
             [bali-bike-server.prisma-utils :as prisma-utils]
             [bali-bike-server.query-resolvers :as query-resolvers]
             [bali-bike-server.mutation-resolvers :as mutation-resolvers]
             [bali-bike-server.rules :as rules]
             [bali-bike-server.middlewares :as middlewares]))
+
+(def pg-client
+  (pg/Client. #js {:database "prisma"
+                   :user "prisma"
+                   :password "prisma"
+                   :host "104.248.152.233"
+                   :port 5432}))
 
 (def resolvers
   {:Query {:bikes query-resolvers/bikes
@@ -40,8 +50,11 @@
                                            permissions]
                              :context (fn [req]
                                         {:prisma #(prisma-utils/exec (.-prisma prisma-client) %)
-                                         :request (.-request req)})})))
+                                         :request (.-request req)
+                                         :pg-client pg-client})})))
 
 (defn main []
-  (auth/init)
-  (.start server (fn [] (.log js/console "Started"))))
+  (async
+   (p/await (.connect pg-client))
+   (auth/init)
+   (.start server (fn [] (.log js/console "Started")))))
