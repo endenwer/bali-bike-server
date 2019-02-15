@@ -30,6 +30,10 @@
       (do
         (prisma [:bikes {:first (:first args) :skip (:skip args)}])))))
 
+(defn own-bikes
+  [_ _ {:keys [prisma user]}]
+  (prisma [:bikes {:where {:ownerUid (:uid user)}}]))
+
 (defn saved-bikes
   [_ _ {:keys [prisma user]}]
   (prisma [:savedBikesList {:userUid (:uid user)} [:bikes]]))
