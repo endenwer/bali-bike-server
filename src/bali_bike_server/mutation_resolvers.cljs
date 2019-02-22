@@ -45,6 +45,20 @@
            :totalPrice total-price
            :bike {:connect {:id (:bikeId args)}}}])))
 
+(defn create-bike
+  [_ _ {:keys [prisma user args]}]
+  (let [owner-uid (:uid user)]
+    (prisma
+     [:createBike
+      {:modelId (:modelId args)
+       :photos {:set (:photos args)}
+       :areaIds {:set (:areaIds args)}
+       :manufactureYear (:manufactureYear args)
+       :mileage (:mileage args)
+       :dailyPrice (:dailyPrice args)
+       :monthlyPrice (:monthlyPrice args)
+       :ownerUid owner-uid}])))
+
 (defn add-bike-to-saved
   [_ _ {:keys [prisma user args]}]
   (alet [saved-list (p/await (p/promise (prisma [:savedBikesList {:userUid (:uid user)}])))]

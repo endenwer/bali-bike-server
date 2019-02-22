@@ -332,20 +332,29 @@ export type SavedBikesListOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ReviewUpdateManyDataInput {
-  rating?: Int;
-  comment?: String;
-  userUid?: String;
+export interface ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput;
+  data: ReviewUpdateManyDataInput;
 }
 
 export type BikeWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface BookingUpsertWithWhereUniqueWithoutBikeInput {
-  where: BookingWhereUniqueInput;
-  update: BookingUpdateWithoutBikeDataInput;
-  create: BookingCreateWithoutBikeInput;
+export interface BookingUpdateWithoutBikeDataInput {
+  userUid?: String;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+  deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
+  deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
+  deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  totalPrice?: Int;
+  status?: BookingStatus;
 }
 
 export interface BikeWhereInput {
@@ -471,166 +480,10 @@ export interface BookingCreateManyWithoutBikeInput {
   connect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
 }
 
-export interface BookingScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  userUid?: String;
-  userUid_not?: String;
-  userUid_in?: String[] | String;
-  userUid_not_in?: String[] | String;
-  userUid_lt?: String;
-  userUid_lte?: String;
-  userUid_gt?: String;
-  userUid_gte?: String;
-  userUid_contains?: String;
-  userUid_not_contains?: String;
-  userUid_starts_with?: String;
-  userUid_not_starts_with?: String;
-  userUid_ends_with?: String;
-  userUid_not_ends_with?: String;
-  startDate?: DateTimeInput;
-  startDate_not?: DateTimeInput;
-  startDate_in?: DateTimeInput[] | DateTimeInput;
-  startDate_not_in?: DateTimeInput[] | DateTimeInput;
-  startDate_lt?: DateTimeInput;
-  startDate_lte?: DateTimeInput;
-  startDate_gt?: DateTimeInput;
-  startDate_gte?: DateTimeInput;
-  endDate?: DateTimeInput;
-  endDate_not?: DateTimeInput;
-  endDate_in?: DateTimeInput[] | DateTimeInput;
-  endDate_not_in?: DateTimeInput[] | DateTimeInput;
-  endDate_lt?: DateTimeInput;
-  endDate_lte?: DateTimeInput;
-  endDate_gt?: DateTimeInput;
-  endDate_gte?: DateTimeInput;
-  deliveryLocationLongitude?: String;
-  deliveryLocationLongitude_not?: String;
-  deliveryLocationLongitude_in?: String[] | String;
-  deliveryLocationLongitude_not_in?: String[] | String;
-  deliveryLocationLongitude_lt?: String;
-  deliveryLocationLongitude_lte?: String;
-  deliveryLocationLongitude_gt?: String;
-  deliveryLocationLongitude_gte?: String;
-  deliveryLocationLongitude_contains?: String;
-  deliveryLocationLongitude_not_contains?: String;
-  deliveryLocationLongitude_starts_with?: String;
-  deliveryLocationLongitude_not_starts_with?: String;
-  deliveryLocationLongitude_ends_with?: String;
-  deliveryLocationLongitude_not_ends_with?: String;
-  deliveryLocationLongitudeDelta?: String;
-  deliveryLocationLongitudeDelta_not?: String;
-  deliveryLocationLongitudeDelta_in?: String[] | String;
-  deliveryLocationLongitudeDelta_not_in?: String[] | String;
-  deliveryLocationLongitudeDelta_lt?: String;
-  deliveryLocationLongitudeDelta_lte?: String;
-  deliveryLocationLongitudeDelta_gt?: String;
-  deliveryLocationLongitudeDelta_gte?: String;
-  deliveryLocationLongitudeDelta_contains?: String;
-  deliveryLocationLongitudeDelta_not_contains?: String;
-  deliveryLocationLongitudeDelta_starts_with?: String;
-  deliveryLocationLongitudeDelta_not_starts_with?: String;
-  deliveryLocationLongitudeDelta_ends_with?: String;
-  deliveryLocationLongitudeDelta_not_ends_with?: String;
-  deliveryLocationLatitude?: String;
-  deliveryLocationLatitude_not?: String;
-  deliveryLocationLatitude_in?: String[] | String;
-  deliveryLocationLatitude_not_in?: String[] | String;
-  deliveryLocationLatitude_lt?: String;
-  deliveryLocationLatitude_lte?: String;
-  deliveryLocationLatitude_gt?: String;
-  deliveryLocationLatitude_gte?: String;
-  deliveryLocationLatitude_contains?: String;
-  deliveryLocationLatitude_not_contains?: String;
-  deliveryLocationLatitude_starts_with?: String;
-  deliveryLocationLatitude_not_starts_with?: String;
-  deliveryLocationLatitude_ends_with?: String;
-  deliveryLocationLatitude_not_ends_with?: String;
-  deliveryLocationLatitudeDelta?: String;
-  deliveryLocationLatitudeDelta_not?: String;
-  deliveryLocationLatitudeDelta_in?: String[] | String;
-  deliveryLocationLatitudeDelta_not_in?: String[] | String;
-  deliveryLocationLatitudeDelta_lt?: String;
-  deliveryLocationLatitudeDelta_lte?: String;
-  deliveryLocationLatitudeDelta_gt?: String;
-  deliveryLocationLatitudeDelta_gte?: String;
-  deliveryLocationLatitudeDelta_contains?: String;
-  deliveryLocationLatitudeDelta_not_contains?: String;
-  deliveryLocationLatitudeDelta_starts_with?: String;
-  deliveryLocationLatitudeDelta_not_starts_with?: String;
-  deliveryLocationLatitudeDelta_ends_with?: String;
-  deliveryLocationLatitudeDelta_not_ends_with?: String;
-  deliveryLocationAddress?: String;
-  deliveryLocationAddress_not?: String;
-  deliveryLocationAddress_in?: String[] | String;
-  deliveryLocationAddress_not_in?: String[] | String;
-  deliveryLocationAddress_lt?: String;
-  deliveryLocationAddress_lte?: String;
-  deliveryLocationAddress_gt?: String;
-  deliveryLocationAddress_gte?: String;
-  deliveryLocationAddress_contains?: String;
-  deliveryLocationAddress_not_contains?: String;
-  deliveryLocationAddress_starts_with?: String;
-  deliveryLocationAddress_not_starts_with?: String;
-  deliveryLocationAddress_ends_with?: String;
-  deliveryLocationAddress_not_ends_with?: String;
-  deliveryLocationComment?: String;
-  deliveryLocationComment_not?: String;
-  deliveryLocationComment_in?: String[] | String;
-  deliveryLocationComment_not_in?: String[] | String;
-  deliveryLocationComment_lt?: String;
-  deliveryLocationComment_lte?: String;
-  deliveryLocationComment_gt?: String;
-  deliveryLocationComment_gte?: String;
-  deliveryLocationComment_contains?: String;
-  deliveryLocationComment_not_contains?: String;
-  deliveryLocationComment_starts_with?: String;
-  deliveryLocationComment_not_starts_with?: String;
-  deliveryLocationComment_ends_with?: String;
-  deliveryLocationComment_not_ends_with?: String;
-  dailyPrice?: Int;
-  dailyPrice_not?: Int;
-  dailyPrice_in?: Int[] | Int;
-  dailyPrice_not_in?: Int[] | Int;
-  dailyPrice_lt?: Int;
-  dailyPrice_lte?: Int;
-  dailyPrice_gt?: Int;
-  dailyPrice_gte?: Int;
-  monthlyPrice?: Int;
-  monthlyPrice_not?: Int;
-  monthlyPrice_in?: Int[] | Int;
-  monthlyPrice_not_in?: Int[] | Int;
-  monthlyPrice_lt?: Int;
-  monthlyPrice_lte?: Int;
-  monthlyPrice_gt?: Int;
-  monthlyPrice_gte?: Int;
-  totalPrice?: Int;
-  totalPrice_not?: Int;
-  totalPrice_in?: Int[] | Int;
-  totalPrice_not_in?: Int[] | Int;
-  totalPrice_lt?: Int;
-  totalPrice_lte?: Int;
-  totalPrice_gt?: Int;
-  totalPrice_gte?: Int;
-  status?: BookingStatus;
-  status_not?: BookingStatus;
-  status_in?: BookingStatus[] | BookingStatus;
-  status_not_in?: BookingStatus[] | BookingStatus;
-  AND?: BookingScalarWhereInput[] | BookingScalarWhereInput;
-  OR?: BookingScalarWhereInput[] | BookingScalarWhereInput;
-  NOT?: BookingScalarWhereInput[] | BookingScalarWhereInput;
+export interface BookingUpsertWithWhereUniqueWithoutBikeInput {
+  where: BookingWhereUniqueInput;
+  update: BookingUpdateWithoutBikeDataInput;
+  create: BookingCreateWithoutBikeInput;
 }
 
 export interface BookingCreateWithoutBikeInput {
@@ -670,6 +523,7 @@ export interface BikeUpdateInput {
   mileage?: Int;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  areaIds?: BikeUpdateareaIdsInput;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -699,23 +553,11 @@ export interface BikeUpdateManyDataInput {
   mileage?: Int;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  areaIds?: BikeUpdateareaIdsInput;
 }
 
-export interface ReviewUpdateManyWithoutBikeInput {
-  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
-  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
-  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
-  update?:
-    | ReviewUpdateWithWhereUniqueWithoutBikeInput[]
-    | ReviewUpdateWithWhereUniqueWithoutBikeInput;
-  upsert?:
-    | ReviewUpsertWithWhereUniqueWithoutBikeInput[]
-    | ReviewUpsertWithWhereUniqueWithoutBikeInput;
-  deleteMany?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
-  updateMany?:
-    | ReviewUpdateManyWithWhereNestedInput[]
-    | ReviewUpdateManyWithWhereNestedInput;
+export interface BikeUpdateareaIdsInput {
+  set?: Int[] | Int;
 }
 
 export interface BikeScalarWhereInput {
@@ -808,19 +650,30 @@ export interface BikeScalarWhereInput {
   NOT?: BikeScalarWhereInput[] | BikeScalarWhereInput;
 }
 
-export interface ReviewUpdateWithWhereUniqueWithoutBikeInput {
-  where: ReviewWhereUniqueInput;
-  data: ReviewUpdateWithoutBikeDataInput;
+export interface ReviewUpdateManyWithoutBikeInput {
+  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
+  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+  update?:
+    | ReviewUpdateWithWhereUniqueWithoutBikeInput[]
+    | ReviewUpdateWithWhereUniqueWithoutBikeInput;
+  upsert?:
+    | ReviewUpsertWithWhereUniqueWithoutBikeInput[]
+    | ReviewUpsertWithWhereUniqueWithoutBikeInput;
+  deleteMany?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
+  updateMany?:
+    | ReviewUpdateManyWithWhereNestedInput[]
+    | ReviewUpdateManyWithWhereNestedInput;
 }
 
 export type BookingWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface ReviewUpdateWithoutBikeDataInput {
-  rating?: Int;
-  comment?: String;
-  userUid?: String;
+export interface ReviewUpdateWithWhereUniqueWithoutBikeInput {
+  where: ReviewWhereUniqueInput;
+  data: ReviewUpdateWithoutBikeDataInput;
 }
 
 export interface BikeUpdateWithWhereUniqueNestedInput {
@@ -828,15 +681,26 @@ export interface BikeUpdateWithWhereUniqueNestedInput {
   data: BikeUpdateDataInput;
 }
 
+export interface ReviewUpdateWithoutBikeDataInput {
+  rating?: Int;
+  comment?: String;
+  userUid?: String;
+}
+
+export type ReviewWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
 export interface ReviewUpsertWithWhereUniqueWithoutBikeInput {
   where: ReviewWhereUniqueInput;
   update: ReviewUpdateWithoutBikeDataInput;
   create: ReviewCreateWithoutBikeInput;
 }
 
-export type ReviewWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface BikeCreateManyInput {
+  create?: BikeCreateInput[] | BikeCreateInput;
+  connect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
+}
 
 export interface ReviewScalarWhereInput {
   id?: ID_Input;
@@ -902,16 +766,6 @@ export interface ReviewScalarWhereInput {
   NOT?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
 }
 
-export interface BikeCreateManyInput {
-  create?: BikeCreateInput[] | BikeCreateInput;
-  connect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
-}
-
-export interface ReviewUpdateManyWithWhereNestedInput {
-  where: ReviewScalarWhereInput;
-  data: ReviewUpdateManyDataInput;
-}
-
 export type SavedBikesListWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   userUid?: String;
@@ -927,6 +781,7 @@ export interface BikeCreateWithoutReviewsInput {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  areaIds?: BikeCreateareaIdsInput;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
 
@@ -967,6 +822,26 @@ export interface SavedBikesListWhereInput {
   NOT?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
 }
 
+export interface ReviewUpdateManyDataInput {
+  rating?: Int;
+  comment?: String;
+  userUid?: String;
+}
+
+export interface BikeUpdateWithoutReviewsDataInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  areaIds?: BikeUpdateareaIdsInput;
+  bookings?: BookingUpdateManyWithoutBikeInput;
+}
+
 export interface BookingUpdateManyWithoutBikeInput {
   create?: BookingCreateWithoutBikeInput[] | BookingCreateWithoutBikeInput;
   delete?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
@@ -984,24 +859,6 @@ export interface BookingUpdateManyWithoutBikeInput {
     | BookingUpdateManyWithWhereNestedInput;
 }
 
-export interface BikeUpdateWithoutReviewsDataInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  bookings?: BookingUpdateManyWithoutBikeInput;
-}
-
-export interface BookingUpdateWithWhereUniqueWithoutBikeInput {
-  where: BookingWhereUniqueInput;
-  data: BookingUpdateWithoutBikeDataInput;
-}
-
 export interface ReviewUpdateInput {
   rating?: Int;
   comment?: String;
@@ -1009,20 +866,9 @@ export interface ReviewUpdateInput {
   bike?: BikeUpdateOneRequiredWithoutReviewsInput;
 }
 
-export interface BookingUpdateWithoutBikeDataInput {
-  userUid?: String;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  deliveryLocationLongitude?: String;
-  deliveryLocationLongitudeDelta?: String;
-  deliveryLocationLatitude?: String;
-  deliveryLocationLatitudeDelta?: String;
-  deliveryLocationAddress?: String;
-  deliveryLocationComment?: String;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  totalPrice?: Int;
-  status?: BookingStatus;
+export interface BookingUpdateWithWhereUniqueWithoutBikeInput {
+  where: BookingWhereUniqueInput;
+  data: BookingUpdateWithoutBikeDataInput;
 }
 
 export interface BikeCreateInput {
@@ -1035,6 +881,7 @@ export interface BikeCreateInput {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  areaIds?: BikeCreateareaIdsInput;
   reviews?: ReviewCreateManyWithoutBikeInput;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
@@ -1202,9 +1049,8 @@ export interface BookingWhereInput {
   NOT?: BookingWhereInput[] | BookingWhereInput;
 }
 
-export interface ReviewCreateManyWithoutBikeInput {
-  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+export interface BikeCreateareaIdsInput {
+  set?: Int[] | Int;
 }
 
 export interface ReviewWhereInput {
@@ -1272,15 +1118,187 @@ export interface ReviewWhereInput {
   NOT?: ReviewWhereInput[] | ReviewWhereInput;
 }
 
-export interface BookingSubscriptionWhereInput {
+export interface SavedBikesListSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: BookingWhereInput;
-  AND?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
-  OR?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
-  NOT?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
+  node?: SavedBikesListWhereInput;
+  AND?:
+    | SavedBikesListSubscriptionWhereInput[]
+    | SavedBikesListSubscriptionWhereInput;
+  OR?:
+    | SavedBikesListSubscriptionWhereInput[]
+    | SavedBikesListSubscriptionWhereInput;
+  NOT?:
+    | SavedBikesListSubscriptionWhereInput[]
+    | SavedBikesListSubscriptionWhereInput;
+}
+
+export interface BookingScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  userUid?: String;
+  userUid_not?: String;
+  userUid_in?: String[] | String;
+  userUid_not_in?: String[] | String;
+  userUid_lt?: String;
+  userUid_lte?: String;
+  userUid_gt?: String;
+  userUid_gte?: String;
+  userUid_contains?: String;
+  userUid_not_contains?: String;
+  userUid_starts_with?: String;
+  userUid_not_starts_with?: String;
+  userUid_ends_with?: String;
+  userUid_not_ends_with?: String;
+  startDate?: DateTimeInput;
+  startDate_not?: DateTimeInput;
+  startDate_in?: DateTimeInput[] | DateTimeInput;
+  startDate_not_in?: DateTimeInput[] | DateTimeInput;
+  startDate_lt?: DateTimeInput;
+  startDate_lte?: DateTimeInput;
+  startDate_gt?: DateTimeInput;
+  startDate_gte?: DateTimeInput;
+  endDate?: DateTimeInput;
+  endDate_not?: DateTimeInput;
+  endDate_in?: DateTimeInput[] | DateTimeInput;
+  endDate_not_in?: DateTimeInput[] | DateTimeInput;
+  endDate_lt?: DateTimeInput;
+  endDate_lte?: DateTimeInput;
+  endDate_gt?: DateTimeInput;
+  endDate_gte?: DateTimeInput;
+  deliveryLocationLongitude?: String;
+  deliveryLocationLongitude_not?: String;
+  deliveryLocationLongitude_in?: String[] | String;
+  deliveryLocationLongitude_not_in?: String[] | String;
+  deliveryLocationLongitude_lt?: String;
+  deliveryLocationLongitude_lte?: String;
+  deliveryLocationLongitude_gt?: String;
+  deliveryLocationLongitude_gte?: String;
+  deliveryLocationLongitude_contains?: String;
+  deliveryLocationLongitude_not_contains?: String;
+  deliveryLocationLongitude_starts_with?: String;
+  deliveryLocationLongitude_not_starts_with?: String;
+  deliveryLocationLongitude_ends_with?: String;
+  deliveryLocationLongitude_not_ends_with?: String;
+  deliveryLocationLongitudeDelta?: String;
+  deliveryLocationLongitudeDelta_not?: String;
+  deliveryLocationLongitudeDelta_in?: String[] | String;
+  deliveryLocationLongitudeDelta_not_in?: String[] | String;
+  deliveryLocationLongitudeDelta_lt?: String;
+  deliveryLocationLongitudeDelta_lte?: String;
+  deliveryLocationLongitudeDelta_gt?: String;
+  deliveryLocationLongitudeDelta_gte?: String;
+  deliveryLocationLongitudeDelta_contains?: String;
+  deliveryLocationLongitudeDelta_not_contains?: String;
+  deliveryLocationLongitudeDelta_starts_with?: String;
+  deliveryLocationLongitudeDelta_not_starts_with?: String;
+  deliveryLocationLongitudeDelta_ends_with?: String;
+  deliveryLocationLongitudeDelta_not_ends_with?: String;
+  deliveryLocationLatitude?: String;
+  deliveryLocationLatitude_not?: String;
+  deliveryLocationLatitude_in?: String[] | String;
+  deliveryLocationLatitude_not_in?: String[] | String;
+  deliveryLocationLatitude_lt?: String;
+  deliveryLocationLatitude_lte?: String;
+  deliveryLocationLatitude_gt?: String;
+  deliveryLocationLatitude_gte?: String;
+  deliveryLocationLatitude_contains?: String;
+  deliveryLocationLatitude_not_contains?: String;
+  deliveryLocationLatitude_starts_with?: String;
+  deliveryLocationLatitude_not_starts_with?: String;
+  deliveryLocationLatitude_ends_with?: String;
+  deliveryLocationLatitude_not_ends_with?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationLatitudeDelta_not?: String;
+  deliveryLocationLatitudeDelta_in?: String[] | String;
+  deliveryLocationLatitudeDelta_not_in?: String[] | String;
+  deliveryLocationLatitudeDelta_lt?: String;
+  deliveryLocationLatitudeDelta_lte?: String;
+  deliveryLocationLatitudeDelta_gt?: String;
+  deliveryLocationLatitudeDelta_gte?: String;
+  deliveryLocationLatitudeDelta_contains?: String;
+  deliveryLocationLatitudeDelta_not_contains?: String;
+  deliveryLocationLatitudeDelta_starts_with?: String;
+  deliveryLocationLatitudeDelta_not_starts_with?: String;
+  deliveryLocationLatitudeDelta_ends_with?: String;
+  deliveryLocationLatitudeDelta_not_ends_with?: String;
+  deliveryLocationAddress?: String;
+  deliveryLocationAddress_not?: String;
+  deliveryLocationAddress_in?: String[] | String;
+  deliveryLocationAddress_not_in?: String[] | String;
+  deliveryLocationAddress_lt?: String;
+  deliveryLocationAddress_lte?: String;
+  deliveryLocationAddress_gt?: String;
+  deliveryLocationAddress_gte?: String;
+  deliveryLocationAddress_contains?: String;
+  deliveryLocationAddress_not_contains?: String;
+  deliveryLocationAddress_starts_with?: String;
+  deliveryLocationAddress_not_starts_with?: String;
+  deliveryLocationAddress_ends_with?: String;
+  deliveryLocationAddress_not_ends_with?: String;
+  deliveryLocationComment?: String;
+  deliveryLocationComment_not?: String;
+  deliveryLocationComment_in?: String[] | String;
+  deliveryLocationComment_not_in?: String[] | String;
+  deliveryLocationComment_lt?: String;
+  deliveryLocationComment_lte?: String;
+  deliveryLocationComment_gt?: String;
+  deliveryLocationComment_gte?: String;
+  deliveryLocationComment_contains?: String;
+  deliveryLocationComment_not_contains?: String;
+  deliveryLocationComment_starts_with?: String;
+  deliveryLocationComment_not_starts_with?: String;
+  deliveryLocationComment_ends_with?: String;
+  deliveryLocationComment_not_ends_with?: String;
+  dailyPrice?: Int;
+  dailyPrice_not?: Int;
+  dailyPrice_in?: Int[] | Int;
+  dailyPrice_not_in?: Int[] | Int;
+  dailyPrice_lt?: Int;
+  dailyPrice_lte?: Int;
+  dailyPrice_gt?: Int;
+  dailyPrice_gte?: Int;
+  monthlyPrice?: Int;
+  monthlyPrice_not?: Int;
+  monthlyPrice_in?: Int[] | Int;
+  monthlyPrice_not_in?: Int[] | Int;
+  monthlyPrice_lt?: Int;
+  monthlyPrice_lte?: Int;
+  monthlyPrice_gt?: Int;
+  monthlyPrice_gte?: Int;
+  totalPrice?: Int;
+  totalPrice_not?: Int;
+  totalPrice_in?: Int[] | Int;
+  totalPrice_not_in?: Int[] | Int;
+  totalPrice_lt?: Int;
+  totalPrice_lte?: Int;
+  totalPrice_gt?: Int;
+  totalPrice_gte?: Int;
+  status?: BookingStatus;
+  status_not?: BookingStatus;
+  status_in?: BookingStatus[] | BookingStatus;
+  status_not_in?: BookingStatus[] | BookingStatus;
+  AND?: BookingScalarWhereInput[] | BookingScalarWhereInput;
+  OR?: BookingScalarWhereInput[] | BookingScalarWhereInput;
+  NOT?: BookingScalarWhereInput[] | BookingScalarWhereInput;
+}
+
+export interface SavedBikesListUpdateManyMutationInput {
+  userUid?: String;
 }
 
 export interface BookingUpdateManyWithWhereNestedInput {
@@ -1288,9 +1306,10 @@ export interface BookingUpdateManyWithWhereNestedInput {
   data: BookingUpdateManyDataInput;
 }
 
-export interface BikeUpdateManyWithWhereNestedInput {
-  where: BikeScalarWhereInput;
-  data: BikeUpdateManyDataInput;
+export interface BikeUpsertWithWhereUniqueNestedInput {
+  where: BikeWhereUniqueInput;
+  update: BikeUpdateDataInput;
+  create: BikeCreateInput;
 }
 
 export interface BookingUpdateManyDataInput {
@@ -1307,105 +1326,6 @@ export interface BookingUpdateManyDataInput {
   monthlyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
-}
-
-export interface BikeUpdateDataInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  reviews?: ReviewUpdateManyWithoutBikeInput;
-  bookings?: BookingUpdateManyWithoutBikeInput;
-}
-
-export interface BikeUpdateManyMutationInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-}
-
-export interface SavedBikesListUpdateInput {
-  userUid?: String;
-  bikes?: BikeUpdateManyInput;
-}
-
-export interface BikeCreateOneWithoutReviewsInput {
-  create?: BikeCreateWithoutReviewsInput;
-  connect?: BikeWhereUniqueInput;
-}
-
-export interface ReviewUpdateManyMutationInput {
-  rating?: Int;
-  comment?: String;
-  userUid?: String;
-}
-
-export interface ReviewCreateInput {
-  rating: Int;
-  comment?: String;
-  userUid: String;
-  bike: BikeCreateOneWithoutReviewsInput;
-}
-
-export interface BikeUpdateOneRequiredWithoutReviewsInput {
-  create?: BikeCreateWithoutReviewsInput;
-  update?: BikeUpdateWithoutReviewsDataInput;
-  upsert?: BikeUpsertWithoutReviewsInput;
-  connect?: BikeWhereUniqueInput;
-}
-
-export interface BookingCreateInput {
-  userUid: String;
-  startDate: DateTimeInput;
-  endDate: DateTimeInput;
-  deliveryLocationLongitude: String;
-  deliveryLocationLongitudeDelta: String;
-  deliveryLocationLatitude: String;
-  deliveryLocationLatitudeDelta: String;
-  deliveryLocationAddress: String;
-  deliveryLocationComment?: String;
-  dailyPrice: Int;
-  monthlyPrice: Int;
-  totalPrice: Int;
-  status?: BookingStatus;
-  bike: BikeCreateOneWithoutBookingsInput;
-}
-
-export interface BikeCreatephotosInput {
-  set?: String[] | String;
-}
-
-export interface BikeCreateOneWithoutBookingsInput {
-  create?: BikeCreateWithoutBookingsInput;
-  connect?: BikeWhereUniqueInput;
-}
-
-export interface SavedBikesListUpdateManyMutationInput {
-  userUid?: String;
-}
-
-export interface BikeCreateWithoutBookingsInput {
-  ownerUid: String;
-  modelId: Int;
-  photos?: BikeCreatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice: Int;
-  monthlyPrice: Int;
-  reviews?: ReviewCreateManyWithoutBikeInput;
 }
 
 export interface BikeUpdateManyInput {
@@ -1425,9 +1345,97 @@ export interface BikeUpdateManyInput {
     | BikeUpdateManyWithWhereNestedInput;
 }
 
+export interface BikeUpdateManyMutationInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  areaIds?: BikeUpdateareaIdsInput;
+}
+
+export interface SavedBikesListCreateInput {
+  userUid: String;
+  bikes?: BikeCreateManyInput;
+}
+
+export interface BikeCreateOneWithoutReviewsInput {
+  create?: BikeCreateWithoutReviewsInput;
+  connect?: BikeWhereUniqueInput;
+}
+
 export interface BikeUpsertWithoutReviewsInput {
   update: BikeUpdateWithoutReviewsDataInput;
   create: BikeCreateWithoutReviewsInput;
+}
+
+export interface ReviewCreateInput {
+  rating: Int;
+  comment?: String;
+  userUid: String;
+  bike: BikeCreateOneWithoutReviewsInput;
+}
+
+export interface ReviewCreateManyWithoutBikeInput {
+  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+}
+
+export interface BookingCreateInput {
+  userUid: String;
+  startDate: DateTimeInput;
+  endDate: DateTimeInput;
+  deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
+  deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
+  deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
+  totalPrice: Int;
+  status?: BookingStatus;
+  bike: BikeCreateOneWithoutBookingsInput;
+}
+
+export interface BikeUpdateManyWithWhereNestedInput {
+  where: BikeScalarWhereInput;
+  data: BikeUpdateManyDataInput;
+}
+
+export interface BikeCreateOneWithoutBookingsInput {
+  create?: BikeCreateWithoutBookingsInput;
+  connect?: BikeWhereUniqueInput;
+}
+
+export interface SavedBikesListUpdateInput {
+  userUid?: String;
+  bikes?: BikeUpdateManyInput;
+}
+
+export interface BikeCreateWithoutBookingsInput {
+  ownerUid: String;
+  modelId: Int;
+  photos?: BikeCreatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
+  areaIds?: BikeCreateareaIdsInput;
+  reviews?: ReviewCreateManyWithoutBikeInput;
+}
+
+export interface BikeUpdateOneRequiredWithoutReviewsInput {
+  create?: BikeCreateWithoutReviewsInput;
+  update?: BikeUpdateWithoutReviewsDataInput;
+  upsert?: BikeUpsertWithoutReviewsInput;
+  connect?: BikeWhereUniqueInput;
 }
 
 export interface BikeUpsertWithoutBookingsInput {
@@ -1445,6 +1453,7 @@ export interface BikeUpdateWithoutBookingsDataInput {
   mileage?: Int;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  areaIds?: BikeUpdateareaIdsInput;
   reviews?: ReviewUpdateManyWithoutBikeInput;
 }
 
@@ -1472,32 +1481,40 @@ export interface BookingUpdateInput {
   bike?: BikeUpdateOneRequiredWithoutBookingsInput;
 }
 
-export interface SavedBikesListCreateInput {
-  userUid: String;
-  bikes?: BikeCreateManyInput;
+export interface BikeCreatephotosInput {
+  set?: String[] | String;
 }
 
-export interface BikeUpsertWithWhereUniqueNestedInput {
-  where: BikeWhereUniqueInput;
-  update: BikeUpdateDataInput;
-  create: BikeCreateInput;
+export interface ReviewUpdateManyMutationInput {
+  rating?: Int;
+  comment?: String;
+  userUid?: String;
 }
 
-export interface SavedBikesListSubscriptionWhereInput {
+export interface BikeUpdateDataInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  areaIds?: BikeUpdateareaIdsInput;
+  reviews?: ReviewUpdateManyWithoutBikeInput;
+  bookings?: BookingUpdateManyWithoutBikeInput;
+}
+
+export interface BookingSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: SavedBikesListWhereInput;
-  AND?:
-    | SavedBikesListSubscriptionWhereInput[]
-    | SavedBikesListSubscriptionWhereInput;
-  OR?:
-    | SavedBikesListSubscriptionWhereInput[]
-    | SavedBikesListSubscriptionWhereInput;
-  NOT?:
-    | SavedBikesListSubscriptionWhereInput[]
-    | SavedBikesListSubscriptionWhereInput;
+  node?: BookingWhereInput;
+  AND?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
+  OR?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
+  NOT?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
 }
 
 export interface NodeNode {
@@ -1791,6 +1808,7 @@ export interface Bike {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  areaIds: Int[];
 }
 
 export interface BikePromise extends Promise<Bike>, Fragmentable {
@@ -1804,6 +1822,7 @@ export interface BikePromise extends Promise<Bike>, Fragmentable {
   mileage: () => Promise<Int>;
   dailyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
+  areaIds: () => Promise<Int[]>;
   reviews: <T = FragmentableArray<Review>>(
     args?: {
       where?: ReviewWhereInput;
@@ -1841,6 +1860,7 @@ export interface BikeSubscription
   mileage: () => Promise<AsyncIterator<Int>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  areaIds: () => Promise<AsyncIterator<Int[]>>;
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(
     args?: {
       where?: ReviewWhereInput;
@@ -2076,6 +2096,7 @@ export interface BikePreviousValues {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  areaIds: Int[];
 }
 
 export interface BikePreviousValuesPromise
@@ -2091,6 +2112,7 @@ export interface BikePreviousValuesPromise
   mileage: () => Promise<Int>;
   dailyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
+  areaIds: () => Promise<Int[]>;
 }
 
 export interface BikePreviousValuesSubscription
@@ -2106,6 +2128,7 @@ export interface BikePreviousValuesSubscription
   mileage: () => Promise<AsyncIterator<Int>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  areaIds: () => Promise<AsyncIterator<Int[]>>;
 }
 
 export interface Review {

@@ -32,7 +32,7 @@
 
 (defn own-bikes
   [_ _ {:keys [prisma user]}]
-  (prisma [:bikes {:where {:ownerUid (:uid user)}}]))
+  (prisma [:bikes {:where {:ownerUid (:uid user)} :orderBy :id_DESC}]))
 
 (defn saved-bikes
   [_ _ {:keys [prisma user]}]

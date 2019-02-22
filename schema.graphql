@@ -24,6 +24,15 @@ type Mutation {
     deliveryLocationAddress: String!
     deliveryLocationComment: String
     bikeId: ID!): Booking
+  createBike(
+    modelId: Int!
+    photos: [String!]!
+    areaIds: [Int!]!
+    manufactureYear: Int!
+    mileage: Int!
+    dailyPrice: Int!
+    monthlyPrice: Int!
+  ): Bike
 }
 
 type User {
@@ -37,6 +46,7 @@ type Bike {
   ownerUid: String!
   modelId: Int!
   photos: [String!]
+  areaIds: [Int!]
   rating: Float
   reviewsCount: Int
   manufactureYear: Int

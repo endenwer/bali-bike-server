@@ -9,6 +9,7 @@ type Bike {
   mileage: Int @default(value: 0)
   dailyPrice: Int!
   monthlyPrice: Int!
+  areaIds: [Int!]!
   reviews: [Review!]!
   bookings: [Booking!]!
 }

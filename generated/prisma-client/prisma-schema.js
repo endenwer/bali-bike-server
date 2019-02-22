@@ -30,6 +30,7 @@ type Bike {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  areaIds: [Int!]!
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
 }
@@ -38,6 +39,10 @@ type BikeConnection {
   pageInfo: PageInfo!
   edges: [BikeEdge]!
   aggregate: AggregateBike!
+}
+
+input BikeCreateareaIdsInput {
+  set: [Int!]
 }
 
 input BikeCreateInput {
@@ -50,6 +55,7 @@ input BikeCreateInput {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  areaIds: BikeCreateareaIdsInput
   reviews: ReviewCreateManyWithoutBikeInput
   bookings: BookingCreateManyWithoutBikeInput
 }
@@ -83,6 +89,7 @@ input BikeCreateWithoutBookingsInput {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  areaIds: BikeCreateareaIdsInput
   reviews: ReviewCreateManyWithoutBikeInput
 }
 
@@ -96,6 +103,7 @@ input BikeCreateWithoutReviewsInput {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  areaIds: BikeCreateareaIdsInput
   bookings: BookingCreateManyWithoutBikeInput
 }
 
@@ -140,6 +148,7 @@ type BikePreviousValues {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  areaIds: [Int!]!
 }
 
 input BikeScalarWhereInput {
@@ -250,6 +259,10 @@ input BikeSubscriptionWhereInput {
   NOT: [BikeSubscriptionWhereInput!]
 }
 
+input BikeUpdateareaIdsInput {
+  set: [Int!]
+}
+
 input BikeUpdateDataInput {
   ownerUid: String
   modelId: Int
@@ -260,6 +273,7 @@ input BikeUpdateDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  areaIds: BikeUpdateareaIdsInput
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -274,6 +288,7 @@ input BikeUpdateInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  areaIds: BikeUpdateareaIdsInput
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -288,6 +303,7 @@ input BikeUpdateManyDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  areaIds: BikeUpdateareaIdsInput
 }
 
 input BikeUpdateManyInput {
@@ -311,6 +327,7 @@ input BikeUpdateManyMutationInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  areaIds: BikeUpdateareaIdsInput
 }
 
 input BikeUpdateManyWithWhereNestedInput {
@@ -346,6 +363,7 @@ input BikeUpdateWithoutBookingsDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  areaIds: BikeUpdateareaIdsInput
   reviews: ReviewUpdateManyWithoutBikeInput
 }
 
@@ -359,6 +377,7 @@ input BikeUpdateWithoutReviewsDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  areaIds: BikeUpdateareaIdsInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
 
