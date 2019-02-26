@@ -1,5 +1,6 @@
 (ns bali-bike-server.mutation-resolvers
   (:require [promesa.core :as p :refer-macros [alet]]
+            ["firebase-admin" :default firebase-admin]
             ["moment-precise-range-plugin"]
             ["moment" :as moment]))
 
@@ -59,6 +60,21 @@
        :monthlyPrice (:monthlyPrice args)
        :ownerUid owner-uid}])))
 
+(defn update-bike
+  [_ _ {:keys [prisma args]}]
+  (let [bike-id (:id args)]
+    (prisma [:updateBike
+             {:data {:photos {:set (:photos args)}
+                     :areaIds {:set (:areaIds args)}
+                     :mileage (:mileage args)
+                     :dailyPrice (:dailyPrice args)
+                     :monthlyPrice (:monthlyPrice args)}
+              :where {:id (:id args)}}])))
+
+(defn delete-bike
+  [_ _ {:keys [prisma args]}]
+  (prisma [:deleteBike {:id (:id args)}]))
+
 (defn add-bike-to-saved
   [_ _ {:keys [prisma user args]}]
   (alet [saved-list (p/await (p/promise (prisma [:savedBikesList {:userUid (:uid user)}])))]
@@ -72,3 +88,10 @@
   [_ _ {:keys [prisma user args]}]
   (prisma [:updateSavedBikesList {:where {:userUid (:uid user)}
                                   :data {:bikes {:disconnect {:id (:bikeId args)}}}}]))
+
+(defn change-role
+  [_ _ {:keys [prisma user args]}]
+  (let [role (:role args)
+        valid-role? (contains? #{"bike-owner" nil} role)]
+    (when valid-role?
+      (.setCustomUserClaims (.auth firebase-admin) (:uid user) (clj->js {:role role})))))

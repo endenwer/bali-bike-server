@@ -33,6 +33,16 @@ type Mutation {
     dailyPrice: Int!
     monthlyPrice: Int!
   ): Bike
+  updateBike(
+    id: ID!
+    photos: [String!]!
+    areaIds: [Int!]!
+    mileage: Int!
+    dailyPrice: Int!
+    monthlyPrice: Int!
+  ): Bike
+  deleteBike(id: ID!): Bike
+  changeRole(role: String): Boolean
 }
 
 type User {

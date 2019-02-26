@@ -29,7 +29,10 @@
    :Mutation {:createBooking mutation-resolvers/create-booking
               :addBikeToSaved mutation-resolvers/add-bike-to-saved
               :removeBikeFromSaved mutation-resolvers/remove-bike-from-saved
-              :createBike mutation-resolvers/create-bike}
+              :createBike mutation-resolvers/create-bike
+              :updateBike mutation-resolvers/update-bike
+              :deleteBike mutation-resolvers/delete-bike
+              :changeRole mutation-resolvers/change-role}
    :Bike {:reviews query-resolvers/bike-reviews
           :saved query-resolvers/bike-saved
           :owner query-resolvers/bike-owner}
@@ -44,7 +47,10 @@
            :Mutation {:createBooking rules/is-authenticated
                       :addBikeToSaved rules/is-authenticated
                       :removeBikeFromSaved rules/is-authenticated
-                      :createBike rules/is-authenticated}})))
+                      :createBike rules/is-authenticated
+                      :updateBike rules/is-bike-owner
+                      :deleteBike rules/is-bike-owner
+                      :changeRole rules/is-authenticated}})))
 
 (def server
   (graphql-server. (clj->js {:typeDefs "./schema.graphql"
