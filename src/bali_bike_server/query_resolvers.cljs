@@ -20,12 +20,38 @@
              {:index 1 :values [] :text query} cleaned-variables)
      :index)))
 
+(def bookings-join-statement
+  (str
+   "left outer join default$default.\"_BikeToBooking\" "
+   "as \"RelationTable\" "
+   "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
+   "left outer join default$default.\"Booking\" as \"Booking\" "
+   "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "))
+
+(def areas-join-statement
+  (str "left outer join default$default.\"Bike_areaIds\"  "
+       "as \"AreaIds\" "
+       "on \"Bike\".\"id\" = \"AreaIds\".\"nodeId\" "))
+
+(def dates-where-statement
+  (str
+   "(not(\"Booking\".\"startDate\" <= :end-date "
+   "AND \"Booking\".\"endDate\" >= :start-date "
+   "AND \"Booking\".\"status\" = 'CONFIRMED') "
+   "OR \"Booking\".id is null) "))
+
+(def model-where-statement "\"Bike\".\"modelId\" = :model-id ")
+(def area-where-statement "\"AreaIds\".\"value\" = :area-id ")
+
 (defn- query-bikes
   [pg-client args]
   (let [start-date (.toISOString (moment (:startDate args)))
         end-date (.toISOString (moment (:endDate args)))
         area-id (:areaId args)
-        model-id (:modelId args)]
+        model-id (:modelId args)
+        where-statements (remove nil? [(when (and start-date end-date) dates-where-statement)
+                                       (when area-id area-where-statement)
+                                       (when model-id model-where-statement)])]
     (p/then
      (p/promise
       (.query
@@ -33,29 +59,14 @@
        (clj->js
         (named-query
          (str "select \"Bike\".* from default$default.\"Bike\" as \"Bike\" "
-              (when (and start-date end-date)
-                (str
-                 "left outer join default$default.\"_BikeToBooking\" "
-                 "as \"RelationTable\" "
-                 "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
-                 "left outer join default$default.\"Booking\" as \"Booking\" "
-                 "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "))
-              (when area-id
-                (str "left outer join default$default.\"Bike_areaIds\"  "
-                     "as \"AreaIds\" "
-                     "on \"Bike\".\"id\" = \"AreaIds\".\"nodeId\" "))
-              (when (and start-date end-date)
-                (str
-                 "where not(\"Booking\".\"startDate\" <= :end-date::timestamptz "
-                 "AND \"Booking\".\"endDate\" >= :start-date::timestamptz "
-                 "AND \"Booking\".\"status\" = 'CONFIRMED') "
-                 "OR \"Booking\".id is null "))
-              (when area-id "where \"AreaIds\".\"value\" = :area-id ")
-              (when model-id "where \"Bike\".\"modelId\" = :model-id ")
+              (when (and start-date end-date) bookings-join-statement)
+              (when area-id areas-join-statement)
+              (when-not (empty? where-statements)
+                (str "where " (string/join " AND " where-statements)))
               "order by \"Bike\".id asc "
               "limit :first "
               "offset :skip")
-         {:star-date start-date
+         {:start-date start-date
           :end-date end-date
           :area-id area-id
           :model-id model-id
