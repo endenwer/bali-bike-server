@@ -1,34 +1,67 @@
 (ns bali-bike-server.query-resolvers
   (:require [promesa.core :as p :refer-macros [alet]]
+            [clojure.string :as string]
             ["firebase-admin" :default firebase-admin]
             ["moment" :as moment]))
+
+(defn named-query
+  [query variables]
+  (let [cleaned-variables (into {} (remove (comp nil? second) variables))]
+    (dissoc
+     (reduce (fn [result [variable-name variable-value]]
+               (let [text (:text result)
+                     values (:values result)
+                     index (:index result)]
+                 (->
+                  result
+                  (assoc :text (string/replace text (str variable-name) (str "$" index)))
+                  (assoc :values (conj values variable-value))
+                  (assoc :index (+ index 1)))))
+             {:index 1 :values [] :text query} cleaned-variables)
+     :index)))
 
 (defn bikes
   [_ _ {:keys [prisma args pg-client]}]
   (let [start-date (.toISOString (moment (:startDate args)))
-        end-date (.toISOString (moment (:endDate args)))]
-    (if (and start-date end-date)
-      (alet [result (p/await
-                     (p/promise
-                      (.query
-                       pg-client
+        end-date (.toISOString (moment (:endDate args)))
+        area-id (:areaId args)
+        model-id (:modelId args)]
+    (alet [result (p/await
+                   (p/promise
+                    (.query
+                     pg-client
+                     (clj->js
+                      (named-query
                        (str "select \"Bike\".* from default$default.\"Bike\" as \"Bike\" "
-                            "left outer join default$default.\"_BikeToBooking\" as \"RelationTable\" "
-                            "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
-                            "left outer join default$default.\"Booking\" as \"Booking\" "
-                            "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "
-                            "where not(\"Booking\".\"startDate\" <= "
-                            "'" end-date "' "
-                            "AND \"Booking\".\"endDate\" >= "
-                            "'" start-date "' "
-                            "AND \"Booking\".\"status\" = 'CONFIRMED') "
-                            "OR \"Booking\".id is null "
+                            (when (and start-date end-date)
+                              (str
+                               "left outer join default$default.\"_BikeToBooking\" "
+                               "as \"RelationTable\" "
+                               "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
+                               "left outer join default$default.\"Booking\" as \"Booking\" "
+                               "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "))
+                            (when area-id
+                              (str "left outer join default$default.\"Bike_areaIds\"  "
+                                   "as \"AreaIds\" "
+                                   "on \"Bike\".\"id\" = \"AreaIds\".\"nodeId\" "))
+                            (when (and start-date end-date)
+                              (str
+                               "where not(\"Booking\".\"startDate\" <= :end-date::timestamptz "
+                               "AND \"Booking\".\"endDate\" >= :start-date::timestamptz "
+                               "AND \"Booking\".\"status\" = 'CONFIRMED') "
+                               "OR \"Booking\".id is null "))
+                            (when area-id "where \"AreaIds\".\"value\" = :area-id ")
+                            (when model-id "where \"Bike\".\"modelId\" = :model-id ")
                             "order by \"Bike\".id asc "
-                            "limit " (:first args) " "
-                            "offset " (:skip args)))))]
-            (.-rows result))
-      (do
-        (prisma [:bikes {:first (:first args) :skip (:skip args)}])))))
+                            "limit :first "
+                            "offset :skip")
+                       {:star-date start-date
+                        :end-date end-date
+                        :area-id area-id
+                        :model-id model-id
+                        :first (:first args)
+                        :skip (:skip args)})))))]
+          (.-rows result))))
 
 (defn own-bikes
   [_ _ {:keys [prisma user]}]

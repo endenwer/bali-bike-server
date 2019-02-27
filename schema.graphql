@@ -3,7 +3,9 @@ type Query {
     first: Int!
     skip: Int!
     startDate: String
-    endDate: String): [Bike!]
+    endDate: String
+    areaId: Int
+    modelId: Int): [Bike!]
   ownBikes: [Bike!]
   savedBikes: [Bike!]
   bike(id: ID!): Bike
