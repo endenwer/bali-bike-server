@@ -4,7 +4,7 @@
             ["firebase-admin" :default firebase-admin]
             ["moment" :as moment]))
 
-(defn named-query
+(defn- named-query
   [query variables]
   (let [cleaned-variables (into {} (remove (comp nil? second) variables))]
     (dissoc
@@ -20,48 +20,87 @@
              {:index 1 :values [] :text query} cleaned-variables)
      :index)))
 
-(defn bikes
-  [_ _ {:keys [prisma args pg-client]}]
+(defn- query-bikes
+  [pg-client args]
   (let [start-date (.toISOString (moment (:startDate args)))
         end-date (.toISOString (moment (:endDate args)))
         area-id (:areaId args)
         model-id (:modelId args)]
-    (alet [result (p/await
-                   (p/promise
-                    (.query
-                     pg-client
-                     (clj->js
-                      (named-query
-                       (str "select \"Bike\".* from default$default.\"Bike\" as \"Bike\" "
-                            (when (and start-date end-date)
-                              (str
-                               "left outer join default$default.\"_BikeToBooking\" "
-                               "as \"RelationTable\" "
-                               "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
-                               "left outer join default$default.\"Booking\" as \"Booking\" "
-                               "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "))
-                            (when area-id
-                              (str "left outer join default$default.\"Bike_areaIds\"  "
-                                   "as \"AreaIds\" "
-                                   "on \"Bike\".\"id\" = \"AreaIds\".\"nodeId\" "))
-                            (when (and start-date end-date)
-                              (str
-                               "where not(\"Booking\".\"startDate\" <= :end-date::timestamptz "
-                               "AND \"Booking\".\"endDate\" >= :start-date::timestamptz "
-                               "AND \"Booking\".\"status\" = 'CONFIRMED') "
-                               "OR \"Booking\".id is null "))
-                            (when area-id "where \"AreaIds\".\"value\" = :area-id ")
-                            (when model-id "where \"Bike\".\"modelId\" = :model-id ")
-                            "order by \"Bike\".id asc "
-                            "limit :first "
-                            "offset :skip")
-                       {:star-date start-date
-                        :end-date end-date
-                        :area-id area-id
-                        :model-id model-id
-                        :first (:first args)
-                        :skip (:skip args)})))))]
-          (.-rows result))))
+    (p/then
+     (p/promise
+      (.query
+       pg-client
+       (clj->js
+        (named-query
+         (str "select \"Bike\".* from default$default.\"Bike\" as \"Bike\" "
+              (when (and start-date end-date)
+                (str
+                 "left outer join default$default.\"_BikeToBooking\" "
+                 "as \"RelationTable\" "
+                 "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
+                 "left outer join default$default.\"Booking\" as \"Booking\" "
+                 "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "))
+              (when area-id
+                (str "left outer join default$default.\"Bike_areaIds\"  "
+                     "as \"AreaIds\" "
+                     "on \"Bike\".\"id\" = \"AreaIds\".\"nodeId\" "))
+              (when (and start-date end-date)
+                (str
+                 "where not(\"Booking\".\"startDate\" <= :end-date::timestamptz "
+                 "AND \"Booking\".\"endDate\" >= :start-date::timestamptz "
+                 "AND \"Booking\".\"status\" = 'CONFIRMED') "
+                 "OR \"Booking\".id is null "))
+              (when area-id "where \"AreaIds\".\"value\" = :area-id ")
+              (when model-id "where \"Bike\".\"modelId\" = :model-id ")
+              "order by \"Bike\".id asc "
+              "limit :first "
+              "offset :skip")
+         {:star-date start-date
+          :end-date end-date
+          :area-id area-id
+          :model-id model-id
+          :first (:first args)
+          :skip (:skip args)}))))
+     #(.-rows %))))
+
+(defn- query-bike-photos
+  [pg-client bikes]
+  (let [bike-ids (map #(get % "id") (js->clj bikes))]
+    (p/then
+     (p/promise
+      (.query
+       pg-client
+       #js {:text (str "select default$default.\"Bike_photos\".* "
+                       "from default$default.\"Bike_photos\" "
+                       "where default$default.\"Bike_photos\".\"nodeId\" "
+                       "in ("
+                       (string/join
+                        ", "
+                        (reduce #(conj %1 (str "$" (+ 1 %2))) [] (range (count bike-ids))))
+                       ")")
+            :values (clj->js bike-ids)}))
+     #(.-rows %))))
+
+(defn- merge-photos-to-bikes
+  [bikes photos]
+  (let [grouped-photos (group-by #(get % "nodeId") (js->clj photos))
+        grouped-sorted-photos (map #(identity {"id" (first %)
+                                               "photos" (map (fn [p] (get p "value"))
+                                                             (sort (fn [a b]
+                                                                     (> (get "position" a)
+                                                                        (get "position" b)))
+                                                                   (second %)))})
+                                   grouped-photos)]
+    (map
+     #(apply merge %)
+     (vals (group-by #(get % "id") (concat (js->clj bikes) grouped-sorted-photos))))))
+
+(defn bikes
+  [_ _ {:keys [prisma args pg-client]}]
+  (alet [bikes (p/await (query-bikes pg-client args))
+         bike-photos (p/await (query-bike-photos pg-client bikes))
+         bikes-with-photos (merge-photos-to-bikes bikes bike-photos)]
+        (clj->js bikes-with-photos)))
 
 (defn own-bikes
   [_ _ {:keys [prisma user]}]
