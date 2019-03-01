@@ -45,6 +45,8 @@ type Mutation {
   ): Bike
   deleteBike(id: ID!): Bike
   changeRole(role: String): Boolean
+  confirmBooking(id: ID!): Booking
+  cancelBooking(id: ID!): Booking
 }
 
 type User {

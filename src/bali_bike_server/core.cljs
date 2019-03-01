@@ -32,7 +32,9 @@
               :createBike mutation-resolvers/create-bike
               :updateBike mutation-resolvers/update-bike
               :deleteBike mutation-resolvers/delete-bike
-              :changeRole mutation-resolvers/change-role}
+              :changeRole mutation-resolvers/change-role
+              :confirmBooking mutation-resolvers/confirm-booking
+              :cancelBooking mutation-resolvers/cancel-booking}
    :Bike {:reviews query-resolvers/bike-reviews
           :saved query-resolvers/bike-saved
           :owner query-resolvers/bike-owner}
@@ -50,7 +52,9 @@
                       :createBike rules/is-authenticated
                       :updateBike rules/is-bike-owner
                       :deleteBike rules/is-bike-owner
-                      :changeRole rules/is-authenticated}})))
+                      :changeRole rules/is-authenticated
+                      :confirmBooking rules/is-booking-bike-owner
+                      :cancelBooking rules/is-booking-bike-owner}})))
 
 (def server
   (graphql-server. (clj->js {:typeDefs "./schema.graphql"

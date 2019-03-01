@@ -95,3 +95,15 @@
         valid-role? (contains? #{"bike-owner" nil} role)]
     (when valid-role?
       (.setCustomUserClaims (.auth firebase-admin) (:uid user) (clj->js {:role role})))))
+
+(defn confirm-booking
+  [_ _ {:keys [prisma args]}]
+  (prisma [:updateBooking
+           {:data {:status "CONFIRMED"}
+            :where {:id (:id args)}}]))
+
+(defn cancel-booking
+  [_ _ {:keys [prisma args]}]
+  (prisma [:updateBooking
+           {:data {:status "CANCELED"}
+            :where {:id (:id args)}}]))
