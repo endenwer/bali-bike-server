@@ -25,6 +25,7 @@
            :ownBikes query-resolvers/own-bikes
            :bike query-resolvers/bike
            :bookings query-resolvers/bookings
+           :bikeOwnerBookings query-resolvers/bike-owner-bookings
            :booking query-resolvers/booking}
    :Mutation {:createBooking mutation-resolvers/create-booking
               :addBikeToSaved mutation-resolvers/add-bike-to-saved
@@ -44,6 +45,7 @@
 (def permissions
   (shield (clj->js
           {:Query {:bookings rules/is-authenticated
+                   :bikeOwnerBookings rules/is-authenticated
                    :booking rules/is-booking-owner
                    :ownBikes rules/is-authenticated}
            :Mutation {:createBooking rules/is-authenticated

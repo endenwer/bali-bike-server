@@ -38,6 +38,7 @@ enum BookingStatus {
 type Booking {
   id: ID! @unique
   userUid: String!
+  bikeOwnerUid: String!
   startDate: DateTime!
   endDate: DateTime!
   deliveryLocationLongitude: String!

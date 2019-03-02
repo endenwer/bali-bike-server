@@ -267,6 +267,8 @@ export type BookingOrderByInput =
   | "id_DESC"
   | "userUid_ASC"
   | "userUid_DESC"
+  | "bikeOwnerUid_ASC"
+  | "bikeOwnerUid_DESC"
   | "startDate_ASC"
   | "startDate_DESC"
   | "endDate_ASC"
@@ -343,6 +345,7 @@ export type BikeWhereUniqueInput = AtLeastOne<{
 
 export interface BookingUpdateWithoutBikeDataInput {
   userUid?: String;
+  bikeOwnerUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
   deliveryLocationLongitude?: String;
@@ -461,6 +464,7 @@ export interface ReviewCreateWithoutBikeInput {
 
 export interface BookingUpdateManyMutationInput {
   userUid?: String;
+  bikeOwnerUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
   deliveryLocationLongitude?: String;
@@ -488,6 +492,7 @@ export interface BookingUpsertWithWhereUniqueWithoutBikeInput {
 
 export interface BookingCreateWithoutBikeInput {
   userUid: String;
+  bikeOwnerUid: String;
   startDate: DateTimeInput;
   endDate: DateTimeInput;
   deliveryLocationLongitude: String;
@@ -915,6 +920,20 @@ export interface BookingWhereInput {
   userUid_not_starts_with?: String;
   userUid_ends_with?: String;
   userUid_not_ends_with?: String;
+  bikeOwnerUid?: String;
+  bikeOwnerUid_not?: String;
+  bikeOwnerUid_in?: String[] | String;
+  bikeOwnerUid_not_in?: String[] | String;
+  bikeOwnerUid_lt?: String;
+  bikeOwnerUid_lte?: String;
+  bikeOwnerUid_gt?: String;
+  bikeOwnerUid_gte?: String;
+  bikeOwnerUid_contains?: String;
+  bikeOwnerUid_not_contains?: String;
+  bikeOwnerUid_starts_with?: String;
+  bikeOwnerUid_not_starts_with?: String;
+  bikeOwnerUid_ends_with?: String;
+  bikeOwnerUid_not_ends_with?: String;
   startDate?: DateTimeInput;
   startDate_not?: DateTimeInput;
   startDate_in?: DateTimeInput[] | DateTimeInput;
@@ -1164,6 +1183,20 @@ export interface BookingScalarWhereInput {
   userUid_not_starts_with?: String;
   userUid_ends_with?: String;
   userUid_not_ends_with?: String;
+  bikeOwnerUid?: String;
+  bikeOwnerUid_not?: String;
+  bikeOwnerUid_in?: String[] | String;
+  bikeOwnerUid_not_in?: String[] | String;
+  bikeOwnerUid_lt?: String;
+  bikeOwnerUid_lte?: String;
+  bikeOwnerUid_gt?: String;
+  bikeOwnerUid_gte?: String;
+  bikeOwnerUid_contains?: String;
+  bikeOwnerUid_not_contains?: String;
+  bikeOwnerUid_starts_with?: String;
+  bikeOwnerUid_not_starts_with?: String;
+  bikeOwnerUid_ends_with?: String;
+  bikeOwnerUid_not_ends_with?: String;
   startDate?: DateTimeInput;
   startDate_not?: DateTimeInput;
   startDate_in?: DateTimeInput[] | DateTimeInput;
@@ -1314,6 +1347,7 @@ export interface BikeUpsertWithWhereUniqueNestedInput {
 
 export interface BookingUpdateManyDataInput {
   userUid?: String;
+  bikeOwnerUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
   deliveryLocationLongitude?: String;
@@ -1387,6 +1421,7 @@ export interface ReviewCreateManyWithoutBikeInput {
 
 export interface BookingCreateInput {
   userUid: String;
+  bikeOwnerUid: String;
   startDate: DateTimeInput;
   endDate: DateTimeInput;
   deliveryLocationLongitude: String;
@@ -1466,6 +1501,7 @@ export interface BikeUpdateOneRequiredWithoutBookingsInput {
 
 export interface BookingUpdateInput {
   userUid?: String;
+  bikeOwnerUid?: String;
   startDate?: DateTimeInput;
   endDate?: DateTimeInput;
   deliveryLocationLongitude?: String;
@@ -1953,6 +1989,7 @@ export interface SavedBikesListEdgeSubscription
 export interface BookingPreviousValues {
   id: ID_Output;
   userUid: String;
+  bikeOwnerUid: String;
   startDate: DateTimeOutput;
   endDate: DateTimeOutput;
   deliveryLocationLongitude: String;
@@ -1972,6 +2009,7 @@ export interface BookingPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   userUid: () => Promise<String>;
+  bikeOwnerUid: () => Promise<String>;
   startDate: () => Promise<DateTimeOutput>;
   endDate: () => Promise<DateTimeOutput>;
   deliveryLocationLongitude: () => Promise<String>;
@@ -1991,6 +2029,7 @@ export interface BookingPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   userUid: () => Promise<AsyncIterator<String>>;
+  bikeOwnerUid: () => Promise<AsyncIterator<String>>;
   startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   deliveryLocationLongitude: () => Promise<AsyncIterator<String>>;
@@ -2033,6 +2072,7 @@ export interface BookingSubscriptionPayloadSubscription
 export interface Booking {
   id: ID_Output;
   userUid: String;
+  bikeOwnerUid: String;
   startDate: DateTimeOutput;
   endDate: DateTimeOutput;
   deliveryLocationLongitude: String;
@@ -2050,6 +2090,7 @@ export interface Booking {
 export interface BookingPromise extends Promise<Booking>, Fragmentable {
   id: () => Promise<ID_Output>;
   userUid: () => Promise<String>;
+  bikeOwnerUid: () => Promise<String>;
   startDate: () => Promise<DateTimeOutput>;
   endDate: () => Promise<DateTimeOutput>;
   deliveryLocationLongitude: () => Promise<String>;
@@ -2070,6 +2111,7 @@ export interface BookingSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   userUid: () => Promise<AsyncIterator<String>>;
+  bikeOwnerUid: () => Promise<AsyncIterator<String>>;
   startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   deliveryLocationLongitude: () => Promise<AsyncIterator<String>>;

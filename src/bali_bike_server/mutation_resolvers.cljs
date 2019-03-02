@@ -44,6 +44,7 @@
            :monthlyPrice monthly-price
            :dailyPrice daily-price
            :totalPrice total-price
+           :bikeOwnerUid (:ownerUid bike)
            :bike {:connect {:id (:bikeId args)}}}])))
 
 (defn create-bike

@@ -9,7 +9,8 @@ type Query {
   ownBikes: [Bike!]
   savedBikes: [Bike!]
   bike(id: ID!): Bike
-  bookings: [Booking!]!
+  bookings: [Booking!]
+  bikeOwnerBookings: [Booking!]
   booking(id: ID!): Booking
 }
 

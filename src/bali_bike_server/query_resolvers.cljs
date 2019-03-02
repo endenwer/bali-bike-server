@@ -147,6 +147,10 @@
   [_ _ {:keys [prisma user]}]
   (prisma [:bookings {:where {:userUid (:uid user)}}]))
 
+(defn bike-owner-bookings
+  [_ _ {:keys [prisma user]}]
+  (prisma [:bookings {:where {:bikeOwnerUid (:uid user)}}]))
+
 (defn booking
   [_ _ {:keys [prisma args]}]
   (prisma [:booking {:id (:id args)}]))

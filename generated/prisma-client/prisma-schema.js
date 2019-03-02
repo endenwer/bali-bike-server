@@ -505,6 +505,7 @@ input BikeWhereUniqueInput {
 type Booking {
   id: ID!
   userUid: String!
+  bikeOwnerUid: String!
   startDate: DateTime!
   endDate: DateTime!
   deliveryLocationLongitude: String!
@@ -528,6 +529,7 @@ type BookingConnection {
 
 input BookingCreateInput {
   userUid: String!
+  bikeOwnerUid: String!
   startDate: DateTime!
   endDate: DateTime!
   deliveryLocationLongitude: String!
@@ -550,6 +552,7 @@ input BookingCreateManyWithoutBikeInput {
 
 input BookingCreateWithoutBikeInput {
   userUid: String!
+  bikeOwnerUid: String!
   startDate: DateTime!
   endDate: DateTime!
   deliveryLocationLongitude: String!
@@ -574,6 +577,8 @@ enum BookingOrderByInput {
   id_DESC
   userUid_ASC
   userUid_DESC
+  bikeOwnerUid_ASC
+  bikeOwnerUid_DESC
   startDate_ASC
   startDate_DESC
   endDate_ASC
@@ -607,6 +612,7 @@ enum BookingOrderByInput {
 type BookingPreviousValues {
   id: ID!
   userUid: String!
+  bikeOwnerUid: String!
   startDate: DateTime!
   endDate: DateTime!
   deliveryLocationLongitude: String!
@@ -650,6 +656,20 @@ input BookingScalarWhereInput {
   userUid_not_starts_with: String
   userUid_ends_with: String
   userUid_not_ends_with: String
+  bikeOwnerUid: String
+  bikeOwnerUid_not: String
+  bikeOwnerUid_in: [String!]
+  bikeOwnerUid_not_in: [String!]
+  bikeOwnerUid_lt: String
+  bikeOwnerUid_lte: String
+  bikeOwnerUid_gt: String
+  bikeOwnerUid_gte: String
+  bikeOwnerUid_contains: String
+  bikeOwnerUid_not_contains: String
+  bikeOwnerUid_starts_with: String
+  bikeOwnerUid_not_starts_with: String
+  bikeOwnerUid_ends_with: String
+  bikeOwnerUid_not_ends_with: String
   startDate: DateTime
   startDate_not: DateTime
   startDate_in: [DateTime!]
@@ -809,6 +829,7 @@ input BookingSubscriptionWhereInput {
 
 input BookingUpdateInput {
   userUid: String
+  bikeOwnerUid: String
   startDate: DateTime
   endDate: DateTime
   deliveryLocationLongitude: String
@@ -826,6 +847,7 @@ input BookingUpdateInput {
 
 input BookingUpdateManyDataInput {
   userUid: String
+  bikeOwnerUid: String
   startDate: DateTime
   endDate: DateTime
   deliveryLocationLongitude: String
@@ -842,6 +864,7 @@ input BookingUpdateManyDataInput {
 
 input BookingUpdateManyMutationInput {
   userUid: String
+  bikeOwnerUid: String
   startDate: DateTime
   endDate: DateTime
   deliveryLocationLongitude: String
@@ -874,6 +897,7 @@ input BookingUpdateManyWithWhereNestedInput {
 
 input BookingUpdateWithoutBikeDataInput {
   userUid: String
+  bikeOwnerUid: String
   startDate: DateTime
   endDate: DateTime
   deliveryLocationLongitude: String
@@ -928,6 +952,20 @@ input BookingWhereInput {
   userUid_not_starts_with: String
   userUid_ends_with: String
   userUid_not_ends_with: String
+  bikeOwnerUid: String
+  bikeOwnerUid_not: String
+  bikeOwnerUid_in: [String!]
+  bikeOwnerUid_not_in: [String!]
+  bikeOwnerUid_lt: String
+  bikeOwnerUid_lte: String
+  bikeOwnerUid_gt: String
+  bikeOwnerUid_gte: String
+  bikeOwnerUid_contains: String
+  bikeOwnerUid_not_contains: String
+  bikeOwnerUid_starts_with: String
+  bikeOwnerUid_not_starts_with: String
+  bikeOwnerUid_ends_with: String
+  bikeOwnerUid_not_ends_with: String
   startDate: DateTime
   startDate_not: DateTime
   startDate_in: [DateTime!]

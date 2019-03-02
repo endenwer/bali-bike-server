@@ -10,7 +10,9 @@
             (when user
               (->
                (p/promise (prisma [:booking {:id (:id args)}]))
-               (p/then (fn [booking] (= (.-userUid booking) (:uid user)))))))))
+               (p/then (fn [booking] (or
+                                      (= (.-bikeOwnerUid booking) (:uid user))
+                                      (= (.-userUid booking) (:uid user))))))))))
 
 (def is-bike-owner
   ((rule) (fn [_ _ {:keys [prisma user args]}]
@@ -23,5 +25,5 @@
   ((rule) (fn [_ _ {:keys [prisma user args]}]
             (when user
               (->
-               (p/promise (.bike (prisma [:booking {:id (:id args)}])))
-               (p/then (fn [bike] (= (.-ownerUid bike) (:uid user)))))))))
+               (p/promise (prisma [:booking {:id (:id args)}]))
+               (p/then (fn [booking] (= (.-bikeOwnerUid booking) (:uid user)))))))))
