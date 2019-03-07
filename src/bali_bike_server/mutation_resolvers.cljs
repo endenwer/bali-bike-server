@@ -1,5 +1,6 @@
 (ns bali-bike-server.mutation-resolvers
   (:require [promesa.core :as p :refer-macros [alet]]
+            [bali-bike-server.constants :as constants]
             ["firebase-admin" :default firebase-admin]
             ["moment-precise-range-plugin"]
             ["moment" :as moment]))
@@ -12,7 +13,13 @@
   [number]
   (* (js/Math.round (/ number 1000)) 1000))
 
-(defn- calculate-total-price
+(defn get-short-dates-range-string
+  [start-date end-date]
+  (str (.format (moment start-date) "MMM D")
+       " - "
+       (.format (moment end-date) "MMM D")))
+
+(defn calculate-total-price
   [{:keys [start-date end-date monthly-price daily-price]}]
   (let [dates-diff (get-dates-diff start-date end-date)
         calculated-daily-price (if (> (:months dates-diff) 0)
@@ -20,6 +27,30 @@
                                 daily-price)]
     (+ (* monthly-price (:months dates-diff))
        (* calculated-daily-price (:days dates-diff)))))
+
+(defn send-notification
+  [user-uid notification]
+  (let [user-ref (.doc (.firestore firebase-admin) (str "users/" user-uid))]
+    (.then
+     (.get user-ref)
+     (fn [user]
+       (.sendToDevice
+        (.messaging firebase-admin)
+        (.-pushToken (.data user))
+        (clj->js notification))))))
+
+(defn send-booking-notification
+  [booking bike]
+  (let [bike-owner-uid (.-bikeOwnerUid booking)
+        model-id (.-modelId bike)
+        start-date (.-startDate booking)
+        end-date (.-endDate booking)
+        notification {:data {:id (.-id booking)}
+                      :notification {:title "New Booking"
+                                     :body (str (get constants/models model-id) ", "
+                                                (get-short-dates-range-string
+                                                 start-date end-date))}}]
+    (send-notification bike-owner-uid notification)))
 
 (defn create-booking
   [_ _ {:keys [prisma user args]}]
@@ -30,22 +61,26 @@
                                              :end-date (:endDate args)
                                              :monthly-price monthly-price
                                              :daily-price daily-price})]
-        (prisma
-         [:createBooking
-          {:startDate (:startDate args)
-           :endDate (:endDate args)
-           :deliveryLocationLongitude (:deliveryLocationLongitude args)
-           :deliveryLocationLongitudeDelta (:deliveryLocationLongitudeDelta args)
-           :deliveryLocationLatitude (:deliveryLocationLatitude args)
-           :deliveryLocationLatitudeDelta (:deliveryLocationLatitudeDelta args)
-           :deliveryLocationAddress (:deliveryLocationAddress args)
-           :deliveryLocationComment (:deliveryLocationComment args)
-           :userUid (:uid user)
-           :monthlyPrice monthly-price
-           :dailyPrice daily-price
-           :totalPrice total-price
-           :bikeOwnerUid (.-ownerUid bike)
-           :bike {:connect {:id (:bikeId args)}}}])))
+        (.then
+         (prisma
+          [:createBooking
+           {:startDate (:startDate args)
+            :endDate (:endDate args)
+            :deliveryLocationLongitude (:deliveryLocationLongitude args)
+            :deliveryLocationLongitudeDelta (:deliveryLocationLongitudeDelta args)
+            :deliveryLocationLatitude (:deliveryLocationLatitude args)
+            :deliveryLocationLatitudeDelta (:deliveryLocationLatitudeDelta args)
+            :deliveryLocationAddress (:deliveryLocationAddress args)
+            :deliveryLocationComment (:deliveryLocationComment args)
+            :userUid (:uid user)
+            :monthlyPrice monthly-price
+            :dailyPrice daily-price
+            :totalPrice total-price
+            :bikeOwnerUid (.-ownerUid bike)
+            :bike {:connect {:id (:bikeId args)}}}])
+         (fn [booking]
+           (send-booking-notification booking bike)
+           booking))))
 
 (defn create-bike
   [_ _ {:keys [prisma user args]}]
