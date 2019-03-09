@@ -1,10 +1,16 @@
 version: '3'
 services:
+  app:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    command: npm start
   prisma:
     image: prismagraphql/prisma:1.23
     restart: always
-    ports:
-    - "4466:4466"
     environment:
       PRISMA_CONFIG: |
         port: 4466
