@@ -13,5 +13,6 @@ COPY package*.json ./
 RUN npm ci --only=production
 COPY . .
 RUN shadow-cljs release app
+ENV NODE_ENV production
 EXPOSE 4000
 CMD [ "npm", "start" ]

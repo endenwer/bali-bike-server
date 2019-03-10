@@ -2,15 +2,20 @@ version: '3'
 services:
   app:
     build: .
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+    depends_on:
+      - prisma
+  nginx:
+    build: ./nginx
     ports:
-      - "4000:4000"
-    command: npm start
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
   prisma:
     image: prismagraphql/prisma:1.23
     restart: always
+    depends_on:
+      - postgres
     environment:
       PRISMA_CONFIG: |
         port: 4466

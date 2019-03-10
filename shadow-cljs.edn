@@ -7,4 +7,5 @@
           {:id        :app
            :target    :node-script
            :main      bali-bike-server.core/main
-           :output-to "index.js"}}}
+           :output-to "index.js"
+           :release {:compiler-options {:optimizations :simple}}}}}
