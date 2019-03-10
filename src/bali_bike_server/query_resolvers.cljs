@@ -76,35 +76,39 @@
 
 (defn- query-bike-photos
   [pg-client bikes]
-  (let [bike-ids (map #(get % "id") (js->clj bikes))]
-    (p/then
-     (p/promise
-      (.query
-       pg-client
-       #js {:text (str "select default$default.\"Bike_photos\".* "
-                       "from default$default.\"Bike_photos\" "
-                       "where default$default.\"Bike_photos\".\"nodeId\" "
-                       "in ("
-                       (string/join
-                        ", "
-                        (reduce #(conj %1 (str "$" (+ 1 %2))) [] (range (count bike-ids))))
-                       ")")
-            :values (clj->js bike-ids)}))
-     #(.-rows %))))
+  (if (empty? bikes)
+    (p/promise nil)
+    (let [bike-ids (map #(get % "id") (js->clj bikes))]
+      (p/then
+       (p/promise
+        (.query
+         pg-client
+         #js {:text (str "select default$default.\"Bike_photos\".* "
+                         "from default$default.\"Bike_photos\" "
+                         "where default$default.\"Bike_photos\".\"nodeId\" "
+                         "in ("
+                         (string/join
+                          ", "
+                          (reduce #(conj %1 (str "$" (+ 1 %2))) [] (range (count bike-ids))))
+                         ")")
+              :values (clj->js bike-ids)}))
+       #(.-rows %)))))
 
 (defn- merge-photos-to-bikes
   [bikes photos]
-  (let [grouped-photos (group-by #(get % "nodeId") (js->clj photos))
-        grouped-sorted-photos (map #(identity {"id" (first %)
-                                               "photos" (map (fn [p] (get p "value"))
-                                                             (sort (fn [a b]
-                                                                     (> (get "position" a)
-                                                                        (get "position" b)))
-                                                                   (second %)))})
-                                   grouped-photos)]
-    (map
-     #(apply merge %)
-     (vals (group-by #(get % "id") (concat (js->clj bikes) grouped-sorted-photos))))))
+  (if (or (empty? bikes) (empty? photos))
+    (p/promise nil)
+    (let [grouped-photos (group-by #(get % "nodeId") (js->clj photos))
+          grouped-sorted-photos (map #(identity {"id" (first %)
+                                                 "photos" (map (fn [p] (get p "value"))
+                                                               (sort (fn [a b]
+                                                                       (> (get "position" a)
+                                                                          (get "position" b)))
+                                                                     (second %)))})
+                                     grouped-photos)]
+      (map
+       #(apply merge %)
+       (vals (group-by #(get % "id") (concat (js->clj bikes) grouped-sorted-photos)))))))
 
 (defn bikes
   [_ _ {:keys [prisma args pg-client]}]

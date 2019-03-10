@@ -72,7 +72,9 @@
                                          :pg-client pg-client})})))
 
 (defn main []
-  (async
-   (p/await (.connect pg-client))
-   (auth/init)
-   (.start server (fn [] (.log js/console "Started")))))
+  (->
+   (async
+    (p/await (.connect pg-client))
+    (auth/init)
+    (.start server (fn [] (.log js/console "Started"))))
+   (p/catch #(.log js/console %))))
