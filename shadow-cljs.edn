@@ -8,4 +8,6 @@
            :target    :node-script
            :main      bali-bike-server.core/main
            :output-to "index.js"
-           :release {:compiler-options {:optimizations :simple}}}}}
+           :dev {:closure-defines {bali-bike-server.core/pg-host "104.248.152.233"}}
+           :release {:compiler-options {:optimizations :simple}
+                     :closure-defines {bali-bike-server.core/pg-host "postgres"}}}}}

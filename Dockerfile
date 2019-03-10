@@ -15,6 +15,7 @@ RUN npm ci --only=production
 COPY . .
 RUN rm prisma.yml
 RUN cp prisma.prod.yml prisma.yml
+RUN prisma generate
 RUN shadow-cljs release app
 ENV NODE_ENV production
 EXPOSE 4000

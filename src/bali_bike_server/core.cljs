@@ -12,11 +12,13 @@
             [bali-bike-server.rules :as rules]
             [bali-bike-server.middlewares :as middlewares]))
 
+(goog-define pg-host "localhost")
+
 (def pg-client
   (pg/Client. #js {:database "prisma"
                    :user "prisma"
                    :password "prisma"
-                   :host "104.248.152.233"
+                   :host pg-host
                    :port 5432}))
 
 (def resolvers
