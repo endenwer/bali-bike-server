@@ -149,7 +149,7 @@
 
 (defn bookings
   [_ _ {:keys [prisma user]}]
-  (prisma [:bookings {:where {:userUid (:uid user)}}]))
+  (prisma [:bookings {:where {:userUid (:uid user)} :orderBy :id_DESC}]))
 
 (defn bike-owner-bookings
   [_ _ {:keys [prisma user]}]
