@@ -6,7 +6,7 @@ ENV CLOJURE_VERSION=1.9.0.375
 RUN apt-get update \
   && apt-get -q -y install openjdk-8-jdk curl \
   && npm install -g shadow-cljs \
-  && npm install -g prisma \
+  && npm install -g prisma@1.23.4 \
   && curl -s https://download.clojure.org/install/linux-install-$CLOJURE_VERSION.sh | bash
 
 WORKDIR /usr/src/app
