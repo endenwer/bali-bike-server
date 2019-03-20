@@ -70,7 +70,14 @@ type Bike {
   monthlyPrice: Int!
   saved: Boolean
   reviews: [Review!]!
+  bookings: [BikeBooking!]
   owner: User!
+}
+
+type BikeBooking {
+  id: ID!
+  startDate: String!
+  endDate: String!
 }
 
 type Review {

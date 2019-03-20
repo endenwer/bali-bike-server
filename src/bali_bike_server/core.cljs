@@ -40,7 +40,8 @@
               :cancelBooking mutation-resolvers/cancel-booking}
    :Bike {:reviews query-resolvers/bike-reviews
           :saved query-resolvers/bike-saved
-          :owner query-resolvers/bike-owner}
+          :owner query-resolvers/bike-owner
+          :bookings query-resolvers/bike-bookings}
    :Booking {:bike query-resolvers/booking-bike
              :user query-resolvers/booking-user}})
 

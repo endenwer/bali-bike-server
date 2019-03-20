@@ -147,6 +147,11 @@
   [_ _ {:keys [prisma parent]}]
   (prisma [:bike {:id (:id parent)} [:reviews]]))
 
+(defn bike-bookings
+  [_ _ {:keys [prisma parent]}]
+  (prisma [:bike {:id (:id parent)}
+           [:bookings {:where {:status "CONFIRMED" :endDate_gt (moment)}}]]))
+
 (defn bookings
   [_ _ {:keys [prisma user]}]
   (prisma [:bookings {:where {:userUid (:uid user)} :orderBy :id_DESC}]))
