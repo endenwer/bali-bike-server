@@ -1,5 +1,6 @@
 (ns bali-bike-server.query-resolvers
   (:require [promesa.core :as p :refer-macros [alet]]
+            [bali-bike-server.constants :as constants]
             [clojure.string :as string]
             ["firebase-admin" :default firebase-admin]
             ["moment" :as moment]))
@@ -174,3 +175,9 @@
         #js {:name (.-displayName user)
              :photoURL (.-photoURL user)
              :uid (.-uid user)}))
+
+(defn constants
+  [_ _ _]
+  (let [models (map #(identity {:id (first %) :value (second %)}) constants/models)
+        areas (map #(identity {:id (first %) :value (second %)}) constants/areas)]
+    (clj->js {:models models :areas areas})))

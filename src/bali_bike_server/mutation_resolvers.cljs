@@ -45,7 +45,7 @@
         model-id (.-modelId bike)
         start-date (.-startDate booking)
         end-date (.-endDate booking)
-        notification {:data {:id (.-id booking)}
+        notification {:data {:id (.-id booking) :type "NEW_BOOKING"}
                       :notification {:title "New Booking"
                                      :body (str (get constants/models model-id) ", "
                                                 (get-short-dates-range-string

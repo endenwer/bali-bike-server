@@ -12,6 +12,17 @@ type Query {
   bookings: [Booking!]
   bikeOwnerBookings: [Booking!]
   booking(id: ID!): Booking
+  constants: Constants!
+}
+
+type Constants {
+  models: [Constant!]!
+  areas: [Constant!]!
+}
+
+type Constant {
+  id: Int!
+  value: String!
 }
 
 type Mutation {

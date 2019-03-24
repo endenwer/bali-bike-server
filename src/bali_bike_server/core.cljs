@@ -28,7 +28,8 @@
            :bike query-resolvers/bike
            :bookings query-resolvers/bookings
            :bikeOwnerBookings query-resolvers/bike-owner-bookings
-           :booking query-resolvers/booking}
+           :booking query-resolvers/booking
+           :constants query-resolvers/constants}
    :Mutation {:createBooking mutation-resolvers/create-booking
               :addBikeToSaved mutation-resolvers/add-bike-to-saved
               :removeBikeFromSaved mutation-resolvers/remove-bike-from-saved
