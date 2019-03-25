@@ -7,7 +7,13 @@
 
 (defn get-dates-diff
   [start-date end-date]
-  (js->clj (.preciseDiff moment (moment start-date) (moment end-date) true) :keywordize-keys true))
+  (let [diff (.preciseDiff moment (moment start-date) (moment end-date) true)
+        months (.-months diff)]
+    (if (> months 0)
+      (js->clj diff :keywordize-keys true)
+      (do
+        (set! (.-days diff) (+ 1 (.-days diff)))
+        (js->clj diff :keywordize-keys true)))))
 
 (defn round-to-thousands
   [number]

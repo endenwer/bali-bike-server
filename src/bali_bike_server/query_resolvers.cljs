@@ -21,25 +21,20 @@
              {:index 1 :values [] :text query} cleaned-variables)
      :index)))
 
-(def bookings-join-statement
-  (str
-   "left outer join default$default.\"_BikeToBooking\" "
-   "as \"RelationTable\" "
-   "on \"Bike\".\"id\" = \"RelationTable\".\"A\" "
-   "left outer join default$default.\"Booking\" as \"Booking\" "
-   "on \"Booking\".\"id\" = \"RelationTable\".\"B\" "))
-
 (def areas-join-statement
   (str "left outer join default$default.\"Bike_areaIds\"  "
        "as \"AreaIds\" "
        "on \"Bike\".\"id\" = \"AreaIds\".\"nodeId\" "))
 
-(def dates-where-statement
+(def bookings-where-statement
   (str
-   "(not(\"Booking\".\"startDate\" <= :end-date "
-   "AND \"Booking\".\"endDate\" >= :start-date "
-   "AND \"Booking\".\"status\" = 'CONFIRMED') "
-   "OR \"Booking\".id is null) "))
+   "\"Bike\".\"id\" NOT IN "
+   "(select \"RelationTable\".\"A\" "
+   "from default$default.\"Booking\" as \"Booking\" "
+   "JOIN default$default.\"_BikeToBooking\" as "
+   "\"RelationTable\" on \"Booking\".\"id\" = \"RelationTable\".\"B\" "
+   "where \"Booking\".\"startDate\" <= :end-date AND "
+   "\"Booking\".\"endDate\" >= :start-date AND \"Booking\".\"status\" = 'CONFIRMED')"))
 
 (def model-where-statement "\"Bike\".\"modelId\" = :model-id ")
 (def area-where-statement "\"AreaIds\".\"value\" = :area-id ")
@@ -50,7 +45,7 @@
         end-date (.toISOString (moment (:endDate args)))
         area-id (:areaId args)
         model-id (:modelId args)
-        where-statements (remove nil? [(when (and start-date end-date) dates-where-statement)
+        where-statements (remove nil? [(when (and start-date end-date) bookings-where-statement)
                                        (when area-id area-where-statement)
                                        (when model-id model-where-statement)])]
     (p/then
@@ -60,7 +55,6 @@
        (clj->js
         (named-query
          (str "select \"Bike\".* from default$default.\"Bike\" as \"Bike\" "
-              (when (and start-date end-date) bookings-join-statement)
               (when area-id areas-join-statement)
               (when-not (empty? where-statements)
                 (str "where " (string/join " AND " where-statements)))
@@ -159,7 +153,7 @@
 
 (defn bike-owner-bookings
   [_ _ {:keys [prisma user]}]
-  (prisma [:bookings {:where {:bikeOwnerUid (:uid user)}}]))
+  (prisma [:bookings {:where {:bikeOwnerUid (:uid user)} :orderBy :id_DESC}]))
 
 (defn booking
   [_ _ {:keys [prisma args]}]
