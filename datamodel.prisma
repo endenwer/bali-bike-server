@@ -9,9 +9,16 @@ type Bike {
   mileage: Int @default(value: 0)
   dailyPrice: Int!
   monthlyPrice: Int!
+  status: BikeStatus! @default(value: "ACTIVE")
   areaIds: [Int!]!
   reviews: [Review!]!
   bookings: [Booking!]!
+}
+
+enum BikeStatus {
+  MODERATION
+  ACTIVE
+  ARCHIVED
 }
 
 type SavedBikesList {

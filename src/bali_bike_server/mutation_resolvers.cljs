@@ -100,7 +100,13 @@
        :mileage (:mileage args)
        :dailyPrice (:dailyPrice args)
        :monthlyPrice (:monthlyPrice args)
-       :ownerUid owner-uid}])))
+       :ownerUid owner-uid
+       :status "MODERATION"}])))
+
+(defn activate-bike
+  [_ _ {:keys [prisma args]}]
+  (prisma [:updateBike {:data {:status "ACTIVE"}
+                        :where {:id (:id args)}}]))
 
 (defn update-bike
   [_ _ {:keys [prisma args]}]

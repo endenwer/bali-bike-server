@@ -5,6 +5,9 @@
 (def is-authenticated
   ((rule) (fn [parent args context info] (js/Boolean (:user context)))))
 
+(def is-moderator
+  ((rule) (fn [parent args context info] (= (get-in context [:user :role]) "moderator"))))
+
 (def is-booking-owner
   ((rule) (fn [_ _ {:keys [prisma user args]}]
             (when user

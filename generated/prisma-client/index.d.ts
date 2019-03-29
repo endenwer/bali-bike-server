@@ -246,6 +246,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type BikeStatus = "MODERATION" | "ACTIVE" | "ARCHIVED";
+
 export type BookingStatus = "WAITING_CONFIRMATION" | "CONFIRMED" | "CANCELED";
 
 export type ReviewOrderByInput =
@@ -317,6 +319,8 @@ export type BikeOrderByInput =
   | "dailyPrice_DESC"
   | "monthlyPrice_ASC"
   | "monthlyPrice_DESC"
+  | "status_ASC"
+  | "status_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -334,30 +338,73 @@ export type SavedBikesListOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ReviewUpdateManyWithWhereNestedInput {
-  where: ReviewScalarWhereInput;
-  data: ReviewUpdateManyDataInput;
-}
-
 export type BikeWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface BookingUpdateWithoutBikeDataInput {
+export interface ReviewWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  rating?: Int;
+  rating_not?: Int;
+  rating_in?: Int[] | Int;
+  rating_not_in?: Int[] | Int;
+  rating_lt?: Int;
+  rating_lte?: Int;
+  rating_gt?: Int;
+  rating_gte?: Int;
+  comment?: String;
+  comment_not?: String;
+  comment_in?: String[] | String;
+  comment_not_in?: String[] | String;
+  comment_lt?: String;
+  comment_lte?: String;
+  comment_gt?: String;
+  comment_gte?: String;
+  comment_contains?: String;
+  comment_not_contains?: String;
+  comment_starts_with?: String;
+  comment_not_starts_with?: String;
+  comment_ends_with?: String;
+  comment_not_ends_with?: String;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
   userUid?: String;
-  bikeOwnerUid?: String;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  deliveryLocationLongitude?: String;
-  deliveryLocationLongitudeDelta?: String;
-  deliveryLocationLatitude?: String;
-  deliveryLocationLatitudeDelta?: String;
-  deliveryLocationAddress?: String;
-  deliveryLocationComment?: String;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  totalPrice?: Int;
-  status?: BookingStatus;
+  userUid_not?: String;
+  userUid_in?: String[] | String;
+  userUid_not_in?: String[] | String;
+  userUid_lt?: String;
+  userUid_lte?: String;
+  userUid_gt?: String;
+  userUid_gte?: String;
+  userUid_contains?: String;
+  userUid_not_contains?: String;
+  userUid_starts_with?: String;
+  userUid_not_starts_with?: String;
+  userUid_ends_with?: String;
+  userUid_not_ends_with?: String;
+  bike?: BikeWhereInput;
+  AND?: ReviewWhereInput[] | ReviewWhereInput;
+  OR?: ReviewWhereInput[] | ReviewWhereInput;
+  NOT?: ReviewWhereInput[] | ReviewWhereInput;
 }
 
 export interface BikeWhereInput {
@@ -445,6 +492,10 @@ export interface BikeWhereInput {
   monthlyPrice_lte?: Int;
   monthlyPrice_gt?: Int;
   monthlyPrice_gte?: Int;
+  status?: BikeStatus;
+  status_not?: BikeStatus;
+  status_in?: BikeStatus[] | BikeStatus;
+  status_not_in?: BikeStatus[] | BikeStatus;
   reviews_every?: ReviewWhereInput;
   reviews_some?: ReviewWhereInput;
   reviews_none?: ReviewWhereInput;
@@ -454,441 +505,6 @@ export interface BikeWhereInput {
   AND?: BikeWhereInput[] | BikeWhereInput;
   OR?: BikeWhereInput[] | BikeWhereInput;
   NOT?: BikeWhereInput[] | BikeWhereInput;
-}
-
-export interface ReviewCreateWithoutBikeInput {
-  rating: Int;
-  comment?: String;
-  userUid: String;
-}
-
-export interface BookingUpdateManyMutationInput {
-  userUid?: String;
-  bikeOwnerUid?: String;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  deliveryLocationLongitude?: String;
-  deliveryLocationLongitudeDelta?: String;
-  deliveryLocationLatitude?: String;
-  deliveryLocationLatitudeDelta?: String;
-  deliveryLocationAddress?: String;
-  deliveryLocationComment?: String;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  totalPrice?: Int;
-  status?: BookingStatus;
-}
-
-export interface BookingCreateManyWithoutBikeInput {
-  create?: BookingCreateWithoutBikeInput[] | BookingCreateWithoutBikeInput;
-  connect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
-}
-
-export interface BookingUpsertWithWhereUniqueWithoutBikeInput {
-  where: BookingWhereUniqueInput;
-  update: BookingUpdateWithoutBikeDataInput;
-  create: BookingCreateWithoutBikeInput;
-}
-
-export interface BookingCreateWithoutBikeInput {
-  userUid: String;
-  bikeOwnerUid: String;
-  startDate: DateTimeInput;
-  endDate: DateTimeInput;
-  deliveryLocationLongitude: String;
-  deliveryLocationLongitudeDelta: String;
-  deliveryLocationLatitude: String;
-  deliveryLocationLatitudeDelta: String;
-  deliveryLocationAddress: String;
-  deliveryLocationComment?: String;
-  dailyPrice: Int;
-  monthlyPrice: Int;
-  totalPrice: Int;
-  status?: BookingStatus;
-}
-
-export interface ReviewSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ReviewWhereInput;
-  AND?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput;
-  OR?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput;
-  NOT?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput;
-}
-
-export interface BikeUpdateInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  areaIds?: BikeUpdateareaIdsInput;
-  reviews?: ReviewUpdateManyWithoutBikeInput;
-  bookings?: BookingUpdateManyWithoutBikeInput;
-}
-
-export interface BikeSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: BikeWhereInput;
-  AND?: BikeSubscriptionWhereInput[] | BikeSubscriptionWhereInput;
-  OR?: BikeSubscriptionWhereInput[] | BikeSubscriptionWhereInput;
-  NOT?: BikeSubscriptionWhereInput[] | BikeSubscriptionWhereInput;
-}
-
-export interface BikeUpdatephotosInput {
-  set?: String[] | String;
-}
-
-export interface BikeUpdateManyDataInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  areaIds?: BikeUpdateareaIdsInput;
-}
-
-export interface BikeUpdateareaIdsInput {
-  set?: Int[] | Int;
-}
-
-export interface BikeScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  ownerUid?: String;
-  ownerUid_not?: String;
-  ownerUid_in?: String[] | String;
-  ownerUid_not_in?: String[] | String;
-  ownerUid_lt?: String;
-  ownerUid_lte?: String;
-  ownerUid_gt?: String;
-  ownerUid_gte?: String;
-  ownerUid_contains?: String;
-  ownerUid_not_contains?: String;
-  ownerUid_starts_with?: String;
-  ownerUid_not_starts_with?: String;
-  ownerUid_ends_with?: String;
-  ownerUid_not_ends_with?: String;
-  modelId?: Int;
-  modelId_not?: Int;
-  modelId_in?: Int[] | Int;
-  modelId_not_in?: Int[] | Int;
-  modelId_lt?: Int;
-  modelId_lte?: Int;
-  modelId_gt?: Int;
-  modelId_gte?: Int;
-  rating?: Float;
-  rating_not?: Float;
-  rating_in?: Float[] | Float;
-  rating_not_in?: Float[] | Float;
-  rating_lt?: Float;
-  rating_lte?: Float;
-  rating_gt?: Float;
-  rating_gte?: Float;
-  reviewsCount?: Int;
-  reviewsCount_not?: Int;
-  reviewsCount_in?: Int[] | Int;
-  reviewsCount_not_in?: Int[] | Int;
-  reviewsCount_lt?: Int;
-  reviewsCount_lte?: Int;
-  reviewsCount_gt?: Int;
-  reviewsCount_gte?: Int;
-  manufactureYear?: Int;
-  manufactureYear_not?: Int;
-  manufactureYear_in?: Int[] | Int;
-  manufactureYear_not_in?: Int[] | Int;
-  manufactureYear_lt?: Int;
-  manufactureYear_lte?: Int;
-  manufactureYear_gt?: Int;
-  manufactureYear_gte?: Int;
-  mileage?: Int;
-  mileage_not?: Int;
-  mileage_in?: Int[] | Int;
-  mileage_not_in?: Int[] | Int;
-  mileage_lt?: Int;
-  mileage_lte?: Int;
-  mileage_gt?: Int;
-  mileage_gte?: Int;
-  dailyPrice?: Int;
-  dailyPrice_not?: Int;
-  dailyPrice_in?: Int[] | Int;
-  dailyPrice_not_in?: Int[] | Int;
-  dailyPrice_lt?: Int;
-  dailyPrice_lte?: Int;
-  dailyPrice_gt?: Int;
-  dailyPrice_gte?: Int;
-  monthlyPrice?: Int;
-  monthlyPrice_not?: Int;
-  monthlyPrice_in?: Int[] | Int;
-  monthlyPrice_not_in?: Int[] | Int;
-  monthlyPrice_lt?: Int;
-  monthlyPrice_lte?: Int;
-  monthlyPrice_gt?: Int;
-  monthlyPrice_gte?: Int;
-  AND?: BikeScalarWhereInput[] | BikeScalarWhereInput;
-  OR?: BikeScalarWhereInput[] | BikeScalarWhereInput;
-  NOT?: BikeScalarWhereInput[] | BikeScalarWhereInput;
-}
-
-export interface ReviewUpdateManyWithoutBikeInput {
-  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
-  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
-  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
-  update?:
-    | ReviewUpdateWithWhereUniqueWithoutBikeInput[]
-    | ReviewUpdateWithWhereUniqueWithoutBikeInput;
-  upsert?:
-    | ReviewUpsertWithWhereUniqueWithoutBikeInput[]
-    | ReviewUpsertWithWhereUniqueWithoutBikeInput;
-  deleteMany?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
-  updateMany?:
-    | ReviewUpdateManyWithWhereNestedInput[]
-    | ReviewUpdateManyWithWhereNestedInput;
-}
-
-export type BookingWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface ReviewUpdateWithWhereUniqueWithoutBikeInput {
-  where: ReviewWhereUniqueInput;
-  data: ReviewUpdateWithoutBikeDataInput;
-}
-
-export interface BikeUpdateWithWhereUniqueNestedInput {
-  where: BikeWhereUniqueInput;
-  data: BikeUpdateDataInput;
-}
-
-export interface ReviewUpdateWithoutBikeDataInput {
-  rating?: Int;
-  comment?: String;
-  userUid?: String;
-}
-
-export type ReviewWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface ReviewUpsertWithWhereUniqueWithoutBikeInput {
-  where: ReviewWhereUniqueInput;
-  update: ReviewUpdateWithoutBikeDataInput;
-  create: ReviewCreateWithoutBikeInput;
-}
-
-export interface BikeCreateManyInput {
-  create?: BikeCreateInput[] | BikeCreateInput;
-  connect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
-}
-
-export interface ReviewScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  rating?: Int;
-  rating_not?: Int;
-  rating_in?: Int[] | Int;
-  rating_not_in?: Int[] | Int;
-  rating_lt?: Int;
-  rating_lte?: Int;
-  rating_gt?: Int;
-  rating_gte?: Int;
-  comment?: String;
-  comment_not?: String;
-  comment_in?: String[] | String;
-  comment_not_in?: String[] | String;
-  comment_lt?: String;
-  comment_lte?: String;
-  comment_gt?: String;
-  comment_gte?: String;
-  comment_contains?: String;
-  comment_not_contains?: String;
-  comment_starts_with?: String;
-  comment_not_starts_with?: String;
-  comment_ends_with?: String;
-  comment_not_ends_with?: String;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  userUid?: String;
-  userUid_not?: String;
-  userUid_in?: String[] | String;
-  userUid_not_in?: String[] | String;
-  userUid_lt?: String;
-  userUid_lte?: String;
-  userUid_gt?: String;
-  userUid_gte?: String;
-  userUid_contains?: String;
-  userUid_not_contains?: String;
-  userUid_starts_with?: String;
-  userUid_not_starts_with?: String;
-  userUid_ends_with?: String;
-  userUid_not_ends_with?: String;
-  AND?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
-  OR?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
-  NOT?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
-}
-
-export type SavedBikesListWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  userUid?: String;
-}>;
-
-export interface BikeCreateWithoutReviewsInput {
-  ownerUid: String;
-  modelId: Int;
-  photos?: BikeCreatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice: Int;
-  monthlyPrice: Int;
-  areaIds?: BikeCreateareaIdsInput;
-  bookings?: BookingCreateManyWithoutBikeInput;
-}
-
-export interface SavedBikesListWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  userUid?: String;
-  userUid_not?: String;
-  userUid_in?: String[] | String;
-  userUid_not_in?: String[] | String;
-  userUid_lt?: String;
-  userUid_lte?: String;
-  userUid_gt?: String;
-  userUid_gte?: String;
-  userUid_contains?: String;
-  userUid_not_contains?: String;
-  userUid_starts_with?: String;
-  userUid_not_starts_with?: String;
-  userUid_ends_with?: String;
-  userUid_not_ends_with?: String;
-  bikes_every?: BikeWhereInput;
-  bikes_some?: BikeWhereInput;
-  bikes_none?: BikeWhereInput;
-  AND?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
-  OR?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
-  NOT?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
-}
-
-export interface ReviewUpdateManyDataInput {
-  rating?: Int;
-  comment?: String;
-  userUid?: String;
-}
-
-export interface BikeUpdateWithoutReviewsDataInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  areaIds?: BikeUpdateareaIdsInput;
-  bookings?: BookingUpdateManyWithoutBikeInput;
-}
-
-export interface BookingUpdateManyWithoutBikeInput {
-  create?: BookingCreateWithoutBikeInput[] | BookingCreateWithoutBikeInput;
-  delete?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
-  connect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
-  disconnect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
-  update?:
-    | BookingUpdateWithWhereUniqueWithoutBikeInput[]
-    | BookingUpdateWithWhereUniqueWithoutBikeInput;
-  upsert?:
-    | BookingUpsertWithWhereUniqueWithoutBikeInput[]
-    | BookingUpsertWithWhereUniqueWithoutBikeInput;
-  deleteMany?: BookingScalarWhereInput[] | BookingScalarWhereInput;
-  updateMany?:
-    | BookingUpdateManyWithWhereNestedInput[]
-    | BookingUpdateManyWithWhereNestedInput;
-}
-
-export interface ReviewUpdateInput {
-  rating?: Int;
-  comment?: String;
-  userUid?: String;
-  bike?: BikeUpdateOneRequiredWithoutReviewsInput;
-}
-
-export interface BookingUpdateWithWhereUniqueWithoutBikeInput {
-  where: BookingWhereUniqueInput;
-  data: BookingUpdateWithoutBikeDataInput;
-}
-
-export interface BikeCreateInput {
-  ownerUid: String;
-  modelId: Int;
-  photos?: BikeCreatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice: Int;
-  monthlyPrice: Int;
-  areaIds?: BikeCreateareaIdsInput;
-  reviews?: ReviewCreateManyWithoutBikeInput;
-  bookings?: BookingCreateManyWithoutBikeInput;
 }
 
 export interface BookingWhereInput {
@@ -1068,11 +684,172 @@ export interface BookingWhereInput {
   NOT?: BookingWhereInput[] | BookingWhereInput;
 }
 
+export type BookingWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type ReviewWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type SavedBikesListWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  userUid?: String;
+}>;
+
+export interface SavedBikesListWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  userUid?: String;
+  userUid_not?: String;
+  userUid_in?: String[] | String;
+  userUid_not_in?: String[] | String;
+  userUid_lt?: String;
+  userUid_lte?: String;
+  userUid_gt?: String;
+  userUid_gte?: String;
+  userUid_contains?: String;
+  userUid_not_contains?: String;
+  userUid_starts_with?: String;
+  userUid_not_starts_with?: String;
+  userUid_ends_with?: String;
+  userUid_not_ends_with?: String;
+  bikes_every?: BikeWhereInput;
+  bikes_some?: BikeWhereInput;
+  bikes_none?: BikeWhereInput;
+  AND?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
+  OR?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
+  NOT?: SavedBikesListWhereInput[] | SavedBikesListWhereInput;
+}
+
+export interface BikeCreateInput {
+  ownerUid: String;
+  modelId: Int;
+  photos?: BikeCreatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
+  status?: BikeStatus;
+  areaIds?: BikeCreateareaIdsInput;
+  reviews?: ReviewCreateManyWithoutBikeInput;
+  bookings?: BookingCreateManyWithoutBikeInput;
+}
+
+export interface BikeCreatephotosInput {
+  set?: String[] | String;
+}
+
 export interface BikeCreateareaIdsInput {
   set?: Int[] | Int;
 }
 
-export interface ReviewWhereInput {
+export interface ReviewCreateManyWithoutBikeInput {
+  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+}
+
+export interface ReviewCreateWithoutBikeInput {
+  rating: Int;
+  comment?: String;
+  userUid: String;
+}
+
+export interface BookingCreateManyWithoutBikeInput {
+  create?: BookingCreateWithoutBikeInput[] | BookingCreateWithoutBikeInput;
+  connect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
+}
+
+export interface BookingCreateWithoutBikeInput {
+  userUid: String;
+  bikeOwnerUid: String;
+  startDate: DateTimeInput;
+  endDate: DateTimeInput;
+  deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
+  deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
+  deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
+  totalPrice: Int;
+  status?: BookingStatus;
+}
+
+export interface BikeUpdateInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  status?: BikeStatus;
+  areaIds?: BikeUpdateareaIdsInput;
+  reviews?: ReviewUpdateManyWithoutBikeInput;
+  bookings?: BookingUpdateManyWithoutBikeInput;
+}
+
+export interface BikeUpdatephotosInput {
+  set?: String[] | String;
+}
+
+export interface BikeUpdateareaIdsInput {
+  set?: Int[] | Int;
+}
+
+export interface ReviewUpdateManyWithoutBikeInput {
+  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
+  delete?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+  disconnect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
+  update?:
+    | ReviewUpdateWithWhereUniqueWithoutBikeInput[]
+    | ReviewUpdateWithWhereUniqueWithoutBikeInput;
+  upsert?:
+    | ReviewUpsertWithWhereUniqueWithoutBikeInput[]
+    | ReviewUpsertWithWhereUniqueWithoutBikeInput;
+  deleteMany?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
+  updateMany?:
+    | ReviewUpdateManyWithWhereNestedInput[]
+    | ReviewUpdateManyWithWhereNestedInput;
+}
+
+export interface ReviewUpdateWithWhereUniqueWithoutBikeInput {
+  where: ReviewWhereUniqueInput;
+  data: ReviewUpdateWithoutBikeDataInput;
+}
+
+export interface ReviewUpdateWithoutBikeDataInput {
+  rating?: Int;
+  comment?: String;
+  userUid?: String;
+}
+
+export interface ReviewUpsertWithWhereUniqueWithoutBikeInput {
+  where: ReviewWhereUniqueInput;
+  update: ReviewUpdateWithoutBikeDataInput;
+  create: ReviewCreateWithoutBikeInput;
+}
+
+export interface ReviewScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1131,27 +908,65 @@ export interface ReviewWhereInput {
   userUid_not_starts_with?: String;
   userUid_ends_with?: String;
   userUid_not_ends_with?: String;
-  bike?: BikeWhereInput;
-  AND?: ReviewWhereInput[] | ReviewWhereInput;
-  OR?: ReviewWhereInput[] | ReviewWhereInput;
-  NOT?: ReviewWhereInput[] | ReviewWhereInput;
+  AND?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
+  OR?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
+  NOT?: ReviewScalarWhereInput[] | ReviewScalarWhereInput;
 }
 
-export interface SavedBikesListSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: SavedBikesListWhereInput;
-  AND?:
-    | SavedBikesListSubscriptionWhereInput[]
-    | SavedBikesListSubscriptionWhereInput;
-  OR?:
-    | SavedBikesListSubscriptionWhereInput[]
-    | SavedBikesListSubscriptionWhereInput;
-  NOT?:
-    | SavedBikesListSubscriptionWhereInput[]
-    | SavedBikesListSubscriptionWhereInput;
+export interface ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput;
+  data: ReviewUpdateManyDataInput;
+}
+
+export interface ReviewUpdateManyDataInput {
+  rating?: Int;
+  comment?: String;
+  userUid?: String;
+}
+
+export interface BookingUpdateManyWithoutBikeInput {
+  create?: BookingCreateWithoutBikeInput[] | BookingCreateWithoutBikeInput;
+  delete?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
+  connect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
+  disconnect?: BookingWhereUniqueInput[] | BookingWhereUniqueInput;
+  update?:
+    | BookingUpdateWithWhereUniqueWithoutBikeInput[]
+    | BookingUpdateWithWhereUniqueWithoutBikeInput;
+  upsert?:
+    | BookingUpsertWithWhereUniqueWithoutBikeInput[]
+    | BookingUpsertWithWhereUniqueWithoutBikeInput;
+  deleteMany?: BookingScalarWhereInput[] | BookingScalarWhereInput;
+  updateMany?:
+    | BookingUpdateManyWithWhereNestedInput[]
+    | BookingUpdateManyWithWhereNestedInput;
+}
+
+export interface BookingUpdateWithWhereUniqueWithoutBikeInput {
+  where: BookingWhereUniqueInput;
+  data: BookingUpdateWithoutBikeDataInput;
+}
+
+export interface BookingUpdateWithoutBikeDataInput {
+  userUid?: String;
+  bikeOwnerUid?: String;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+  deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
+  deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
+  deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  totalPrice?: Int;
+  status?: BookingStatus;
+}
+
+export interface BookingUpsertWithWhereUniqueWithoutBikeInput {
+  where: BookingWhereUniqueInput;
+  update: BookingUpdateWithoutBikeDataInput;
+  create: BookingCreateWithoutBikeInput;
 }
 
 export interface BookingScalarWhereInput {
@@ -1330,19 +1145,9 @@ export interface BookingScalarWhereInput {
   NOT?: BookingScalarWhereInput[] | BookingScalarWhereInput;
 }
 
-export interface SavedBikesListUpdateManyMutationInput {
-  userUid?: String;
-}
-
 export interface BookingUpdateManyWithWhereNestedInput {
   where: BookingScalarWhereInput;
   data: BookingUpdateManyDataInput;
-}
-
-export interface BikeUpsertWithWhereUniqueNestedInput {
-  where: BikeWhereUniqueInput;
-  update: BikeUpdateDataInput;
-  create: BikeCreateInput;
 }
 
 export interface BookingUpdateManyDataInput {
@@ -1362,23 +1167,6 @@ export interface BookingUpdateManyDataInput {
   status?: BookingStatus;
 }
 
-export interface BikeUpdateManyInput {
-  create?: BikeCreateInput[] | BikeCreateInput;
-  update?:
-    | BikeUpdateWithWhereUniqueNestedInput[]
-    | BikeUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | BikeUpsertWithWhereUniqueNestedInput[]
-    | BikeUpsertWithWhereUniqueNestedInput;
-  delete?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
-  connect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
-  disconnect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
-  deleteMany?: BikeScalarWhereInput[] | BikeScalarWhereInput;
-  updateMany?:
-    | BikeUpdateManyWithWhereNestedInput[]
-    | BikeUpdateManyWithWhereNestedInput;
-}
-
 export interface BikeUpdateManyMutationInput {
   ownerUid?: String;
   modelId?: Int;
@@ -1389,34 +1177,8 @@ export interface BikeUpdateManyMutationInput {
   mileage?: Int;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
-}
-
-export interface SavedBikesListCreateInput {
-  userUid: String;
-  bikes?: BikeCreateManyInput;
-}
-
-export interface BikeCreateOneWithoutReviewsInput {
-  create?: BikeCreateWithoutReviewsInput;
-  connect?: BikeWhereUniqueInput;
-}
-
-export interface BikeUpsertWithoutReviewsInput {
-  update: BikeUpdateWithoutReviewsDataInput;
-  create: BikeCreateWithoutReviewsInput;
-}
-
-export interface ReviewCreateInput {
-  rating: Int;
-  comment?: String;
-  userUid: String;
-  bike: BikeCreateOneWithoutReviewsInput;
-}
-
-export interface ReviewCreateManyWithoutBikeInput {
-  create?: ReviewCreateWithoutBikeInput[] | ReviewCreateWithoutBikeInput;
-  connect?: ReviewWhereUniqueInput[] | ReviewWhereUniqueInput;
 }
 
 export interface BookingCreateInput {
@@ -1437,19 +1199,9 @@ export interface BookingCreateInput {
   bike: BikeCreateOneWithoutBookingsInput;
 }
 
-export interface BikeUpdateManyWithWhereNestedInput {
-  where: BikeScalarWhereInput;
-  data: BikeUpdateManyDataInput;
-}
-
 export interface BikeCreateOneWithoutBookingsInput {
   create?: BikeCreateWithoutBookingsInput;
   connect?: BikeWhereUniqueInput;
-}
-
-export interface SavedBikesListUpdateInput {
-  userUid?: String;
-  bikes?: BikeUpdateManyInput;
 }
 
 export interface BikeCreateWithoutBookingsInput {
@@ -1462,41 +1214,9 @@ export interface BikeCreateWithoutBookingsInput {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
   reviews?: ReviewCreateManyWithoutBikeInput;
-}
-
-export interface BikeUpdateOneRequiredWithoutReviewsInput {
-  create?: BikeCreateWithoutReviewsInput;
-  update?: BikeUpdateWithoutReviewsDataInput;
-  upsert?: BikeUpsertWithoutReviewsInput;
-  connect?: BikeWhereUniqueInput;
-}
-
-export interface BikeUpsertWithoutBookingsInput {
-  update: BikeUpdateWithoutBookingsDataInput;
-  create: BikeCreateWithoutBookingsInput;
-}
-
-export interface BikeUpdateWithoutBookingsDataInput {
-  ownerUid?: String;
-  modelId?: Int;
-  photos?: BikeUpdatephotosInput;
-  rating?: Float;
-  reviewsCount?: Int;
-  manufactureYear?: Int;
-  mileage?: Int;
-  dailyPrice?: Int;
-  monthlyPrice?: Int;
-  areaIds?: BikeUpdateareaIdsInput;
-  reviews?: ReviewUpdateManyWithoutBikeInput;
-}
-
-export interface BikeUpdateOneRequiredWithoutBookingsInput {
-  create?: BikeCreateWithoutBookingsInput;
-  update?: BikeUpdateWithoutBookingsDataInput;
-  upsert?: BikeUpsertWithoutBookingsInput;
-  connect?: BikeWhereUniqueInput;
 }
 
 export interface BookingUpdateInput {
@@ -1517,14 +1237,152 @@ export interface BookingUpdateInput {
   bike?: BikeUpdateOneRequiredWithoutBookingsInput;
 }
 
-export interface BikeCreatephotosInput {
-  set?: String[] | String;
+export interface BikeUpdateOneRequiredWithoutBookingsInput {
+  create?: BikeCreateWithoutBookingsInput;
+  update?: BikeUpdateWithoutBookingsDataInput;
+  upsert?: BikeUpsertWithoutBookingsInput;
+  connect?: BikeWhereUniqueInput;
+}
+
+export interface BikeUpdateWithoutBookingsDataInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  status?: BikeStatus;
+  areaIds?: BikeUpdateareaIdsInput;
+  reviews?: ReviewUpdateManyWithoutBikeInput;
+}
+
+export interface BikeUpsertWithoutBookingsInput {
+  update: BikeUpdateWithoutBookingsDataInput;
+  create: BikeCreateWithoutBookingsInput;
+}
+
+export interface BookingUpdateManyMutationInput {
+  userUid?: String;
+  bikeOwnerUid?: String;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+  deliveryLocationLongitude?: String;
+  deliveryLocationLongitudeDelta?: String;
+  deliveryLocationLatitude?: String;
+  deliveryLocationLatitudeDelta?: String;
+  deliveryLocationAddress?: String;
+  deliveryLocationComment?: String;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  totalPrice?: Int;
+  status?: BookingStatus;
+}
+
+export interface ReviewCreateInput {
+  rating: Int;
+  comment?: String;
+  userUid: String;
+  bike: BikeCreateOneWithoutReviewsInput;
+}
+
+export interface BikeCreateOneWithoutReviewsInput {
+  create?: BikeCreateWithoutReviewsInput;
+  connect?: BikeWhereUniqueInput;
+}
+
+export interface BikeCreateWithoutReviewsInput {
+  ownerUid: String;
+  modelId: Int;
+  photos?: BikeCreatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice: Int;
+  monthlyPrice: Int;
+  status?: BikeStatus;
+  areaIds?: BikeCreateareaIdsInput;
+  bookings?: BookingCreateManyWithoutBikeInput;
+}
+
+export interface ReviewUpdateInput {
+  rating?: Int;
+  comment?: String;
+  userUid?: String;
+  bike?: BikeUpdateOneRequiredWithoutReviewsInput;
+}
+
+export interface BikeUpdateOneRequiredWithoutReviewsInput {
+  create?: BikeCreateWithoutReviewsInput;
+  update?: BikeUpdateWithoutReviewsDataInput;
+  upsert?: BikeUpsertWithoutReviewsInput;
+  connect?: BikeWhereUniqueInput;
+}
+
+export interface BikeUpdateWithoutReviewsDataInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  status?: BikeStatus;
+  areaIds?: BikeUpdateareaIdsInput;
+  bookings?: BookingUpdateManyWithoutBikeInput;
+}
+
+export interface BikeUpsertWithoutReviewsInput {
+  update: BikeUpdateWithoutReviewsDataInput;
+  create: BikeCreateWithoutReviewsInput;
 }
 
 export interface ReviewUpdateManyMutationInput {
   rating?: Int;
   comment?: String;
   userUid?: String;
+}
+
+export interface SavedBikesListCreateInput {
+  userUid: String;
+  bikes?: BikeCreateManyInput;
+}
+
+export interface BikeCreateManyInput {
+  create?: BikeCreateInput[] | BikeCreateInput;
+  connect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
+}
+
+export interface SavedBikesListUpdateInput {
+  userUid?: String;
+  bikes?: BikeUpdateManyInput;
+}
+
+export interface BikeUpdateManyInput {
+  create?: BikeCreateInput[] | BikeCreateInput;
+  update?:
+    | BikeUpdateWithWhereUniqueNestedInput[]
+    | BikeUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | BikeUpsertWithWhereUniqueNestedInput[]
+    | BikeUpsertWithWhereUniqueNestedInput;
+  delete?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
+  connect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
+  disconnect?: BikeWhereUniqueInput[] | BikeWhereUniqueInput;
+  deleteMany?: BikeScalarWhereInput[] | BikeScalarWhereInput;
+  updateMany?:
+    | BikeUpdateManyWithWhereNestedInput[]
+    | BikeUpdateManyWithWhereNestedInput;
+}
+
+export interface BikeUpdateWithWhereUniqueNestedInput {
+  where: BikeWhereUniqueInput;
+  data: BikeUpdateDataInput;
 }
 
 export interface BikeUpdateDataInput {
@@ -1537,9 +1395,144 @@ export interface BikeUpdateDataInput {
   mileage?: Int;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
+}
+
+export interface BikeUpsertWithWhereUniqueNestedInput {
+  where: BikeWhereUniqueInput;
+  update: BikeUpdateDataInput;
+  create: BikeCreateInput;
+}
+
+export interface BikeScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  ownerUid?: String;
+  ownerUid_not?: String;
+  ownerUid_in?: String[] | String;
+  ownerUid_not_in?: String[] | String;
+  ownerUid_lt?: String;
+  ownerUid_lte?: String;
+  ownerUid_gt?: String;
+  ownerUid_gte?: String;
+  ownerUid_contains?: String;
+  ownerUid_not_contains?: String;
+  ownerUid_starts_with?: String;
+  ownerUid_not_starts_with?: String;
+  ownerUid_ends_with?: String;
+  ownerUid_not_ends_with?: String;
+  modelId?: Int;
+  modelId_not?: Int;
+  modelId_in?: Int[] | Int;
+  modelId_not_in?: Int[] | Int;
+  modelId_lt?: Int;
+  modelId_lte?: Int;
+  modelId_gt?: Int;
+  modelId_gte?: Int;
+  rating?: Float;
+  rating_not?: Float;
+  rating_in?: Float[] | Float;
+  rating_not_in?: Float[] | Float;
+  rating_lt?: Float;
+  rating_lte?: Float;
+  rating_gt?: Float;
+  rating_gte?: Float;
+  reviewsCount?: Int;
+  reviewsCount_not?: Int;
+  reviewsCount_in?: Int[] | Int;
+  reviewsCount_not_in?: Int[] | Int;
+  reviewsCount_lt?: Int;
+  reviewsCount_lte?: Int;
+  reviewsCount_gt?: Int;
+  reviewsCount_gte?: Int;
+  manufactureYear?: Int;
+  manufactureYear_not?: Int;
+  manufactureYear_in?: Int[] | Int;
+  manufactureYear_not_in?: Int[] | Int;
+  manufactureYear_lt?: Int;
+  manufactureYear_lte?: Int;
+  manufactureYear_gt?: Int;
+  manufactureYear_gte?: Int;
+  mileage?: Int;
+  mileage_not?: Int;
+  mileage_in?: Int[] | Int;
+  mileage_not_in?: Int[] | Int;
+  mileage_lt?: Int;
+  mileage_lte?: Int;
+  mileage_gt?: Int;
+  mileage_gte?: Int;
+  dailyPrice?: Int;
+  dailyPrice_not?: Int;
+  dailyPrice_in?: Int[] | Int;
+  dailyPrice_not_in?: Int[] | Int;
+  dailyPrice_lt?: Int;
+  dailyPrice_lte?: Int;
+  dailyPrice_gt?: Int;
+  dailyPrice_gte?: Int;
+  monthlyPrice?: Int;
+  monthlyPrice_not?: Int;
+  monthlyPrice_in?: Int[] | Int;
+  monthlyPrice_not_in?: Int[] | Int;
+  monthlyPrice_lt?: Int;
+  monthlyPrice_lte?: Int;
+  monthlyPrice_gt?: Int;
+  monthlyPrice_gte?: Int;
+  status?: BikeStatus;
+  status_not?: BikeStatus;
+  status_in?: BikeStatus[] | BikeStatus;
+  status_not_in?: BikeStatus[] | BikeStatus;
+  AND?: BikeScalarWhereInput[] | BikeScalarWhereInput;
+  OR?: BikeScalarWhereInput[] | BikeScalarWhereInput;
+  NOT?: BikeScalarWhereInput[] | BikeScalarWhereInput;
+}
+
+export interface BikeUpdateManyWithWhereNestedInput {
+  where: BikeScalarWhereInput;
+  data: BikeUpdateManyDataInput;
+}
+
+export interface BikeUpdateManyDataInput {
+  ownerUid?: String;
+  modelId?: Int;
+  photos?: BikeUpdatephotosInput;
+  rating?: Float;
+  reviewsCount?: Int;
+  manufactureYear?: Int;
+  mileage?: Int;
+  dailyPrice?: Int;
+  monthlyPrice?: Int;
+  status?: BikeStatus;
+  areaIds?: BikeUpdateareaIdsInput;
+}
+
+export interface SavedBikesListUpdateManyMutationInput {
+  userUid?: String;
+}
+
+export interface BikeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: BikeWhereInput;
+  AND?: BikeSubscriptionWhereInput[] | BikeSubscriptionWhereInput;
+  OR?: BikeSubscriptionWhereInput[] | BikeSubscriptionWhereInput;
+  NOT?: BikeSubscriptionWhereInput[] | BikeSubscriptionWhereInput;
 }
 
 export interface BookingSubscriptionWhereInput {
@@ -1553,284 +1546,36 @@ export interface BookingSubscriptionWhereInput {
   NOT?: BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput;
 }
 
+export interface ReviewSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ReviewWhereInput;
+  AND?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput;
+  OR?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput;
+  NOT?: ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput;
+}
+
+export interface SavedBikesListSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: SavedBikesListWhereInput;
+  AND?:
+    | SavedBikesListSubscriptionWhereInput[]
+    | SavedBikesListSubscriptionWhereInput;
+  OR?:
+    | SavedBikesListSubscriptionWhereInput[]
+    | SavedBikesListSubscriptionWhereInput;
+  NOT?:
+    | SavedBikesListSubscriptionWhereInput[]
+    | SavedBikesListSubscriptionWhereInput;
+}
+
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface SavedBikesListPreviousValues {
-  id: ID_Output;
-  userUid: String;
-}
-
-export interface SavedBikesListPreviousValuesPromise
-  extends Promise<SavedBikesListPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  userUid: () => Promise<String>;
-}
-
-export interface SavedBikesListPreviousValuesSubscription
-  extends Promise<AsyncIterator<SavedBikesListPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  userUid: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateBike {
-  count: Int;
-}
-
-export interface AggregateBikePromise
-  extends Promise<AggregateBike>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateBikeSubscription
-  extends Promise<AsyncIterator<AggregateBike>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ReviewSubscriptionPayload {
-  mutation: MutationType;
-  node: Review;
-  updatedFields: String[];
-  previousValues: ReviewPreviousValues;
-}
-
-export interface ReviewSubscriptionPayloadPromise
-  extends Promise<ReviewSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ReviewPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ReviewPreviousValuesPromise>() => T;
-}
-
-export interface ReviewSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ReviewSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ReviewSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ReviewPreviousValuesSubscription>() => T;
-}
-
-export interface BikeEdge {
-  node: Bike;
-  cursor: String;
-}
-
-export interface BikeEdgePromise extends Promise<BikeEdge>, Fragmentable {
-  node: <T = BikePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BikeEdgeSubscription
-  extends Promise<AsyncIterator<BikeEdge>>,
-    Fragmentable {
-  node: <T = BikeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSavedBikesList {
-  count: Int;
-}
-
-export interface AggregateSavedBikesListPromise
-  extends Promise<AggregateSavedBikesList>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSavedBikesListSubscription
-  extends Promise<AsyncIterator<AggregateSavedBikesList>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface SavedBikesListConnection {
-  pageInfo: PageInfo;
-  edges: SavedBikesListEdge[];
-}
-
-export interface SavedBikesListConnectionPromise
-  extends Promise<SavedBikesListConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SavedBikesListEdge>>() => T;
-  aggregate: <T = AggregateSavedBikesListPromise>() => T;
-}
-
-export interface SavedBikesListConnectionSubscription
-  extends Promise<AsyncIterator<SavedBikesListConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SavedBikesListEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSavedBikesListSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface SavedBikesList {
-  id: ID_Output;
-  userUid: String;
-}
-
-export interface SavedBikesListPromise
-  extends Promise<SavedBikesList>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  userUid: () => Promise<String>;
-  bikes: <T = FragmentableArray<Bike>>(
-    args?: {
-      where?: BikeWhereInput;
-      orderBy?: BikeOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface SavedBikesListSubscription
-  extends Promise<AsyncIterator<SavedBikesList>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  userUid: () => Promise<AsyncIterator<String>>;
-  bikes: <T = Promise<AsyncIterator<BikeSubscription>>>(
-    args?: {
-      where?: BikeWhereInput;
-      orderBy?: BikeOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface BikeConnection {
-  pageInfo: PageInfo;
-  edges: BikeEdge[];
-}
-
-export interface BikeConnectionPromise
-  extends Promise<BikeConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<BikeEdge>>() => T;
-  aggregate: <T = AggregateBikePromise>() => T;
-}
-
-export interface BikeConnectionSubscription
-  extends Promise<AsyncIterator<BikeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<BikeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateBikeSubscription>() => T;
-}
-
-export interface ReviewEdge {
-  node: Review;
-  cursor: String;
-}
-
-export interface ReviewEdgePromise extends Promise<ReviewEdge>, Fragmentable {
-  node: <T = ReviewPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ReviewEdgeSubscription
-  extends Promise<AsyncIterator<ReviewEdge>>,
-    Fragmentable {
-  node: <T = ReviewSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ReviewPreviousValues {
-  id: ID_Output;
-  rating: Int;
-  comment?: String;
-  createdAt: DateTimeOutput;
-  userUid: String;
-}
-
-export interface ReviewPreviousValuesPromise
-  extends Promise<ReviewPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  rating: () => Promise<Int>;
-  comment: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  userUid: () => Promise<String>;
-}
-
-export interface ReviewPreviousValuesSubscription
-  extends Promise<AsyncIterator<ReviewPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  rating: () => Promise<AsyncIterator<Int>>;
-  comment: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  userUid: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateBooking {
-  count: Int;
-}
-
-export interface AggregateBookingPromise
-  extends Promise<AggregateBooking>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateBookingSubscription
-  extends Promise<AsyncIterator<AggregateBooking>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Bike {
@@ -1844,6 +1589,7 @@ export interface Bike {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  status: BikeStatus;
   areaIds: Int[];
 }
 
@@ -1858,6 +1604,7 @@ export interface BikePromise extends Promise<Bike>, Fragmentable {
   mileage: () => Promise<Int>;
   dailyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
+  status: () => Promise<BikeStatus>;
   areaIds: () => Promise<Int[]>;
   reviews: <T = FragmentableArray<Review>>(
     args?: {
@@ -1896,6 +1643,7 @@ export interface BikeSubscription
   mileage: () => Promise<AsyncIterator<Int>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  status: () => Promise<AsyncIterator<BikeStatus>>;
   areaIds: () => Promise<AsyncIterator<Int[]>>;
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(
     args?: {
@@ -1921,152 +1669,32 @@ export interface BikeSubscription
   ) => T;
 }
 
-export interface BookingConnection {
-  pageInfo: PageInfo;
-  edges: BookingEdge[];
-}
-
-export interface BookingConnectionPromise
-  extends Promise<BookingConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<BookingEdge>>() => T;
-  aggregate: <T = AggregateBookingPromise>() => T;
-}
-
-export interface BookingConnectionSubscription
-  extends Promise<AsyncIterator<BookingConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<BookingEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateBookingSubscription>() => T;
-}
-
-export interface BikeSubscriptionPayload {
-  mutation: MutationType;
-  node: Bike;
-  updatedFields: String[];
-  previousValues: BikePreviousValues;
-}
-
-export interface BikeSubscriptionPayloadPromise
-  extends Promise<BikeSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = BikePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = BikePreviousValuesPromise>() => T;
-}
-
-export interface BikeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BikeSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BikeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BikePreviousValuesSubscription>() => T;
-}
-
-export interface SavedBikesListEdge {
-  node: SavedBikesList;
-  cursor: String;
-}
-
-export interface SavedBikesListEdgePromise
-  extends Promise<SavedBikesListEdge>,
-    Fragmentable {
-  node: <T = SavedBikesListPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface SavedBikesListEdgeSubscription
-  extends Promise<AsyncIterator<SavedBikesListEdge>>,
-    Fragmentable {
-  node: <T = SavedBikesListSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface BookingPreviousValues {
+export interface Review {
   id: ID_Output;
+  rating: Int;
+  comment?: String;
+  createdAt: DateTimeOutput;
   userUid: String;
-  bikeOwnerUid: String;
-  startDate: DateTimeOutput;
-  endDate: DateTimeOutput;
-  deliveryLocationLongitude: String;
-  deliveryLocationLongitudeDelta: String;
-  deliveryLocationLatitude: String;
-  deliveryLocationLatitudeDelta: String;
-  deliveryLocationAddress: String;
-  deliveryLocationComment?: String;
-  dailyPrice: Int;
-  monthlyPrice: Int;
-  totalPrice: Int;
-  status: BookingStatus;
 }
 
-export interface BookingPreviousValuesPromise
-  extends Promise<BookingPreviousValues>,
-    Fragmentable {
+export interface ReviewPromise extends Promise<Review>, Fragmentable {
   id: () => Promise<ID_Output>;
+  rating: () => Promise<Int>;
+  comment: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
   userUid: () => Promise<String>;
-  bikeOwnerUid: () => Promise<String>;
-  startDate: () => Promise<DateTimeOutput>;
-  endDate: () => Promise<DateTimeOutput>;
-  deliveryLocationLongitude: () => Promise<String>;
-  deliveryLocationLongitudeDelta: () => Promise<String>;
-  deliveryLocationLatitude: () => Promise<String>;
-  deliveryLocationLatitudeDelta: () => Promise<String>;
-  deliveryLocationAddress: () => Promise<String>;
-  deliveryLocationComment: () => Promise<String>;
-  dailyPrice: () => Promise<Int>;
-  monthlyPrice: () => Promise<Int>;
-  totalPrice: () => Promise<Int>;
-  status: () => Promise<BookingStatus>;
+  bike: <T = BikePromise>() => T;
 }
 
-export interface BookingPreviousValuesSubscription
-  extends Promise<AsyncIterator<BookingPreviousValues>>,
+export interface ReviewSubscription
+  extends Promise<AsyncIterator<Review>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  rating: () => Promise<AsyncIterator<Int>>;
+  comment: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   userUid: () => Promise<AsyncIterator<String>>;
-  bikeOwnerUid: () => Promise<AsyncIterator<String>>;
-  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  deliveryLocationLongitude: () => Promise<AsyncIterator<String>>;
-  deliveryLocationLongitudeDelta: () => Promise<AsyncIterator<String>>;
-  deliveryLocationLatitude: () => Promise<AsyncIterator<String>>;
-  deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
-  deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
-  deliveryLocationComment: () => Promise<AsyncIterator<String>>;
-  dailyPrice: () => Promise<AsyncIterator<Int>>;
-  monthlyPrice: () => Promise<AsyncIterator<Int>>;
-  totalPrice: () => Promise<AsyncIterator<Int>>;
-  status: () => Promise<AsyncIterator<BookingStatus>>;
-}
-
-export interface BookingSubscriptionPayload {
-  mutation: MutationType;
-  node: Booking;
-  updatedFields: String[];
-  previousValues: BookingPreviousValues;
-}
-
-export interface BookingSubscriptionPayloadPromise
-  extends Promise<BookingSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = BookingPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = BookingPreviousValuesPromise>() => T;
-}
-
-export interface BookingSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BookingSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BookingSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BookingPreviousValuesSubscription>() => T;
+  bike: <T = BikeSubscription>() => T;
 }
 
 export interface Booking {
@@ -2127,6 +1755,329 @@ export interface BookingSubscription
   bike: <T = BikeSubscription>() => T;
 }
 
+export interface BikeConnection {
+  pageInfo: PageInfo;
+  edges: BikeEdge[];
+}
+
+export interface BikeConnectionPromise
+  extends Promise<BikeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BikeEdge>>() => T;
+  aggregate: <T = AggregateBikePromise>() => T;
+}
+
+export interface BikeConnectionSubscription
+  extends Promise<AsyncIterator<BikeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BikeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBikeSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BikeEdge {
+  node: Bike;
+  cursor: String;
+}
+
+export interface BikeEdgePromise extends Promise<BikeEdge>, Fragmentable {
+  node: <T = BikePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BikeEdgeSubscription
+  extends Promise<AsyncIterator<BikeEdge>>,
+    Fragmentable {
+  node: <T = BikeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateBike {
+  count: Int;
+}
+
+export interface AggregateBikePromise
+  extends Promise<AggregateBike>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBikeSubscription
+  extends Promise<AsyncIterator<AggregateBike>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BookingConnection {
+  pageInfo: PageInfo;
+  edges: BookingEdge[];
+}
+
+export interface BookingConnectionPromise
+  extends Promise<BookingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BookingEdge>>() => T;
+  aggregate: <T = AggregateBookingPromise>() => T;
+}
+
+export interface BookingConnectionSubscription
+  extends Promise<AsyncIterator<BookingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BookingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBookingSubscription>() => T;
+}
+
+export interface BookingEdge {
+  node: Booking;
+  cursor: String;
+}
+
+export interface BookingEdgePromise extends Promise<BookingEdge>, Fragmentable {
+  node: <T = BookingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BookingEdgeSubscription
+  extends Promise<AsyncIterator<BookingEdge>>,
+    Fragmentable {
+  node: <T = BookingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateBooking {
+  count: Int;
+}
+
+export interface AggregateBookingPromise
+  extends Promise<AggregateBooking>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBookingSubscription
+  extends Promise<AsyncIterator<AggregateBooking>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ReviewConnection {
+  pageInfo: PageInfo;
+  edges: ReviewEdge[];
+}
+
+export interface ReviewConnectionPromise
+  extends Promise<ReviewConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ReviewEdge>>() => T;
+  aggregate: <T = AggregateReviewPromise>() => T;
+}
+
+export interface ReviewConnectionSubscription
+  extends Promise<AsyncIterator<ReviewConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ReviewEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateReviewSubscription>() => T;
+}
+
+export interface ReviewEdge {
+  node: Review;
+  cursor: String;
+}
+
+export interface ReviewEdgePromise extends Promise<ReviewEdge>, Fragmentable {
+  node: <T = ReviewPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ReviewEdgeSubscription
+  extends Promise<AsyncIterator<ReviewEdge>>,
+    Fragmentable {
+  node: <T = ReviewSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateReview {
+  count: Int;
+}
+
+export interface AggregateReviewPromise
+  extends Promise<AggregateReview>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateReviewSubscription
+  extends Promise<AsyncIterator<AggregateReview>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface SavedBikesList {
+  id: ID_Output;
+  userUid: String;
+}
+
+export interface SavedBikesListPromise
+  extends Promise<SavedBikesList>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  userUid: () => Promise<String>;
+  bikes: <T = FragmentableArray<Bike>>(
+    args?: {
+      where?: BikeWhereInput;
+      orderBy?: BikeOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface SavedBikesListSubscription
+  extends Promise<AsyncIterator<SavedBikesList>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  userUid: () => Promise<AsyncIterator<String>>;
+  bikes: <T = Promise<AsyncIterator<BikeSubscription>>>(
+    args?: {
+      where?: BikeWhereInput;
+      orderBy?: BikeOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface SavedBikesListConnection {
+  pageInfo: PageInfo;
+  edges: SavedBikesListEdge[];
+}
+
+export interface SavedBikesListConnectionPromise
+  extends Promise<SavedBikesListConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SavedBikesListEdge>>() => T;
+  aggregate: <T = AggregateSavedBikesListPromise>() => T;
+}
+
+export interface SavedBikesListConnectionSubscription
+  extends Promise<AsyncIterator<SavedBikesListConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SavedBikesListEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSavedBikesListSubscription>() => T;
+}
+
+export interface SavedBikesListEdge {
+  node: SavedBikesList;
+  cursor: String;
+}
+
+export interface SavedBikesListEdgePromise
+  extends Promise<SavedBikesListEdge>,
+    Fragmentable {
+  node: <T = SavedBikesListPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SavedBikesListEdgeSubscription
+  extends Promise<AsyncIterator<SavedBikesListEdge>>,
+    Fragmentable {
+  node: <T = SavedBikesListSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateSavedBikesList {
+  count: Int;
+}
+
+export interface AggregateSavedBikesListPromise
+  extends Promise<AggregateSavedBikesList>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSavedBikesListSubscription
+  extends Promise<AsyncIterator<AggregateSavedBikesList>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface BikeSubscriptionPayload {
+  mutation: MutationType;
+  node: Bike;
+  updatedFields: String[];
+  previousValues: BikePreviousValues;
+}
+
+export interface BikeSubscriptionPayloadPromise
+  extends Promise<BikeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BikePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BikePreviousValuesPromise>() => T;
+}
+
+export interface BikeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BikeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BikeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BikePreviousValuesSubscription>() => T;
+}
+
 export interface BikePreviousValues {
   id: ID_Output;
   ownerUid: String;
@@ -2138,6 +2089,7 @@ export interface BikePreviousValues {
   mileage?: Int;
   dailyPrice: Int;
   monthlyPrice: Int;
+  status: BikeStatus;
   areaIds: Int[];
 }
 
@@ -2154,6 +2106,7 @@ export interface BikePreviousValuesPromise
   mileage: () => Promise<Int>;
   dailyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
+  status: () => Promise<BikeStatus>;
   areaIds: () => Promise<Int[]>;
 }
 
@@ -2170,10 +2123,119 @@ export interface BikePreviousValuesSubscription
   mileage: () => Promise<AsyncIterator<Int>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  status: () => Promise<AsyncIterator<BikeStatus>>;
   areaIds: () => Promise<AsyncIterator<Int[]>>;
 }
 
-export interface Review {
+export interface BookingSubscriptionPayload {
+  mutation: MutationType;
+  node: Booking;
+  updatedFields: String[];
+  previousValues: BookingPreviousValues;
+}
+
+export interface BookingSubscriptionPayloadPromise
+  extends Promise<BookingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BookingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BookingPreviousValuesPromise>() => T;
+}
+
+export interface BookingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BookingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BookingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BookingPreviousValuesSubscription>() => T;
+}
+
+export interface BookingPreviousValues {
+  id: ID_Output;
+  userUid: String;
+  bikeOwnerUid: String;
+  startDate: DateTimeOutput;
+  endDate: DateTimeOutput;
+  deliveryLocationLongitude: String;
+  deliveryLocationLongitudeDelta: String;
+  deliveryLocationLatitude: String;
+  deliveryLocationLatitudeDelta: String;
+  deliveryLocationAddress: String;
+  deliveryLocationComment?: String;
+  dailyPrice: Int;
+  monthlyPrice: Int;
+  totalPrice: Int;
+  status: BookingStatus;
+}
+
+export interface BookingPreviousValuesPromise
+  extends Promise<BookingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  userUid: () => Promise<String>;
+  bikeOwnerUid: () => Promise<String>;
+  startDate: () => Promise<DateTimeOutput>;
+  endDate: () => Promise<DateTimeOutput>;
+  deliveryLocationLongitude: () => Promise<String>;
+  deliveryLocationLongitudeDelta: () => Promise<String>;
+  deliveryLocationLatitude: () => Promise<String>;
+  deliveryLocationLatitudeDelta: () => Promise<String>;
+  deliveryLocationAddress: () => Promise<String>;
+  deliveryLocationComment: () => Promise<String>;
+  dailyPrice: () => Promise<Int>;
+  monthlyPrice: () => Promise<Int>;
+  totalPrice: () => Promise<Int>;
+  status: () => Promise<BookingStatus>;
+}
+
+export interface BookingPreviousValuesSubscription
+  extends Promise<AsyncIterator<BookingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  userUid: () => Promise<AsyncIterator<String>>;
+  bikeOwnerUid: () => Promise<AsyncIterator<String>>;
+  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  deliveryLocationLongitude: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLongitudeDelta: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLatitude: () => Promise<AsyncIterator<String>>;
+  deliveryLocationLatitudeDelta: () => Promise<AsyncIterator<String>>;
+  deliveryLocationAddress: () => Promise<AsyncIterator<String>>;
+  deliveryLocationComment: () => Promise<AsyncIterator<String>>;
+  dailyPrice: () => Promise<AsyncIterator<Int>>;
+  monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  totalPrice: () => Promise<AsyncIterator<Int>>;
+  status: () => Promise<AsyncIterator<BookingStatus>>;
+}
+
+export interface ReviewSubscriptionPayload {
+  mutation: MutationType;
+  node: Review;
+  updatedFields: String[];
+  previousValues: ReviewPreviousValues;
+}
+
+export interface ReviewSubscriptionPayloadPromise
+  extends Promise<ReviewSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ReviewPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ReviewPreviousValuesPromise>() => T;
+}
+
+export interface ReviewSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ReviewSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ReviewSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ReviewPreviousValuesSubscription>() => T;
+}
+
+export interface ReviewPreviousValues {
   id: ID_Output;
   rating: Int;
   comment?: String;
@@ -2181,24 +2243,24 @@ export interface Review {
   userUid: String;
 }
 
-export interface ReviewPromise extends Promise<Review>, Fragmentable {
+export interface ReviewPreviousValuesPromise
+  extends Promise<ReviewPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   rating: () => Promise<Int>;
   comment: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   userUid: () => Promise<String>;
-  bike: <T = BikePromise>() => T;
 }
 
-export interface ReviewSubscription
-  extends Promise<AsyncIterator<Review>>,
+export interface ReviewPreviousValuesSubscription
+  extends Promise<AsyncIterator<ReviewPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   rating: () => Promise<AsyncIterator<Int>>;
   comment: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   userUid: () => Promise<AsyncIterator<String>>;
-  bike: <T = BikeSubscription>() => T;
 }
 
 export interface SavedBikesListSubscriptionPayload {
@@ -2226,76 +2288,24 @@ export interface SavedBikesListSubscriptionPayloadSubscription
   previousValues: <T = SavedBikesListPreviousValuesSubscription>() => T;
 }
 
-export interface BookingEdge {
-  node: Booking;
-  cursor: String;
+export interface SavedBikesListPreviousValues {
+  id: ID_Output;
+  userUid: String;
 }
 
-export interface BookingEdgePromise extends Promise<BookingEdge>, Fragmentable {
-  node: <T = BookingPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface BookingEdgeSubscription
-  extends Promise<AsyncIterator<BookingEdge>>,
+export interface SavedBikesListPreviousValuesPromise
+  extends Promise<SavedBikesListPreviousValues>,
     Fragmentable {
-  node: <T = BookingSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<ID_Output>;
+  userUid: () => Promise<String>;
 }
 
-export interface ReviewConnection {
-  pageInfo: PageInfo;
-  edges: ReviewEdge[];
-}
-
-export interface ReviewConnectionPromise
-  extends Promise<ReviewConnection>,
+export interface SavedBikesListPreviousValuesSubscription
+  extends Promise<AsyncIterator<SavedBikesListPreviousValues>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ReviewEdge>>() => T;
-  aggregate: <T = AggregateReviewPromise>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  userUid: () => Promise<AsyncIterator<String>>;
 }
-
-export interface ReviewConnectionSubscription
-  extends Promise<AsyncIterator<ReviewConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ReviewEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateReviewSubscription>() => T;
-}
-
-export interface AggregateReview {
-  count: Int;
-}
-
-export interface AggregateReviewPromise
-  extends Promise<AggregateReview>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateReviewSubscription
-  extends Promise<AsyncIterator<AggregateReview>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
-
-export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -2318,6 +2328,23 @@ The `Float` scalar type represents signed double-precision fractional values as 
 */
 export type Float = number;
 
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+export type Long = string;
+
 /**
  * Model Metadata
  */
@@ -2325,6 +2352,10 @@ export type Float = number;
 export const models: Model[] = [
   {
     name: "Bike",
+    embedded: false
+  },
+  {
+    name: "BikeStatus",
     embedded: false
   },
   {

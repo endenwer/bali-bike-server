@@ -36,6 +36,9 @@
    "where \"Booking\".\"startDate\" <= :end-date AND "
    "\"Booking\".\"endDate\" >= :start-date AND \"Booking\".\"status\" = 'CONFIRMED')"))
 
+(def bike-status-where-statement
+  (str "\"Bike\".\"status\" = 'ACTIVE'"))
+
 (def model-where-statement "\"Bike\".\"modelId\" = :model-id ")
 (def area-where-statement "\"AreaIds\".\"value\" = :area-id ")
 
@@ -47,7 +50,8 @@
         model-id (:modelId args)
         where-statements (remove nil? [(when (and start-date end-date) bookings-where-statement)
                                        (when area-id area-where-statement)
-                                       (when model-id model-where-statement)])]
+                                       (when model-id model-where-statement)
+                                       bike-status-where-statement])]
     (p/then
      (p/promise
       (.query
@@ -115,6 +119,10 @@
 (defn own-bikes
   [_ _ {:keys [prisma user]}]
   (prisma [:bikes {:where {:ownerUid (:uid user)} :orderBy :id_DESC}]))
+
+(defn bikes-on-moderation
+  [_ _ {:keys [prisma]}]
+  (prisma [:bikes {:where {:status "MODERATION"}}]))
 
 (defn saved-bikes
   [_ _ {:keys [prisma user]}]

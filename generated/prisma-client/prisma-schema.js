@@ -30,6 +30,7 @@ type Bike {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  status: BikeStatus!
   areaIds: [Int!]!
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
@@ -55,6 +56,7 @@ input BikeCreateInput {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  status: BikeStatus
   areaIds: BikeCreateareaIdsInput
   reviews: ReviewCreateManyWithoutBikeInput
   bookings: BookingCreateManyWithoutBikeInput
@@ -89,6 +91,7 @@ input BikeCreateWithoutBookingsInput {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  status: BikeStatus
   areaIds: BikeCreateareaIdsInput
   reviews: ReviewCreateManyWithoutBikeInput
 }
@@ -103,6 +106,7 @@ input BikeCreateWithoutReviewsInput {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  status: BikeStatus
   areaIds: BikeCreateareaIdsInput
   bookings: BookingCreateManyWithoutBikeInput
 }
@@ -131,6 +135,8 @@ enum BikeOrderByInput {
   dailyPrice_DESC
   monthlyPrice_ASC
   monthlyPrice_DESC
+  status_ASC
+  status_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -148,6 +154,7 @@ type BikePreviousValues {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  status: BikeStatus!
   areaIds: [Int!]!
 }
 
@@ -236,9 +243,19 @@ input BikeScalarWhereInput {
   monthlyPrice_lte: Int
   monthlyPrice_gt: Int
   monthlyPrice_gte: Int
+  status: BikeStatus
+  status_not: BikeStatus
+  status_in: [BikeStatus!]
+  status_not_in: [BikeStatus!]
   AND: [BikeScalarWhereInput!]
   OR: [BikeScalarWhereInput!]
   NOT: [BikeScalarWhereInput!]
+}
+
+enum BikeStatus {
+  MODERATION
+  ACTIVE
+  ARCHIVED
 }
 
 type BikeSubscriptionPayload {
@@ -273,6 +290,7 @@ input BikeUpdateDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
@@ -288,6 +306,7 @@ input BikeUpdateInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
@@ -303,6 +322,7 @@ input BikeUpdateManyDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
 }
 
@@ -327,6 +347,7 @@ input BikeUpdateManyMutationInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
 }
 
@@ -363,6 +384,7 @@ input BikeUpdateWithoutBookingsDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
   reviews: ReviewUpdateManyWithoutBikeInput
 }
@@ -377,6 +399,7 @@ input BikeUpdateWithoutReviewsDataInput {
   mileage: Int
   dailyPrice: Int
   monthlyPrice: Int
+  status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -487,6 +510,10 @@ input BikeWhereInput {
   monthlyPrice_lte: Int
   monthlyPrice_gt: Int
   monthlyPrice_gte: Int
+  status: BikeStatus
+  status_not: BikeStatus
+  status_in: [BikeStatus!]
+  status_not_in: [BikeStatus!]
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput

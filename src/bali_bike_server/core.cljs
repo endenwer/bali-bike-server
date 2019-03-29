@@ -1,6 +1,6 @@
 (ns bali-bike-server.core
   (:require ["graphql-yoga" :refer [GraphQLServer] :rename {GraphQLServer graphql-server}]
-            ["graphql-shield" :refer [shield]]
+            ["graphql-shield" :as graphql-shield :refer [shield]]
             ["/prisma-client" :default prisma-client]
             ["pg" :as pg]
             [promesa.async-cljs :refer-macros [async]]
@@ -25,6 +25,7 @@
   {:Query {:bikes query-resolvers/bikes
            :savedBikes query-resolvers/saved-bikes
            :ownBikes query-resolvers/own-bikes
+           :bikesOnModeration query-resolvers/bikes-on-moderation
            :bike query-resolvers/bike
            :bookings query-resolvers/bookings
            :bikeOwnerBookings query-resolvers/bike-owner-bookings
@@ -36,6 +37,7 @@
               :createBike mutation-resolvers/create-bike
               :updateBike mutation-resolvers/update-bike
               :deleteBike mutation-resolvers/delete-bike
+              :activateBike mutation-resolvers/activate-bike
               :changeRole mutation-resolvers/change-role
               :confirmBooking mutation-resolvers/confirm-booking
               :cancelBooking mutation-resolvers/cancel-booking}
@@ -51,13 +53,15 @@
           {:Query {:bookings rules/is-authenticated
                    :bikeOwnerBookings rules/is-authenticated
                    :booking rules/is-booking-owner
-                   :ownBikes rules/is-authenticated}
+                   :ownBikes rules/is-authenticated
+                   :bikesOnModeration rules/is-moderator}
            :Mutation {:createBooking rules/is-authenticated
                       :addBikeToSaved rules/is-authenticated
                       :removeBikeFromSaved rules/is-authenticated
                       :createBike rules/is-authenticated
                       :updateBike rules/is-bike-owner
-                      :deleteBike rules/is-bike-owner
+                      :deleteBike (graphql-shield/or rules/is-bike-owner rules/is-moderator)
+                      :activateBike rules/is-moderator
                       :changeRole rules/is-authenticated
                       :confirmBooking rules/is-booking-bike-owner
                       :cancelBooking rules/is-booking-bike-owner}})))

@@ -7,6 +7,7 @@ type Query {
     areaId: Int
     modelId: Int): [Bike!]
   ownBikes: [Bike!]
+  bikesOnModeration: [Bike!]
   savedBikes: [Bike!]
   bike(id: ID!): Bike
   bookings: [Booking!]
@@ -56,6 +57,7 @@ type Mutation {
     monthlyPrice: Int!
   ): Bike
   deleteBike(id: ID!): Bike
+  activateBike(id: ID!): Bike
   changeRole(role: String): Boolean
   confirmBooking(id: ID!): Booking
   cancelBooking(id: ID!): Booking
@@ -83,6 +85,13 @@ type Bike {
   reviews: [Review!]!
   bookings: [BikeBooking!]
   owner: User!
+  status: BikeStatus!
+}
+
+enum BikeStatus {
+  MODERATION
+  ACTIVE
+  ARCHIVED
 }
 
 type BikeBooking {
