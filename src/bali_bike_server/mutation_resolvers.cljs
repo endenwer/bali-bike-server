@@ -3,7 +3,10 @@
             [bali-bike-server.constants :as constants]
             ["firebase-admin" :default firebase-admin]
             ["moment-precise-range-plugin"]
-            ["moment" :as moment]))
+            ["moment" :as moment]
+            ["postmark" :as postmark]))
+
+(def postmark-client (postmark/ServerClient. "dd8c31b4-d90f-4dc6-9eee-1f32e1f5c3f4"))
 
 (defn get-dates-diff
   [start-date end-date]
@@ -42,7 +45,7 @@
      (fn [user]
        (.sendToDevice
         (.messaging firebase-admin)
-        (.-pushToken (.data user))
+        (.-pushTokens (.data user))
         (clj->js notification))))))
 
 (defn send-booking-notification
@@ -51,12 +54,34 @@
         model-id (.-modelId bike)
         start-date (.-startDate booking)
         end-date (.-endDate booking)
-        notification {:data {:id (.-id booking) :type "NEW_BOOKING"}
+        notification {:data {:id (.-id booking) :type "NEW_BOOKNG"}
                       :notification {:title "New Booking"
                                      :body (str (get constants/models model-id) ", "
                                                 (get-short-dates-range-string
                                                  start-date end-date))}}]
     (send-notification bike-owner-uid notification)))
+
+(defn send-booking-email
+  [booking bike]
+  (alet [owner-uid (.-bikeOwnerUid booking)
+         owner (p/await (.getUser (.auth firebase-admin) owner-uid))
+         model (get constants/models (.-modelId bike))
+         start-date (.format (moment (.-startDate booking)) "MMMM D")
+         end-date (.format (moment (.-endDate booking)) "MMMM D")
+         bike-photo (first (.-photos bike))
+         delivery-location (.-deliveryLocationAddress booking)
+         total-price (.-totalPrice booking)]
+        (.sendEmailWithTemplate
+         postmark-client
+         (clj->js {:From "noreply@balibike.app"
+                   :To (.-email owner)
+                   :TemplateAlias "new_booking"
+                   :TemplateModel {:bike_model model
+                                   :start_date start-date
+                                   :end_date end-date
+                                   :bike_photo_url bike-photo
+                                   :delivery_location delivery-location
+                                   :total_payment total-price}}))))
 
 (defn create-booking
   [_ _ {:keys [prisma user args]}]
@@ -86,6 +111,7 @@
             :bike {:connect {:id (:bikeId args)}}}])
          (fn [booking]
            (send-booking-notification booking bike)
+           (when-not js/goog.DEBUG (send-booking-email booking bike))
            booking))))
 
 (defn create-bike
