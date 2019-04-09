@@ -4,7 +4,8 @@
             ["firebase-admin" :default firebase-admin]
             ["moment-precise-range-plugin"]
             ["moment" :as moment]
-            ["postmark" :as postmark]))
+            ["postmark" :as postmark]
+            ["https" :as https]))
 
 (def postmark-client (postmark/ServerClient. "dd8c31b4-d90f-4dc6-9eee-1f32e1f5c3f4"))
 
@@ -83,6 +84,9 @@
                                    :delivery_location delivery-location
                                    :total_payment total-price}}))))
 
+(defn send-telegram-message-to-me []
+  (https/get "https://api.telegram.org/bot762520235:AAEVu2VTl1tNjEG1ANAHkDR2k9xjQ7Ruf5k/sendMessage?chat_id=276487288&text=New%20booking"))
+
 (defn create-booking
   [_ _ {:keys [prisma user args]}]
   (alet [bike (p/await (p/promise (prisma [:bike {:id (:bikeId args)}])))
@@ -111,7 +115,9 @@
             :bike {:connect {:id (:bikeId args)}}}])
          (fn [booking]
            (send-booking-notification booking bike)
-           (when-not js/goog.DEBUG (send-booking-email booking bike))
+           (when-not js/goog.DEBUG
+             (send-booking-email booking bike)
+             (send-telegram-message-to-me))
            booking))))
 
 (defn create-bike
