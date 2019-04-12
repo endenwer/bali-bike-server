@@ -1,6 +1,7 @@
 (ns bali-bike-server.mutation-resolvers
   (:require [promesa.core :as p :refer-macros [alet]]
             [bali-bike-server.constants :as constants]
+            [clojure.string :as string]
             ["firebase-admin" :default firebase-admin]
             ["moment-precise-range-plugin"]
             ["moment" :as moment]
@@ -135,21 +136,44 @@
        :ownerUid owner-uid
        :status "MODERATION"}])))
 
+(defn get-photo-thumbnails
+  [photos]
+  (let [file-names (map #(last (re-find #"bike_photos\%2F(.+)\?" %)) photos)
+        url-config {:action "read" :expires "03-01-2500"}
+        bucket (.bucket (.storage firebase-admin))]
+    (p/all
+     (map-indexed
+      (fn [index file-name]
+        (if (string/includes? file-name "thumb_")
+          (p/promise (get photos index))
+          (.then
+           (.getSignedUrl
+            (.file bucket (str "bike_photos/thumb_" file-name))
+            (clj->js url-config))
+           #(aget % 0))))
+      file-names))))
+
 (defn activate-bike
   [_ _ {:keys [prisma args]}]
-  (prisma [:updateBike {:data {:status "ACTIVE"}
-                        :where {:id (:id args)}}]))
+  (alet [bike (p/await (p/promise (prisma [:bike {:id (:id args)}])))
+         photo-thumbnails (p/await (get-photo-thumbnails (.-photos bike)))]
+        (prisma [:updateBike {:data {:status "ACTIVE"
+                                     :photos {:set photo-thumbnails}}
+                              :where {:id (:id args)}}])))
 
 (defn update-bike
   [_ _ {:keys [prisma args]}]
-  (let [bike-id (:id args)]
-    (prisma [:updateBike
-             {:data {:photos {:set (:photos args)}
-                     :areaIds {:set (:areaIds args)}
-                     :mileage (:mileage args)
-                     :dailyPrice (:dailyPrice args)
-                     :monthlyPrice (:monthlyPrice args)}
-              :where {:id (:id args)}}])))
+  (alet [bike-id (:id args)
+         bike (p/await (p/promise (prisma [:bike {:id bike-id}])))
+         photo-changed? (not= (set (js->clj (.-photos bike))) (set (:photos args)))]
+        (prisma [:updateBike
+                 {:data {:photos {:set (:photos args)}
+                         :areaIds {:set (:areaIds args)}
+                         :mileage (:mileage args)
+                         :dailyPrice (:dailyPrice args)
+                         :monthlyPrice (:monthlyPrice args)
+                         :status (if photo-changed? "MODERATION" "ACTIVE")}
+                  :where {:id (:id args)}}])))
 
 (defn delete-bike
   [_ _ {:keys [prisma args]}]

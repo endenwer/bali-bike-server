@@ -5,6 +5,7 @@
 
 (def service-account "serviceAccountKey.json")
 (def database-url "https://bali-bike.firebaseio.com")
+(def storage-bucket "bali-bike-app.appspot.com")
 
 (defn get-user [token]
   (->
@@ -15,4 +16,6 @@
 
 (defn init []
   (let [credential (.credential.cert firebase-admin service-account)]
-    (.initializeApp firebase-admin (clj->js {:credential credential :databaseURL database-url}))))
+    (.initializeApp firebase-admin (clj->js {:credential credential
+                                             :databaseURL database-url
+                                             :storageBucket storage-bucket}))))
