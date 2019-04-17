@@ -291,6 +291,8 @@ export type BookingOrderByInput =
   | "dailyPrice_DESC"
   | "monthlyPrice_ASC"
   | "monthlyPrice_DESC"
+  | "weeklyPrice_ASC"
+  | "weeklyPrice_DESC"
   | "totalPrice_ASC"
   | "totalPrice_DESC"
   | "status_ASC"
@@ -317,6 +319,8 @@ export type BikeOrderByInput =
   | "mileage_DESC"
   | "dailyPrice_ASC"
   | "dailyPrice_DESC"
+  | "weeklyPrice_ASC"
+  | "weeklyPrice_DESC"
   | "monthlyPrice_ASC"
   | "monthlyPrice_DESC"
   | "status_ASC"
@@ -484,6 +488,14 @@ export interface BikeWhereInput {
   dailyPrice_lte?: Int;
   dailyPrice_gt?: Int;
   dailyPrice_gte?: Int;
+  weeklyPrice?: Int;
+  weeklyPrice_not?: Int;
+  weeklyPrice_in?: Int[] | Int;
+  weeklyPrice_not_in?: Int[] | Int;
+  weeklyPrice_lt?: Int;
+  weeklyPrice_lte?: Int;
+  weeklyPrice_gt?: Int;
+  weeklyPrice_gte?: Int;
   monthlyPrice?: Int;
   monthlyPrice_not?: Int;
   monthlyPrice_in?: Int[] | Int;
@@ -666,6 +678,14 @@ export interface BookingWhereInput {
   monthlyPrice_lte?: Int;
   monthlyPrice_gt?: Int;
   monthlyPrice_gte?: Int;
+  weeklyPrice?: Int;
+  weeklyPrice_not?: Int;
+  weeklyPrice_in?: Int[] | Int;
+  weeklyPrice_not_in?: Int[] | Int;
+  weeklyPrice_lt?: Int;
+  weeklyPrice_lte?: Int;
+  weeklyPrice_gt?: Int;
+  weeklyPrice_gte?: Int;
   totalPrice?: Int;
   totalPrice_not?: Int;
   totalPrice_in?: Int[] | Int;
@@ -743,6 +763,7 @@ export interface BikeCreateInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice: Int;
+  weeklyPrice?: Int;
   monthlyPrice: Int;
   status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
@@ -786,7 +807,8 @@ export interface BookingCreateWithoutBikeInput {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice: Int;
   status?: BookingStatus;
 }
@@ -800,6 +822,7 @@ export interface BikeUpdateInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice?: Int;
+  weeklyPrice?: Int;
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
@@ -959,6 +982,7 @@ export interface BookingUpdateWithoutBikeDataInput {
   deliveryLocationComment?: String;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
 }
@@ -1128,6 +1152,14 @@ export interface BookingScalarWhereInput {
   monthlyPrice_lte?: Int;
   monthlyPrice_gt?: Int;
   monthlyPrice_gte?: Int;
+  weeklyPrice?: Int;
+  weeklyPrice_not?: Int;
+  weeklyPrice_in?: Int[] | Int;
+  weeklyPrice_not_in?: Int[] | Int;
+  weeklyPrice_lt?: Int;
+  weeklyPrice_lte?: Int;
+  weeklyPrice_gt?: Int;
+  weeklyPrice_gte?: Int;
   totalPrice?: Int;
   totalPrice_not?: Int;
   totalPrice_in?: Int[] | Int;
@@ -1163,6 +1195,7 @@ export interface BookingUpdateManyDataInput {
   deliveryLocationComment?: String;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
 }
@@ -1176,6 +1209,7 @@ export interface BikeUpdateManyMutationInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice?: Int;
+  weeklyPrice?: Int;
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
@@ -1193,7 +1227,8 @@ export interface BookingCreateInput {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice: Int;
   status?: BookingStatus;
   bike: BikeCreateOneWithoutBookingsInput;
@@ -1213,6 +1248,7 @@ export interface BikeCreateWithoutBookingsInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice: Int;
+  weeklyPrice?: Int;
   monthlyPrice: Int;
   status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
@@ -1232,6 +1268,7 @@ export interface BookingUpdateInput {
   deliveryLocationComment?: String;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
   bike?: BikeUpdateOneRequiredWithoutBookingsInput;
@@ -1253,6 +1290,7 @@ export interface BikeUpdateWithoutBookingsDataInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice?: Int;
+  weeklyPrice?: Int;
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
@@ -1277,6 +1315,7 @@ export interface BookingUpdateManyMutationInput {
   deliveryLocationComment?: String;
   dailyPrice?: Int;
   monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice?: Int;
   status?: BookingStatus;
 }
@@ -1302,6 +1341,7 @@ export interface BikeCreateWithoutReviewsInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice: Int;
+  weeklyPrice?: Int;
   monthlyPrice: Int;
   status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
@@ -1331,6 +1371,7 @@ export interface BikeUpdateWithoutReviewsDataInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice?: Int;
+  weeklyPrice?: Int;
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
@@ -1394,6 +1435,7 @@ export interface BikeUpdateDataInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice?: Int;
+  weeklyPrice?: Int;
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
@@ -1484,6 +1526,14 @@ export interface BikeScalarWhereInput {
   dailyPrice_lte?: Int;
   dailyPrice_gt?: Int;
   dailyPrice_gte?: Int;
+  weeklyPrice?: Int;
+  weeklyPrice_not?: Int;
+  weeklyPrice_in?: Int[] | Int;
+  weeklyPrice_not_in?: Int[] | Int;
+  weeklyPrice_lt?: Int;
+  weeklyPrice_lte?: Int;
+  weeklyPrice_gt?: Int;
+  weeklyPrice_gte?: Int;
   monthlyPrice?: Int;
   monthlyPrice_not?: Int;
   monthlyPrice_in?: Int[] | Int;
@@ -1515,6 +1565,7 @@ export interface BikeUpdateManyDataInput {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice?: Int;
+  weeklyPrice?: Int;
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
@@ -1588,6 +1639,7 @@ export interface Bike {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice: Int;
+  weeklyPrice?: Int;
   monthlyPrice: Int;
   status: BikeStatus;
   areaIds: Int[];
@@ -1603,6 +1655,7 @@ export interface BikePromise extends Promise<Bike>, Fragmentable {
   manufactureYear: () => Promise<Int>;
   mileage: () => Promise<Int>;
   dailyPrice: () => Promise<Int>;
+  weeklyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
   status: () => Promise<BikeStatus>;
   areaIds: () => Promise<Int[]>;
@@ -1642,6 +1695,7 @@ export interface BikeSubscription
   manufactureYear: () => Promise<AsyncIterator<Int>>;
   mileage: () => Promise<AsyncIterator<Int>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
+  weeklyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BikeStatus>>;
   areaIds: () => Promise<AsyncIterator<Int[]>>;
@@ -1710,7 +1764,8 @@ export interface Booking {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice: Int;
   status: BookingStatus;
 }
@@ -1729,6 +1784,7 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   deliveryLocationComment: () => Promise<String>;
   dailyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
+  weeklyPrice: () => Promise<Int>;
   totalPrice: () => Promise<Int>;
   status: () => Promise<BookingStatus>;
   bike: <T = BikePromise>() => T;
@@ -1750,6 +1806,7 @@ export interface BookingSubscription
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  weeklyPrice: () => Promise<AsyncIterator<Int>>;
   totalPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
   bike: <T = BikeSubscription>() => T;
@@ -2088,6 +2145,7 @@ export interface BikePreviousValues {
   manufactureYear?: Int;
   mileage?: Int;
   dailyPrice: Int;
+  weeklyPrice?: Int;
   monthlyPrice: Int;
   status: BikeStatus;
   areaIds: Int[];
@@ -2105,6 +2163,7 @@ export interface BikePreviousValuesPromise
   manufactureYear: () => Promise<Int>;
   mileage: () => Promise<Int>;
   dailyPrice: () => Promise<Int>;
+  weeklyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
   status: () => Promise<BikeStatus>;
   areaIds: () => Promise<Int[]>;
@@ -2122,6 +2181,7 @@ export interface BikePreviousValuesSubscription
   manufactureYear: () => Promise<AsyncIterator<Int>>;
   mileage: () => Promise<AsyncIterator<Int>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
+  weeklyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BikeStatus>>;
   areaIds: () => Promise<AsyncIterator<Int[]>>;
@@ -2165,7 +2225,8 @@ export interface BookingPreviousValues {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
+  weeklyPrice?: Int;
   totalPrice: Int;
   status: BookingStatus;
 }
@@ -2186,6 +2247,7 @@ export interface BookingPreviousValuesPromise
   deliveryLocationComment: () => Promise<String>;
   dailyPrice: () => Promise<Int>;
   monthlyPrice: () => Promise<Int>;
+  weeklyPrice: () => Promise<Int>;
   totalPrice: () => Promise<Int>;
   status: () => Promise<BookingStatus>;
 }
@@ -2206,6 +2268,7 @@ export interface BookingPreviousValuesSubscription
   deliveryLocationComment: () => Promise<AsyncIterator<String>>;
   dailyPrice: () => Promise<AsyncIterator<Int>>;
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
+  weeklyPrice: () => Promise<AsyncIterator<Int>>;
   totalPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BookingStatus>>;
 }

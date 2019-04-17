@@ -31,13 +31,16 @@
        (.format (moment end-date) "MMM D")))
 
 (defn calculate-total-price
-  [{:keys [start-date end-date monthly-price daily-price]}]
+  [{:keys [start-date end-date monthly-price weekly-price daily-price]}]
   (let [dates-diff (get-dates-diff start-date end-date)
-        calculated-daily-price (if (> (:months dates-diff) 0)
-                                (round-to-thousands (/ monthly-price 30))
-                                daily-price)]
-    (+ (* monthly-price (:months dates-diff))
-       (* calculated-daily-price (:days dates-diff)))))
+        days (:days dates-diff)
+        weeks (quot days 7)
+        months (:months dates-diff)]
+    (cond
+      (> months 0) (+ (* monthly-price months) (* (round-to-thousands (/ monthly-price 30)) days))
+      (> weeks 0) (+ (* weeks weekly-price)
+                     (* (round-to-thousands (/ weekly-price 7)) (- days (* weeks 7))))
+      :else (* daily-price days))))
 
 (defn send-notification
   [user-uid notification]
@@ -93,9 +96,11 @@
   (alet [bike (p/await (p/promise (prisma [:bike {:id (:bikeId args)}])))
          monthly-price (.-monthlyPrice bike)
          daily-price (.-dailyPrice bike)
+         weekly-price (.-weeklyPrice bike)
          total-price (calculate-total-price {:start-date (:startDate args)
                                              :end-date (:endDate args)
                                              :monthly-price monthly-price
+                                             :weekly-price weekly-price
                                              :daily-price daily-price})]
         (.then
          (prisma
@@ -110,6 +115,7 @@
             :deliveryLocationComment (:deliveryLocationComment args)
             :userUid (:uid user)
             :monthlyPrice monthly-price
+            :weeklyPrice weekly-price
             :dailyPrice daily-price
             :totalPrice total-price
             :bikeOwnerUid (.-ownerUid bike)
@@ -133,6 +139,7 @@
        :mileage (:mileage args)
        :dailyPrice (:dailyPrice args)
        :monthlyPrice (:monthlyPrice args)
+       :weeklyPrice (:weeklyPrice args)
        :ownerUid owner-uid
        :status "MODERATION"}])))
 
@@ -172,6 +179,7 @@
                          :mileage (:mileage args)
                          :dailyPrice (:dailyPrice args)
                          :monthlyPrice (:monthlyPrice args)
+                         :weeklyPrice (:weeklyPrice args)
                          :status (if photo-changed? "MODERATION" "ACTIVE")}
                   :where {:id (:id args)}}])))
 

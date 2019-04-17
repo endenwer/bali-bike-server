@@ -47,6 +47,7 @@ type Mutation {
     mileage: Int!
     dailyPrice: Int!
     monthlyPrice: Int!
+    weeklyPrice: Int!
   ): Bike
   updateBike(
     id: ID!
@@ -55,6 +56,7 @@ type Mutation {
     mileage: Int!
     dailyPrice: Int!
     monthlyPrice: Int!
+    weeklyPrice: Int!
   ): Bike
   deleteBike(id: ID!): Bike
   activateBike(id: ID!): Bike
@@ -81,6 +83,7 @@ type Bike {
   mileage: Int
   dailyPrice: Int!
   monthlyPrice: Int!
+  weeklyPrice: Int!
   saved: Boolean
   reviews: [Review!]!
   bookings: [BikeBooking!]
@@ -130,6 +133,7 @@ type Booking {
   deliveryLocationComment: String
   dailyPrice: Int!
   monthlyPrice: Int!
+  weeklyPrice: Int!
   totalPrice: Int!
   status: BookingStatus!
   bike: Bike!

@@ -8,6 +8,7 @@ type Bike {
   manufactureYear: Int
   mileage: Int @default(value: 0)
   dailyPrice: Int!
+  weeklyPrice: Int!
   monthlyPrice: Int!
   status: BikeStatus! @default(value: "ACTIVE")
   areaIds: [Int!]!
@@ -56,6 +57,7 @@ type Booking {
   deliveryLocationComment: String
   dailyPrice: Int!
   monthlyPrice: Int!
+  weeklyPrice: Int!
   totalPrice: Int!
   status: BookingStatus! @default(value: "WAITING_CONFIRMATION")
   bike: Bike!

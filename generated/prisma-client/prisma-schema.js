@@ -29,6 +29,7 @@ type Bike {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int!
+  weeklyPrice: Int
   monthlyPrice: Int!
   status: BikeStatus!
   areaIds: [Int!]!
@@ -55,6 +56,7 @@ input BikeCreateInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int!
+  weeklyPrice: Int
   monthlyPrice: Int!
   status: BikeStatus
   areaIds: BikeCreateareaIdsInput
@@ -90,6 +92,7 @@ input BikeCreateWithoutBookingsInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int!
+  weeklyPrice: Int
   monthlyPrice: Int!
   status: BikeStatus
   areaIds: BikeCreateareaIdsInput
@@ -105,6 +108,7 @@ input BikeCreateWithoutReviewsInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int!
+  weeklyPrice: Int
   monthlyPrice: Int!
   status: BikeStatus
   areaIds: BikeCreateareaIdsInput
@@ -133,6 +137,8 @@ enum BikeOrderByInput {
   mileage_DESC
   dailyPrice_ASC
   dailyPrice_DESC
+  weeklyPrice_ASC
+  weeklyPrice_DESC
   monthlyPrice_ASC
   monthlyPrice_DESC
   status_ASC
@@ -153,6 +159,7 @@ type BikePreviousValues {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int!
+  weeklyPrice: Int
   monthlyPrice: Int!
   status: BikeStatus!
   areaIds: [Int!]!
@@ -235,6 +242,14 @@ input BikeScalarWhereInput {
   dailyPrice_lte: Int
   dailyPrice_gt: Int
   dailyPrice_gte: Int
+  weeklyPrice: Int
+  weeklyPrice_not: Int
+  weeklyPrice_in: [Int!]
+  weeklyPrice_not_in: [Int!]
+  weeklyPrice_lt: Int
+  weeklyPrice_lte: Int
+  weeklyPrice_gt: Int
+  weeklyPrice_gte: Int
   monthlyPrice: Int
   monthlyPrice_not: Int
   monthlyPrice_in: [Int!]
@@ -289,6 +304,7 @@ input BikeUpdateDataInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int
+  weeklyPrice: Int
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
@@ -305,6 +321,7 @@ input BikeUpdateInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int
+  weeklyPrice: Int
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
@@ -321,6 +338,7 @@ input BikeUpdateManyDataInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int
+  weeklyPrice: Int
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
@@ -346,6 +364,7 @@ input BikeUpdateManyMutationInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int
+  weeklyPrice: Int
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
@@ -383,6 +402,7 @@ input BikeUpdateWithoutBookingsDataInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int
+  weeklyPrice: Int
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
@@ -398,6 +418,7 @@ input BikeUpdateWithoutReviewsDataInput {
   manufactureYear: Int
   mileage: Int
   dailyPrice: Int
+  weeklyPrice: Int
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
@@ -502,6 +523,14 @@ input BikeWhereInput {
   dailyPrice_lte: Int
   dailyPrice_gt: Int
   dailyPrice_gte: Int
+  weeklyPrice: Int
+  weeklyPrice_not: Int
+  weeklyPrice_in: [Int!]
+  weeklyPrice_not_in: [Int!]
+  weeklyPrice_lt: Int
+  weeklyPrice_lte: Int
+  weeklyPrice_gt: Int
+  weeklyPrice_gte: Int
   monthlyPrice: Int
   monthlyPrice_not: Int
   monthlyPrice_in: [Int!]
@@ -542,7 +571,8 @@ type Booking {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int!
+  monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int!
   status: BookingStatus!
   bike: Bike!
@@ -566,7 +596,8 @@ input BookingCreateInput {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int!
+  monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int!
   status: BookingStatus
   bike: BikeCreateOneWithoutBookingsInput!
@@ -589,7 +620,8 @@ input BookingCreateWithoutBikeInput {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int!
+  monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int!
   status: BookingStatus
 }
@@ -626,6 +658,8 @@ enum BookingOrderByInput {
   dailyPrice_DESC
   monthlyPrice_ASC
   monthlyPrice_DESC
+  weeklyPrice_ASC
+  weeklyPrice_DESC
   totalPrice_ASC
   totalPrice_DESC
   status_ASC
@@ -649,7 +683,8 @@ type BookingPreviousValues {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int!
+  monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int!
   status: BookingStatus!
 }
@@ -813,6 +848,14 @@ input BookingScalarWhereInput {
   monthlyPrice_lte: Int
   monthlyPrice_gt: Int
   monthlyPrice_gte: Int
+  weeklyPrice: Int
+  weeklyPrice_not: Int
+  weeklyPrice_in: [Int!]
+  weeklyPrice_not_in: [Int!]
+  weeklyPrice_lt: Int
+  weeklyPrice_lte: Int
+  weeklyPrice_gt: Int
+  weeklyPrice_gte: Int
   totalPrice: Int
   totalPrice_not: Int
   totalPrice_in: [Int!]
@@ -867,6 +910,7 @@ input BookingUpdateInput {
   deliveryLocationComment: String
   dailyPrice: Int
   monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int
   status: BookingStatus
   bike: BikeUpdateOneRequiredWithoutBookingsInput
@@ -885,6 +929,7 @@ input BookingUpdateManyDataInput {
   deliveryLocationComment: String
   dailyPrice: Int
   monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int
   status: BookingStatus
 }
@@ -902,6 +947,7 @@ input BookingUpdateManyMutationInput {
   deliveryLocationComment: String
   dailyPrice: Int
   monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int
   status: BookingStatus
 }
@@ -935,6 +981,7 @@ input BookingUpdateWithoutBikeDataInput {
   deliveryLocationComment: String
   dailyPrice: Int
   monthlyPrice: Int
+  weeklyPrice: Int
   totalPrice: Int
   status: BookingStatus
 }
@@ -1109,6 +1156,14 @@ input BookingWhereInput {
   monthlyPrice_lte: Int
   monthlyPrice_gt: Int
   monthlyPrice_gte: Int
+  weeklyPrice: Int
+  weeklyPrice_not: Int
+  weeklyPrice_in: [Int!]
+  weeklyPrice_not_in: [Int!]
+  weeklyPrice_lt: Int
+  weeklyPrice_lte: Int
+  weeklyPrice_gt: Int
+  weeklyPrice_gte: Int
   totalPrice: Int
   totalPrice_not: Int
   totalPrice_in: [Int!]
