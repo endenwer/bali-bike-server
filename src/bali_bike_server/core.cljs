@@ -59,7 +59,7 @@
                       :addBikeToSaved rules/is-authenticated
                       :removeBikeFromSaved rules/is-authenticated
                       :createBike rules/is-authenticated
-                      :updateBike rules/is-bike-owner
+                      :updateBike (graphql-shield/or rules/is-bike-owner rules/is-moderator)
                       :deleteBike (graphql-shield/or rules/is-bike-owner rules/is-moderator)
                       :activateBike rules/is-moderator
                       :changeRole rules/is-authenticated
