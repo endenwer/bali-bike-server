@@ -325,6 +325,12 @@ export type BikeOrderByInput =
   | "monthlyPrice_DESC"
   | "status_ASC"
   | "status_DESC"
+  | "whatsapp_ASC"
+  | "whatsapp_DESC"
+  | "facebook_ASC"
+  | "facebook_DESC"
+  | "onlyContacts_ASC"
+  | "onlyContacts_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -508,6 +514,36 @@ export interface BikeWhereInput {
   status_not?: BikeStatus;
   status_in?: BikeStatus[] | BikeStatus;
   status_not_in?: BikeStatus[] | BikeStatus;
+  whatsapp?: String;
+  whatsapp_not?: String;
+  whatsapp_in?: String[] | String;
+  whatsapp_not_in?: String[] | String;
+  whatsapp_lt?: String;
+  whatsapp_lte?: String;
+  whatsapp_gt?: String;
+  whatsapp_gte?: String;
+  whatsapp_contains?: String;
+  whatsapp_not_contains?: String;
+  whatsapp_starts_with?: String;
+  whatsapp_not_starts_with?: String;
+  whatsapp_ends_with?: String;
+  whatsapp_not_ends_with?: String;
+  facebook?: String;
+  facebook_not?: String;
+  facebook_in?: String[] | String;
+  facebook_not_in?: String[] | String;
+  facebook_lt?: String;
+  facebook_lte?: String;
+  facebook_gt?: String;
+  facebook_gte?: String;
+  facebook_contains?: String;
+  facebook_not_contains?: String;
+  facebook_starts_with?: String;
+  facebook_not_starts_with?: String;
+  facebook_ends_with?: String;
+  facebook_not_ends_with?: String;
+  onlyContacts?: Boolean;
+  onlyContacts_not?: Boolean;
   reviews_every?: ReviewWhereInput;
   reviews_some?: ReviewWhereInput;
   reviews_none?: ReviewWhereInput;
@@ -762,11 +798,14 @@ export interface BikeCreateInput {
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
-  dailyPrice: Int;
+  dailyPrice?: Int;
   weeklyPrice?: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   reviews?: ReviewCreateManyWithoutBikeInput;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
@@ -807,8 +846,8 @@ export interface BookingCreateWithoutBikeInput {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice?: Int;
-  weeklyPrice?: Int;
+  monthlyPrice: Int;
+  weeklyPrice: Int;
   totalPrice: Int;
   status?: BookingStatus;
 }
@@ -826,6 +865,9 @@ export interface BikeUpdateInput {
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -1213,6 +1255,9 @@ export interface BikeUpdateManyMutationInput {
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
 }
 
 export interface BookingCreateInput {
@@ -1227,8 +1272,8 @@ export interface BookingCreateInput {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice?: Int;
-  weeklyPrice?: Int;
+  monthlyPrice: Int;
+  weeklyPrice: Int;
   totalPrice: Int;
   status?: BookingStatus;
   bike: BikeCreateOneWithoutBookingsInput;
@@ -1247,11 +1292,14 @@ export interface BikeCreateWithoutBookingsInput {
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
-  dailyPrice: Int;
+  dailyPrice?: Int;
   weeklyPrice?: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   reviews?: ReviewCreateManyWithoutBikeInput;
 }
 
@@ -1294,6 +1342,9 @@ export interface BikeUpdateWithoutBookingsDataInput {
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   reviews?: ReviewUpdateManyWithoutBikeInput;
 }
 
@@ -1340,11 +1391,14 @@ export interface BikeCreateWithoutReviewsInput {
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
-  dailyPrice: Int;
+  dailyPrice?: Int;
   weeklyPrice?: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeCreateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
 
@@ -1375,6 +1429,9 @@ export interface BikeUpdateWithoutReviewsDataInput {
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
 
@@ -1439,6 +1496,9 @@ export interface BikeUpdateDataInput {
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -1546,6 +1606,36 @@ export interface BikeScalarWhereInput {
   status_not?: BikeStatus;
   status_in?: BikeStatus[] | BikeStatus;
   status_not_in?: BikeStatus[] | BikeStatus;
+  whatsapp?: String;
+  whatsapp_not?: String;
+  whatsapp_in?: String[] | String;
+  whatsapp_not_in?: String[] | String;
+  whatsapp_lt?: String;
+  whatsapp_lte?: String;
+  whatsapp_gt?: String;
+  whatsapp_gte?: String;
+  whatsapp_contains?: String;
+  whatsapp_not_contains?: String;
+  whatsapp_starts_with?: String;
+  whatsapp_not_starts_with?: String;
+  whatsapp_ends_with?: String;
+  whatsapp_not_ends_with?: String;
+  facebook?: String;
+  facebook_not?: String;
+  facebook_in?: String[] | String;
+  facebook_not_in?: String[] | String;
+  facebook_lt?: String;
+  facebook_lte?: String;
+  facebook_gt?: String;
+  facebook_gte?: String;
+  facebook_contains?: String;
+  facebook_not_contains?: String;
+  facebook_starts_with?: String;
+  facebook_not_starts_with?: String;
+  facebook_ends_with?: String;
+  facebook_not_ends_with?: String;
+  onlyContacts?: Boolean;
+  onlyContacts_not?: Boolean;
   AND?: BikeScalarWhereInput[] | BikeScalarWhereInput;
   OR?: BikeScalarWhereInput[] | BikeScalarWhereInput;
   NOT?: BikeScalarWhereInput[] | BikeScalarWhereInput;
@@ -1569,6 +1659,9 @@ export interface BikeUpdateManyDataInput {
   monthlyPrice?: Int;
   status?: BikeStatus;
   areaIds?: BikeUpdateareaIdsInput;
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
 }
 
 export interface SavedBikesListUpdateManyMutationInput {
@@ -1638,11 +1731,14 @@ export interface Bike {
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
-  dailyPrice: Int;
+  dailyPrice?: Int;
   weeklyPrice?: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
   status: BikeStatus;
   areaIds: Int[];
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
 }
 
 export interface BikePromise extends Promise<Bike>, Fragmentable {
@@ -1659,6 +1755,9 @@ export interface BikePromise extends Promise<Bike>, Fragmentable {
   monthlyPrice: () => Promise<Int>;
   status: () => Promise<BikeStatus>;
   areaIds: () => Promise<Int[]>;
+  whatsapp: () => Promise<String>;
+  facebook: () => Promise<String>;
+  onlyContacts: () => Promise<Boolean>;
   reviews: <T = FragmentableArray<Review>>(
     args?: {
       where?: ReviewWhereInput;
@@ -1699,6 +1798,9 @@ export interface BikeSubscription
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BikeStatus>>;
   areaIds: () => Promise<AsyncIterator<Int[]>>;
+  whatsapp: () => Promise<AsyncIterator<String>>;
+  facebook: () => Promise<AsyncIterator<String>>;
+  onlyContacts: () => Promise<AsyncIterator<Boolean>>;
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(
     args?: {
       where?: ReviewWhereInput;
@@ -1764,8 +1866,8 @@ export interface Booking {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice?: Int;
-  weeklyPrice?: Int;
+  monthlyPrice: Int;
+  weeklyPrice: Int;
   totalPrice: Int;
   status: BookingStatus;
 }
@@ -2144,11 +2246,14 @@ export interface BikePreviousValues {
   reviewsCount?: Int;
   manufactureYear?: Int;
   mileage?: Int;
-  dailyPrice: Int;
+  dailyPrice?: Int;
   weeklyPrice?: Int;
-  monthlyPrice: Int;
+  monthlyPrice?: Int;
   status: BikeStatus;
   areaIds: Int[];
+  whatsapp?: String;
+  facebook?: String;
+  onlyContacts?: Boolean;
 }
 
 export interface BikePreviousValuesPromise
@@ -2167,6 +2272,9 @@ export interface BikePreviousValuesPromise
   monthlyPrice: () => Promise<Int>;
   status: () => Promise<BikeStatus>;
   areaIds: () => Promise<Int[]>;
+  whatsapp: () => Promise<String>;
+  facebook: () => Promise<String>;
+  onlyContacts: () => Promise<Boolean>;
 }
 
 export interface BikePreviousValuesSubscription
@@ -2185,6 +2293,9 @@ export interface BikePreviousValuesSubscription
   monthlyPrice: () => Promise<AsyncIterator<Int>>;
   status: () => Promise<AsyncIterator<BikeStatus>>;
   areaIds: () => Promise<AsyncIterator<Int[]>>;
+  whatsapp: () => Promise<AsyncIterator<String>>;
+  facebook: () => Promise<AsyncIterator<String>>;
+  onlyContacts: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface BookingSubscriptionPayload {
@@ -2225,8 +2336,8 @@ export interface BookingPreviousValues {
   deliveryLocationAddress: String;
   deliveryLocationComment?: String;
   dailyPrice: Int;
-  monthlyPrice?: Int;
-  weeklyPrice?: Int;
+  monthlyPrice: Int;
+  weeklyPrice: Int;
   totalPrice: Int;
   status: BookingStatus;
 }
@@ -2392,6 +2503,11 @@ The `Float` scalar type represents signed double-precision fractional values as 
 export type Float = number;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -2400,11 +2516,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
 
 export type Long = string;
 

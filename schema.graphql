@@ -42,21 +42,27 @@ type Mutation {
   createBike(
     modelId: Int!
     photos: [String!]!
-    areaIds: [Int!]!
-    manufactureYear: Int!
-    mileage: Int!
-    dailyPrice: Int!
-    monthlyPrice: Int!
-    weeklyPrice: Int!
+    areaIds: [Int!]
+    manufactureYear: Int
+    mileage: Int
+    dailyPrice: Int
+    monthlyPrice: Int
+    weeklyPrice: Int
+    whatsapp: String
+    facebook: String
+    onlyContacts: Boolean
   ): Bike
   updateBike(
     id: ID!
     photos: [String!]!
-    areaIds: [Int!]!
-    mileage: Int!
-    dailyPrice: Int!
-    monthlyPrice: Int!
-    weeklyPrice: Int!
+    areaIds: [Int!]
+    mileage: Int
+    dailyPrice: Int
+    monthlyPrice: Int
+    weeklyPrice: Int
+    whatsapp: String
+    facebook: String
+    onlyContacts: Boolean
   ): Bike
   deleteBike(id: ID!): Bike
   activateBike(id: ID!): Bike
@@ -81,14 +87,17 @@ type Bike {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
-  dailyPrice: Int!
-  monthlyPrice: Int!
-  weeklyPrice: Int!
+  dailyPrice: Int
+  monthlyPrice: Int
+  weeklyPrice: Int
   saved: Boolean
   reviews: [Review!]!
   bookings: [BikeBooking!]
   owner: User!
   status: BikeStatus!
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
 }
 
 enum BikeStatus {

@@ -7,11 +7,14 @@ type Bike {
   reviewsCount: Int @default(value: 0)
   manufactureYear: Int
   mileage: Int @default(value: 0)
-  dailyPrice: Int!
-  weeklyPrice: Int!
-  monthlyPrice: Int!
+  dailyPrice: Int
+  weeklyPrice: Int
+  monthlyPrice: Int
   status: BikeStatus! @default(value: "ACTIVE")
-  areaIds: [Int!]!
+  areaIds: [Int!]
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean @default(value: false)
   reviews: [Review!]!
   bookings: [Booking!]!
 }

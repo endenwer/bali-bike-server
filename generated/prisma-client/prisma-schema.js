@@ -28,11 +28,14 @@ type Bike {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
-  dailyPrice: Int!
+  dailyPrice: Int
   weeklyPrice: Int
-  monthlyPrice: Int!
+  monthlyPrice: Int
   status: BikeStatus!
   areaIds: [Int!]!
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
 }
@@ -55,11 +58,14 @@ input BikeCreateInput {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
-  dailyPrice: Int!
+  dailyPrice: Int
   weeklyPrice: Int
-  monthlyPrice: Int!
+  monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeCreateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   reviews: ReviewCreateManyWithoutBikeInput
   bookings: BookingCreateManyWithoutBikeInput
 }
@@ -91,11 +97,14 @@ input BikeCreateWithoutBookingsInput {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
-  dailyPrice: Int!
+  dailyPrice: Int
   weeklyPrice: Int
-  monthlyPrice: Int!
+  monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeCreateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   reviews: ReviewCreateManyWithoutBikeInput
 }
 
@@ -107,11 +116,14 @@ input BikeCreateWithoutReviewsInput {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
-  dailyPrice: Int!
+  dailyPrice: Int
   weeklyPrice: Int
-  monthlyPrice: Int!
+  monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeCreateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   bookings: BookingCreateManyWithoutBikeInput
 }
 
@@ -143,6 +155,12 @@ enum BikeOrderByInput {
   monthlyPrice_DESC
   status_ASC
   status_DESC
+  whatsapp_ASC
+  whatsapp_DESC
+  facebook_ASC
+  facebook_DESC
+  onlyContacts_ASC
+  onlyContacts_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -158,11 +176,14 @@ type BikePreviousValues {
   reviewsCount: Int
   manufactureYear: Int
   mileage: Int
-  dailyPrice: Int!
+  dailyPrice: Int
   weeklyPrice: Int
-  monthlyPrice: Int!
+  monthlyPrice: Int
   status: BikeStatus!
   areaIds: [Int!]!
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
 }
 
 input BikeScalarWhereInput {
@@ -262,6 +283,36 @@ input BikeScalarWhereInput {
   status_not: BikeStatus
   status_in: [BikeStatus!]
   status_not_in: [BikeStatus!]
+  whatsapp: String
+  whatsapp_not: String
+  whatsapp_in: [String!]
+  whatsapp_not_in: [String!]
+  whatsapp_lt: String
+  whatsapp_lte: String
+  whatsapp_gt: String
+  whatsapp_gte: String
+  whatsapp_contains: String
+  whatsapp_not_contains: String
+  whatsapp_starts_with: String
+  whatsapp_not_starts_with: String
+  whatsapp_ends_with: String
+  whatsapp_not_ends_with: String
+  facebook: String
+  facebook_not: String
+  facebook_in: [String!]
+  facebook_not_in: [String!]
+  facebook_lt: String
+  facebook_lte: String
+  facebook_gt: String
+  facebook_gte: String
+  facebook_contains: String
+  facebook_not_contains: String
+  facebook_starts_with: String
+  facebook_not_starts_with: String
+  facebook_ends_with: String
+  facebook_not_ends_with: String
+  onlyContacts: Boolean
+  onlyContacts_not: Boolean
   AND: [BikeScalarWhereInput!]
   OR: [BikeScalarWhereInput!]
   NOT: [BikeScalarWhereInput!]
@@ -308,6 +359,9 @@ input BikeUpdateDataInput {
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -325,6 +379,9 @@ input BikeUpdateInput {
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -342,6 +399,9 @@ input BikeUpdateManyDataInput {
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
 }
 
 input BikeUpdateManyInput {
@@ -368,6 +428,9 @@ input BikeUpdateManyMutationInput {
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
 }
 
 input BikeUpdateManyWithWhereNestedInput {
@@ -406,6 +469,9 @@ input BikeUpdateWithoutBookingsDataInput {
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   reviews: ReviewUpdateManyWithoutBikeInput
 }
 
@@ -422,6 +488,9 @@ input BikeUpdateWithoutReviewsDataInput {
   monthlyPrice: Int
   status: BikeStatus
   areaIds: BikeUpdateareaIdsInput
+  whatsapp: String
+  facebook: String
+  onlyContacts: Boolean
   bookings: BookingUpdateManyWithoutBikeInput
 }
 
@@ -543,6 +612,36 @@ input BikeWhereInput {
   status_not: BikeStatus
   status_in: [BikeStatus!]
   status_not_in: [BikeStatus!]
+  whatsapp: String
+  whatsapp_not: String
+  whatsapp_in: [String!]
+  whatsapp_not_in: [String!]
+  whatsapp_lt: String
+  whatsapp_lte: String
+  whatsapp_gt: String
+  whatsapp_gte: String
+  whatsapp_contains: String
+  whatsapp_not_contains: String
+  whatsapp_starts_with: String
+  whatsapp_not_starts_with: String
+  whatsapp_ends_with: String
+  whatsapp_not_ends_with: String
+  facebook: String
+  facebook_not: String
+  facebook_in: [String!]
+  facebook_not_in: [String!]
+  facebook_lt: String
+  facebook_lte: String
+  facebook_gt: String
+  facebook_gte: String
+  facebook_contains: String
+  facebook_not_contains: String
+  facebook_starts_with: String
+  facebook_not_starts_with: String
+  facebook_ends_with: String
+  facebook_not_ends_with: String
+  onlyContacts: Boolean
+  onlyContacts_not: Boolean
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
@@ -571,8 +670,8 @@ type Booking {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int
-  weeklyPrice: Int
+  monthlyPrice: Int!
+  weeklyPrice: Int!
   totalPrice: Int!
   status: BookingStatus!
   bike: Bike!
@@ -596,8 +695,8 @@ input BookingCreateInput {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int
-  weeklyPrice: Int
+  monthlyPrice: Int!
+  weeklyPrice: Int!
   totalPrice: Int!
   status: BookingStatus
   bike: BikeCreateOneWithoutBookingsInput!
@@ -620,8 +719,8 @@ input BookingCreateWithoutBikeInput {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int
-  weeklyPrice: Int
+  monthlyPrice: Int!
+  weeklyPrice: Int!
   totalPrice: Int!
   status: BookingStatus
 }
@@ -683,8 +782,8 @@ type BookingPreviousValues {
   deliveryLocationAddress: String!
   deliveryLocationComment: String
   dailyPrice: Int!
-  monthlyPrice: Int
-  weeklyPrice: Int
+  monthlyPrice: Int!
+  weeklyPrice: Int!
   totalPrice: Int!
   status: BookingStatus!
 }

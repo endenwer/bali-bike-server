@@ -141,6 +141,9 @@
        :monthlyPrice (:monthlyPrice args)
        :weeklyPrice (:weeklyPrice args)
        :ownerUid owner-uid
+       :whatsapp (:whatsapp args)
+       :facebook (:facebook args)
+       :onlyContacts (:onlyContacts args)
        :status "MODERATION"}])))
 
 (defn get-photo-thumbnails
@@ -180,6 +183,9 @@
                          :dailyPrice (:dailyPrice args)
                          :monthlyPrice (:monthlyPrice args)
                          :weeklyPrice (:weeklyPrice args)
+                         :whatsapp (:whatsapp args)
+                         :facebook (:facebook args)
+                         :onlyContacts (:onlyContacts args)
                          :status (if photo-changed? "MODERATION" "ACTIVE")}
                   :where {:id (:id args)}}])))
 
