@@ -62,7 +62,7 @@
               (when area-id areas-join-statement)
               (when-not (empty? where-statements)
                 (str "where " (string/join " AND " where-statements)))
-              "order by \"Bike\".id asc "
+              "order by \"Bike\".id desc "
               "limit :first "
               "offset :skip")
          {:start-date start-date
