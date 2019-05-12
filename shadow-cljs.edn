@@ -8,7 +8,7 @@
            :target    :node-script
            :main      bali-bike-server.core/main
            :output-to "index.js"
-           :dev {:closure-defines {bali-bike-server.core/pg-host "35.232.182.221"
+           :dev {:closure-defines {bali-bike-server.core/pg-host "localhost"
                                    "goog.DEBUG" true}}
            :release {:compiler-options {:optimizations :simple}
                      :closure-defines {bali-bike-server.core/pg-host "postgres"
