@@ -41,6 +41,7 @@
 
 (def model-where-statement "\"Bike\".\"modelId\" = :model-id ")
 (def area-where-statement "\"AreaIds\".\"value\" = :area-id ")
+(def whatsapp-where-statement "\"Bike\".\"whatsapp\" = :whatsapp ")
 
 (defn- query-bikes
   [pg-client args]
@@ -48,9 +49,11 @@
         end-date (.toISOString (moment (:endDate args)))
         area-id (:areaId args)
         model-id (:modelId args)
+        whatsapp (when (:whatsapp args) (str "+" (:whatsapp args)))
         where-statements (remove nil? [(when (and start-date end-date) bookings-where-statement)
                                        (when area-id area-where-statement)
                                        (when model-id model-where-statement)
+                                       (when whatsapp whatsapp-where-statement)
                                        bike-status-where-statement])]
     (p/then
      (p/promise
@@ -69,6 +72,7 @@
           :end-date end-date
           :area-id area-id
           :model-id model-id
+          :whatsapp whatsapp
           :first (:first args)
           :skip (:skip args)}))))
      #(.-rows %))))
