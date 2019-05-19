@@ -3,3 +3,4 @@
 eval $(docker-machine env balibike)
 docker-compose up -d --no-deps --build app
 docker-compose exec app prisma deploy
+eval $(docker-machine env -u)
