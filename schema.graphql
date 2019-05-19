@@ -6,7 +6,14 @@ type Query {
     endDate: String
     areaId: Int
     modelId: Int
-    whatsapp: String): [Bike!]
+    whatsapp: String
+    minDailyPrice: Int
+    maxDailyPrice: Int
+    minWeeklyPrice: Int
+    maxWeeklyPrice: Int
+    minMonthyPrice: Int
+    maxMonthlyPrice: Int
+    orderBy: BikesOrder): [Bike!]
   ownBikes: [Bike!]
   bikesOnModeration: [Bike!]
   savedBikes: [Bike!]
@@ -15,6 +22,17 @@ type Query {
   bikeOwnerBookings: [Booking!]
   booking(id: ID!): Booking
   constants: Constants!
+}
+
+enum BikesOrder {
+  DATE_ASC
+  DATE_DESC
+  DAILY_PRICE_ASC
+  DAILY_PRICE_DESC
+  WEEKLY_PRICE_ASC
+  WEEKLY_PRICE_DESC
+  MONTHLY_PRICE_ASC
+  MONTHLY_PRICE_DESC
 }
 
 type Constants {

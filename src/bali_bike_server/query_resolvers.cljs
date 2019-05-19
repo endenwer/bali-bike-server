@@ -42,19 +42,51 @@
 (def model-where-statement "\"Bike\".\"modelId\" = :model-id ")
 (def area-where-statement "\"AreaIds\".\"value\" = :area-id ")
 (def whatsapp-where-statement "\"Bike\".\"whatsapp\" = :whatsapp ")
+(def min-daily-price-where-statement "\"Bike\".\"dailyPrice\" >= :min-daily-price ")
+(def max-daily-price-where-statement "\"Bike\".\"dailyPrice\" <= :max-daily-price ")
+(def min-weekly-price-where-statement "\"Bike\".\"weeklyPrice\" >= :min-weekly-price ")
+(def max-weekly-price-where-statement "\"Bike\".\"weeklyPrice\" <= :max-weekly-price ")
+(def min-monthly-price-where-statement "\"Bike\".\"monthlyPrice\" >= :min-monthly-price ")
+(def max-monthly-price-where-statement "\"Bike\".\"monthlyPrice\" <= :max-monthly-price ")
+
+(defn order-statement
+  [order]
+  (case order
+    "DATE_ASC" " order by \"Bike\".id asc "
+    "DATE_DESC" " order by \"Bike\".id desc "
+    "DAILY_PRICE_ASC" " order by \"Bike\".\"dailyPrice\" asc, \"Bike\".id desc "
+    "DAILY_PRICE_DESC" " order by \"Bike\".\"dailyPrice\" desc, \"Bike\".id desc "
+    "WEEKLY_PRICE_DESC" " order by \"Bike\".\"weeklyPrice\" desc, \"Bike\".id desc "
+    "MONTHLY_PRICE_ASC" " order by \"Bike\".\"monthlyPrice\" asc, \"Bike\".id desc "
+    "MONTHLY_PRICE_DESC" " order by \"Bike\".\"monthlyPrice\" desc, \"Bike\".id desc "
+    " order by \"Bike\".id desc "))
 
 (defn- query-bikes
   [pg-client args]
   (let [start-date (.toISOString (moment (:startDate args)))
         end-date (.toISOString (moment (:endDate args)))
+        whatsapp (when (:whatsapp args) (str "+" (:whatsapp args)))
+        bikes-order (:orderBy args)
         area-id (:areaId args)
         model-id (:modelId args)
-        whatsapp (when (:whatsapp args) (str "+" (:whatsapp args)))
-        where-statements (remove nil? [(when (and start-date end-date) bookings-where-statement)
-                                       (when area-id area-where-statement)
-                                       (when model-id model-where-statement)
-                                       (when whatsapp whatsapp-where-statement)
-                                       bike-status-where-statement])]
+        min-daily-price (:minDailyPrice args)
+        max-daily-price (:maxDailyPrice args)
+        min-weekly-price (:minWeeklyPrice args)
+        max-weekly-price (:maxWeeklyPrice args)
+        min-monthly-price (:minMonthlyPrice args)
+        max-monthly-price (:maxMonthlyPrice args)
+        where-statements (remove nil?
+                                 [(when (and start-date end-date) bookings-where-statement)
+                                  (when area-id area-where-statement)
+                                  (when model-id model-where-statement)
+                                  (when whatsapp whatsapp-where-statement)
+                                  (when min-daily-price min-daily-price-where-statement)
+                                  (when max-daily-price max-daily-price-where-statement)
+                                  (when min-weekly-price min-weekly-price-where-statement)
+                                  (when max-weekly-price max-weekly-price-where-statement)
+                                  (when min-monthly-price min-monthly-price-where-statement)
+                                  (when max-monthly-price max-monthly-price-where-statement)
+                                  bike-status-where-statement])]
     (p/then
      (p/promise
       (.query
@@ -65,7 +97,7 @@
               (when area-id areas-join-statement)
               (when-not (empty? where-statements)
                 (str "where " (string/join " AND " where-statements)))
-              "order by \"Bike\".id desc "
+              (order-statement bikes-order)
               "limit :first "
               "offset :skip")
          {:start-date start-date
@@ -73,6 +105,12 @@
           :area-id area-id
           :model-id model-id
           :whatsapp whatsapp
+          :min-daily-price min-daily-price
+          :max-daily-price max-daily-price
+          :min-weekly-price min-weekly-price
+          :max-weekly-price max-weekly-price
+          :min-monthly-price min-monthly-price
+          :max-monthly-price max-monthly-price
           :first (:first args)
           :skip (:skip args)}))))
      #(.-rows %))))
@@ -102,16 +140,18 @@
   (if (or (empty? bikes) (empty? photos))
     (p/promise nil)
     (let [grouped-photos (group-by #(get % "nodeId") (js->clj photos))
-          grouped-sorted-photos (map #(identity {"id" (first %)
-                                                 "photos" (map (fn [p] (get p "value"))
-                                                               (sort (fn [a b]
-                                                                       (> (get "position" a)
-                                                                          (get "position" b)))
-                                                                     (second %)))})
-                                     grouped-photos)]
-      (map
-       #(apply merge %)
-       (vals (group-by #(get % "id") (concat (js->clj bikes) grouped-sorted-photos)))))))
+          grouped-sorted-photos (reduce
+                                 #(assoc %1 (first %2)
+                                         (map (fn [p] (get p "value"))
+                                              (sort (fn [a b]
+                                                      (> (get "position" a)
+                                                         (get "position" b)))
+                                                    (second %2))))
+                                 {}
+                                 grouped-photos)]
+      (map #(do (set! (.-photos %) (clj->js (get grouped-sorted-photos (.-id %))))
+                (identity %))
+           bikes))))
 
 (defn bikes
   [_ _ {:keys [prisma args pg-client]}]
