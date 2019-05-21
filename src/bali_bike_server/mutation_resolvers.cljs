@@ -88,8 +88,9 @@
                                    :delivery_location delivery-location
                                    :total_payment total-price}}))))
 
-(defn send-telegram-message-to-me []
-  (https/get "https://api.telegram.org/bot762520235:AAEVu2VTl1tNjEG1ANAHkDR2k9xjQ7Ruf5k/sendMessage?chat_id=276487288&text=New%20booking"))
+(defn send-telegram-message-to-me
+  [message]
+  (https/get (str "https://api.telegram.org/bot762520235:AAEVu2VTl1tNjEG1ANAHkDR2k9xjQ7Ruf5k/sendMessage?chat_id=276487288&text=" message)))
 
 (defn create-booking
   [_ _ {:keys [prisma user args]}]
@@ -124,12 +125,13 @@
            (send-booking-notification booking bike)
            (when-not js/goog.DEBUG
              (send-booking-email booking bike)
-             (send-telegram-message-to-me))
+             (send-telegram-message-to-me "new-booking"))
            booking))))
 
 (defn create-bike
   [_ _ {:keys [prisma user args]}]
   (let [owner-uid (:uid user)]
+    (send-telegram-message-to-me "new-bike")
     (prisma
      [:createBike
       {:modelId (:modelId args)
@@ -175,7 +177,9 @@
   [_ _ {:keys [prisma args]}]
   (alet [bike-id (:id args)
          bike (p/await (p/promise (prisma [:bike {:id bike-id}])))
-         photo-changed? (not= (set (js->clj (.-photos bike))) (set (:photos args)))]
+         photo-changed? (not= (set (js->clj (.-photos bike))) (set (:photos args)))
+         status (if photo-changed? "MODERATION" (.-status bike))]
+        (if (= status "MODERATION") (send-telegram-message-to-me "moderation-bike"))
         (prisma [:updateBike
                  {:data {:photos {:set (:photos args)}
                          :areaIds {:set (:areaIds args)}
@@ -186,7 +190,7 @@
                          :whatsapp (:whatsapp args)
                          :facebook (:facebook args)
                          :onlyContacts (:onlyContacts args)
-                         :status (if photo-changed? "MODERATION" "ACTIVE")}
+                         :status status}
                   :where {:id (:id args)}}])))
 
 (defn delete-bike
