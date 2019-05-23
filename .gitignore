@@ -2,3 +2,4 @@
 /node_modules
 /.nrepl-port
 index.js
+/dumps
