@@ -36,6 +36,9 @@ type Bike {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
 }
@@ -66,6 +69,9 @@ input BikeCreateInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   reviews: ReviewCreateManyWithoutBikeInput
   bookings: BookingCreateManyWithoutBikeInput
 }
@@ -105,6 +111,9 @@ input BikeCreateWithoutBookingsInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   reviews: ReviewCreateManyWithoutBikeInput
 }
 
@@ -124,6 +133,9 @@ input BikeCreateWithoutReviewsInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   bookings: BookingCreateManyWithoutBikeInput
 }
 
@@ -161,6 +173,12 @@ enum BikeOrderByInput {
   facebook_DESC
   onlyContacts_ASC
   onlyContacts_DESC
+  addressLat_ASC
+  addressLat_DESC
+  addressLng_ASC
+  addressLng_DESC
+  address_ASC
+  address_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -184,6 +202,9 @@ type BikePreviousValues {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
 }
 
 input BikeScalarWhereInput {
@@ -313,6 +334,48 @@ input BikeScalarWhereInput {
   facebook_not_ends_with: String
   onlyContacts: Boolean
   onlyContacts_not: Boolean
+  addressLat: String
+  addressLat_not: String
+  addressLat_in: [String!]
+  addressLat_not_in: [String!]
+  addressLat_lt: String
+  addressLat_lte: String
+  addressLat_gt: String
+  addressLat_gte: String
+  addressLat_contains: String
+  addressLat_not_contains: String
+  addressLat_starts_with: String
+  addressLat_not_starts_with: String
+  addressLat_ends_with: String
+  addressLat_not_ends_with: String
+  addressLng: String
+  addressLng_not: String
+  addressLng_in: [String!]
+  addressLng_not_in: [String!]
+  addressLng_lt: String
+  addressLng_lte: String
+  addressLng_gt: String
+  addressLng_gte: String
+  addressLng_contains: String
+  addressLng_not_contains: String
+  addressLng_starts_with: String
+  addressLng_not_starts_with: String
+  addressLng_ends_with: String
+  addressLng_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
   AND: [BikeScalarWhereInput!]
   OR: [BikeScalarWhereInput!]
   NOT: [BikeScalarWhereInput!]
@@ -362,6 +425,9 @@ input BikeUpdateDataInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -382,6 +448,9 @@ input BikeUpdateInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   reviews: ReviewUpdateManyWithoutBikeInput
   bookings: BookingUpdateManyWithoutBikeInput
 }
@@ -402,6 +471,9 @@ input BikeUpdateManyDataInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
 }
 
 input BikeUpdateManyInput {
@@ -431,6 +503,9 @@ input BikeUpdateManyMutationInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
 }
 
 input BikeUpdateManyWithWhereNestedInput {
@@ -472,6 +547,9 @@ input BikeUpdateWithoutBookingsDataInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   reviews: ReviewUpdateManyWithoutBikeInput
 }
 
@@ -491,6 +569,9 @@ input BikeUpdateWithoutReviewsDataInput {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean
+  addressLat: String
+  addressLng: String
+  address: String
   bookings: BookingUpdateManyWithoutBikeInput
 }
 
@@ -642,6 +723,48 @@ input BikeWhereInput {
   facebook_not_ends_with: String
   onlyContacts: Boolean
   onlyContacts_not: Boolean
+  addressLat: String
+  addressLat_not: String
+  addressLat_in: [String!]
+  addressLat_not_in: [String!]
+  addressLat_lt: String
+  addressLat_lte: String
+  addressLat_gt: String
+  addressLat_gte: String
+  addressLat_contains: String
+  addressLat_not_contains: String
+  addressLat_starts_with: String
+  addressLat_not_starts_with: String
+  addressLat_ends_with: String
+  addressLat_not_ends_with: String
+  addressLng: String
+  addressLng_not: String
+  addressLng_in: [String!]
+  addressLng_not_in: [String!]
+  addressLng_lt: String
+  addressLng_lte: String
+  addressLng_gt: String
+  addressLng_gte: String
+  addressLng_contains: String
+  addressLng_not_contains: String
+  addressLng_starts_with: String
+  addressLng_not_starts_with: String
+  addressLng_ends_with: String
+  addressLng_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput

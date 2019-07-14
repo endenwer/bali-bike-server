@@ -15,6 +15,9 @@ type Bike {
   whatsapp: String
   facebook: String
   onlyContacts: Boolean @default(value: false)
+  addressLat: String
+  addressLng: String
+  address: String
   reviews: [Review!]!
   bookings: [Booking!]!
 }

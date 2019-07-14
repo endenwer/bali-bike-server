@@ -331,6 +331,12 @@ export type BikeOrderByInput =
   | "facebook_DESC"
   | "onlyContacts_ASC"
   | "onlyContacts_DESC"
+  | "addressLat_ASC"
+  | "addressLat_DESC"
+  | "addressLng_ASC"
+  | "addressLng_DESC"
+  | "address_ASC"
+  | "address_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -544,6 +550,48 @@ export interface BikeWhereInput {
   facebook_not_ends_with?: String;
   onlyContacts?: Boolean;
   onlyContacts_not?: Boolean;
+  addressLat?: String;
+  addressLat_not?: String;
+  addressLat_in?: String[] | String;
+  addressLat_not_in?: String[] | String;
+  addressLat_lt?: String;
+  addressLat_lte?: String;
+  addressLat_gt?: String;
+  addressLat_gte?: String;
+  addressLat_contains?: String;
+  addressLat_not_contains?: String;
+  addressLat_starts_with?: String;
+  addressLat_not_starts_with?: String;
+  addressLat_ends_with?: String;
+  addressLat_not_ends_with?: String;
+  addressLng?: String;
+  addressLng_not?: String;
+  addressLng_in?: String[] | String;
+  addressLng_not_in?: String[] | String;
+  addressLng_lt?: String;
+  addressLng_lte?: String;
+  addressLng_gt?: String;
+  addressLng_gte?: String;
+  addressLng_contains?: String;
+  addressLng_not_contains?: String;
+  addressLng_starts_with?: String;
+  addressLng_not_starts_with?: String;
+  addressLng_ends_with?: String;
+  addressLng_not_ends_with?: String;
+  address?: String;
+  address_not?: String;
+  address_in?: String[] | String;
+  address_not_in?: String[] | String;
+  address_lt?: String;
+  address_lte?: String;
+  address_gt?: String;
+  address_gte?: String;
+  address_contains?: String;
+  address_not_contains?: String;
+  address_starts_with?: String;
+  address_not_starts_with?: String;
+  address_ends_with?: String;
+  address_not_ends_with?: String;
   reviews_every?: ReviewWhereInput;
   reviews_some?: ReviewWhereInput;
   reviews_none?: ReviewWhereInput;
@@ -806,6 +854,9 @@ export interface BikeCreateInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   reviews?: ReviewCreateManyWithoutBikeInput;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
@@ -868,6 +919,9 @@ export interface BikeUpdateInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -1258,6 +1312,9 @@ export interface BikeUpdateManyMutationInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
 }
 
 export interface BookingCreateInput {
@@ -1300,6 +1357,9 @@ export interface BikeCreateWithoutBookingsInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   reviews?: ReviewCreateManyWithoutBikeInput;
 }
 
@@ -1345,6 +1405,9 @@ export interface BikeUpdateWithoutBookingsDataInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   reviews?: ReviewUpdateManyWithoutBikeInput;
 }
 
@@ -1399,6 +1462,9 @@ export interface BikeCreateWithoutReviewsInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   bookings?: BookingCreateManyWithoutBikeInput;
 }
 
@@ -1432,6 +1498,9 @@ export interface BikeUpdateWithoutReviewsDataInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
 
@@ -1499,6 +1568,9 @@ export interface BikeUpdateDataInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
   reviews?: ReviewUpdateManyWithoutBikeInput;
   bookings?: BookingUpdateManyWithoutBikeInput;
 }
@@ -1636,6 +1708,48 @@ export interface BikeScalarWhereInput {
   facebook_not_ends_with?: String;
   onlyContacts?: Boolean;
   onlyContacts_not?: Boolean;
+  addressLat?: String;
+  addressLat_not?: String;
+  addressLat_in?: String[] | String;
+  addressLat_not_in?: String[] | String;
+  addressLat_lt?: String;
+  addressLat_lte?: String;
+  addressLat_gt?: String;
+  addressLat_gte?: String;
+  addressLat_contains?: String;
+  addressLat_not_contains?: String;
+  addressLat_starts_with?: String;
+  addressLat_not_starts_with?: String;
+  addressLat_ends_with?: String;
+  addressLat_not_ends_with?: String;
+  addressLng?: String;
+  addressLng_not?: String;
+  addressLng_in?: String[] | String;
+  addressLng_not_in?: String[] | String;
+  addressLng_lt?: String;
+  addressLng_lte?: String;
+  addressLng_gt?: String;
+  addressLng_gte?: String;
+  addressLng_contains?: String;
+  addressLng_not_contains?: String;
+  addressLng_starts_with?: String;
+  addressLng_not_starts_with?: String;
+  addressLng_ends_with?: String;
+  addressLng_not_ends_with?: String;
+  address?: String;
+  address_not?: String;
+  address_in?: String[] | String;
+  address_not_in?: String[] | String;
+  address_lt?: String;
+  address_lte?: String;
+  address_gt?: String;
+  address_gte?: String;
+  address_contains?: String;
+  address_not_contains?: String;
+  address_starts_with?: String;
+  address_not_starts_with?: String;
+  address_ends_with?: String;
+  address_not_ends_with?: String;
   AND?: BikeScalarWhereInput[] | BikeScalarWhereInput;
   OR?: BikeScalarWhereInput[] | BikeScalarWhereInput;
   NOT?: BikeScalarWhereInput[] | BikeScalarWhereInput;
@@ -1662,6 +1776,9 @@ export interface BikeUpdateManyDataInput {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
 }
 
 export interface SavedBikesListUpdateManyMutationInput {
@@ -1739,6 +1856,9 @@ export interface Bike {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
 }
 
 export interface BikePromise extends Promise<Bike>, Fragmentable {
@@ -1758,6 +1878,9 @@ export interface BikePromise extends Promise<Bike>, Fragmentable {
   whatsapp: () => Promise<String>;
   facebook: () => Promise<String>;
   onlyContacts: () => Promise<Boolean>;
+  addressLat: () => Promise<String>;
+  addressLng: () => Promise<String>;
+  address: () => Promise<String>;
   reviews: <T = FragmentableArray<Review>>(
     args?: {
       where?: ReviewWhereInput;
@@ -1801,6 +1924,9 @@ export interface BikeSubscription
   whatsapp: () => Promise<AsyncIterator<String>>;
   facebook: () => Promise<AsyncIterator<String>>;
   onlyContacts: () => Promise<AsyncIterator<Boolean>>;
+  addressLat: () => Promise<AsyncIterator<String>>;
+  addressLng: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(
     args?: {
       where?: ReviewWhereInput;
@@ -2254,6 +2380,9 @@ export interface BikePreviousValues {
   whatsapp?: String;
   facebook?: String;
   onlyContacts?: Boolean;
+  addressLat?: String;
+  addressLng?: String;
+  address?: String;
 }
 
 export interface BikePreviousValuesPromise
@@ -2275,6 +2404,9 @@ export interface BikePreviousValuesPromise
   whatsapp: () => Promise<String>;
   facebook: () => Promise<String>;
   onlyContacts: () => Promise<Boolean>;
+  addressLat: () => Promise<String>;
+  addressLng: () => Promise<String>;
+  address: () => Promise<String>;
 }
 
 export interface BikePreviousValuesSubscription
@@ -2296,6 +2428,9 @@ export interface BikePreviousValuesSubscription
   whatsapp: () => Promise<AsyncIterator<String>>;
   facebook: () => Promise<AsyncIterator<String>>;
   onlyContacts: () => Promise<AsyncIterator<Boolean>>;
+  addressLat: () => Promise<AsyncIterator<String>>;
+  addressLng: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BookingSubscriptionPayload {

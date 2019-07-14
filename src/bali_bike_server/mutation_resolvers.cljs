@@ -146,6 +146,9 @@
        :whatsapp (:whatsapp args)
        :facebook (:facebook args)
        :onlyContacts (:onlyContacts args)
+       :address (:address args)
+       :addressLat (:addressLat args)
+       :addressLng (:addressLng args)
        :status "MODERATION"}])))
 
 (defn get-photo-thumbnails
@@ -190,6 +193,9 @@
                          :whatsapp (:whatsapp args)
                          :facebook (:facebook args)
                          :onlyContacts (:onlyContacts args)
+                         :address (:address args)
+                         :addressLat (:addressLat args)
+                         :addressLng (:addressLng args)
                          :status status}
                   :where {:id (:id args)}}])))
 
